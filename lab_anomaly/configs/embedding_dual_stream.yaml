@@ -1,0 +1,23 @@
+dataset_root: lab_dataset
+labels_csv: lab_dataset/labels/video_labels.csv
+out_dir: lab_dataset/derived/embeddings
+
+encoder:
+  model_name: MCG-NJU/videomae-base
+  device: auto
+  use_half: true
+  use_dual_stream: true
+  flow_branch_type: cnn
+  fusion_method: concat
+
+flows:
+  flows_dir: lab_dataset/derived/optical_flows
+
+sampling:
+  clip_len: 16
+  frame_stride: 2
+  num_clips_per_video: 8
+
+runtime:
+  batch_size: 32
+  limit: 0

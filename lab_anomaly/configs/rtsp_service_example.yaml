@@ -1,0 +1,35 @@
+# RTSP 实时推理服务示例配置
+rtsp_url: "rtsp://user:pass@ip:554/xxx"
+camera_id: cam0
+out_dir: lab_dataset/derived/realtime
+
+artifacts:
+  known_checkpoint: lab_dataset/derived/known_classifier/checkpoint_best.pt
+  open_set_dir: lab_dataset/derived/open_set
+
+encoder:
+  model_name: MCG-NJU/videomae-base
+  device: auto   # auto/cuda/cpu
+  use_half: false
+
+sampling:
+  clip_len: 16
+  frame_stride: 2
+  sample_fps: 5.0
+  window_stride: 4
+
+fusion:
+  min_known_prob: 0.5
+  treat_low_conf_as_unknown: true
+
+outputs:
+  save_snapshot: true
+  api_url: ""              # 例如 "http://127.0.0.1:8000/event"
+  api_timeout_sec: 3.0
+
+runtime:
+  cooldown_sec: 3.0
+  open_timeout_sec: 10.0
+  reconnect_wait_sec: 3.0
+  show: false
+

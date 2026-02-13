@@ -1,0 +1,22 @@
+embeddings_dir: lab_dataset/derived/embeddings
+known_checkpoint: lab_dataset/derived/known_classifier/checkpoint_best.pt
+out_dir: lab_dataset/derived/pseudo_iter
+
+# 伪标签生成
+exclude_labels: unknown
+kmeans_k: 16
+topk_pos: 2
+bottomk_neg: 2
+min_videos_per_label: 2
+seed: 42
+expected_num_clips: 0   # 0=从 meta 推断
+
+# 继续训练（可选）
+train_epochs: 2
+lr: 0.0001
+weight_decay: 0.01
+lambda_pos: 0.5
+lambda_neg: 0.5
+batch_size: 16
+device: auto  # auto/cuda/cpu
+

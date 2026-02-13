@@ -1,0 +1,634 @@
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000095.jpg 159,2,305,52,81 206,52,327,134,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_24.jpg 500,72,600,210,80 465,189,557,282,80 440,266,575,413,80 385,394,607,532,80 452,522,603,632,80 508,636,564,733,80 463,677,504,745,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000016.jpg 155,244,183,263,80 275,136,288,171,80 247,144,264,173,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001407.jpg 1369,996,1465,1055,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01228.jpg 96,1,153,65,81 206,5,297,115,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_db947568-96ac-4a89-a6d1-268ad5b89fc9.jpg 41,47,294,203,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000793.jpg 2,1,170,226,81 172,1,708,257,81 246,254,666,319,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_d20971dd-acf9-4ea6-bcfb-936c293dfde8.jpg 305,14,468,189,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00215.jpg 9,63,98,381,81 104,53,190,382,81 213,239,371,389,81 195,15,359,225,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000638.jpg 805,323,1063,611,81 995,206,1324,326,81 1065,329,1241,449,81 1337,37,1909,438,81 1519,429,1657,483,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00971.jpg 199,459,400,876,81 243,31,513,460,81 516,133,639,280,81 91,193,229,292,81 187,298,244,454,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_239.jpg 293,2,383,341,81 384,2,469,150,81 111,1,288,27,81 70,186,96,240,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001672.jpg 3,39,664,339,81 209,308,454,417,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001497.jpg 545,84,957,552,81 1206,135,1599,654,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000034.jpg 274,278,304,323,80 335,254,374,307,80 415,251,465,310,80 497,275,535,320,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00942.jpg 160,3,548,96,81 148,98,230,235,81 237,98,374,134,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_25d1bbf3-a6d4-4f79-aceb-cfec52a66688.jpg 2,2,183,297,80 299,32,550,295,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001650.jpg 742,59,1300,535,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001086.jpg 703,7,1195,195,81 797,191,1151,341,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00050.jpg 416,283,436,303,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_0ca430be-57db-49c9-801a-47d95f6b1f60.jpg 464,190,626,346,80 600,367,789,523,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00309.jpg 816,2,1057,122,81 1060,1,1139,262,81 599,1,937,215,81 804,476,1041,547,81 1060,311,1093,454,81 945,126,1057,247,81 824,250,1055,475,81 593,226,812,470,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00994.jpg 2,33,68,224,81 69,58,172,227,81 172,102,235,200,81 239,144,293,198,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001482.jpg 273,271,299,314,80 240,288,250,300,80 216,308,235,316,80 126,286,142,296,80 299,249,322,272,80 323,225,351,290,80 344,211,441,254,80 367,133,397,213,80 396,173,420,215,80 411,21,449,69,80 416,67,462,152,80 423,154,447,200,80 444,164,512,214,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fire105.jpg 533,403,710,641,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00420.jpg 7,5,240,135,81 574,236,574,237,81 384,137,551,249,81 115,248,351,327,81 10,139,358,246,81 251,7,567,133,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fb712c7d-9988-4acb-807f-c8493e296fc4.jpg 541,199,603,316,80 476,27,522,53,80 498,177,538,217,80 445,69,468,94,80 450,214,465,237,80 436,345,449,365,80 448,125,463,141,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_431.jpg 20,510,52,643,80 1,650,117,686,80 90,558,150,590,80 254,560,292,595,80 292,526,311,630,80 207,628,324,678,80 535,568,561,645,80 496,641,601,687,80 600,651,655,691,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000962.jpg 207,6,269,60,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000202.jpg 50,1,178,41,80 114,40,178,117,80 153,112,201,141,80 148,150,191,167,80 190,141,220,160,80 226,187,234,214,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(53).jpg 129,33,228,105,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00752.jpg 135,5,237,85,81 237,5,349,74,81 224,76,359,136,81 224,138,382,197,81 262,201,433,245,81 324,245,458,291,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001806.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000747.jpg 6,359,352,589,81 1,598,69,933,81 84,837,255,955,81 575,345,1662,500,81 666,11,1627,344,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000647.jpg 809,1,1121,159,81 663,115,809,444,81 807,162,1015,465,81 1027,157,1261,554,81 1159,557,1265,661,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_small(37).jpg 52,54,61,76,80 87,95,96,108,80 112,118,124,132,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00303.jpg 111,88,230,234,81 7,141,102,354,81 192,332,389,614,81 397,336,608,484,81 308,132,604,328,81 619,138,933,340,81 935,16,1084,232,81 448,1,551,127,81 554,1,762,131,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000488.jpg 644,400,781,567,81 761,353,845,479,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00199.jpg 328,418,368,435,80 352,401,390,415,80 222,411,281,423,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001653.jpg 136,359,431,527,81 184,133,505,359,81 284,33,418,137,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_canada-wildfire.jpg 278,302,349,371,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001460.jpg 1083,83,1265,265,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_81.jpg 99,9,280,228,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_7fe125be-f6a3-426e-b122-97a1643136d5.jpg 353,91,405,141,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00901.jpg 395,155,505,305,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00956.jpg 247,290,285,314,80 281,269,318,311,80 262,243,300,271,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(195).jpg 50,186,137,245,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_172.jpg 63,1,288,34,81 88,33,311,76,81 183,77,331,136,81 294,135,333,160,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001623.jpg 126,396,234,438,80 160,365,234,397,80 178,450,213,485,80 481,440,522,472,80 1069,442,1128,524,80 1115,411,1186,484,80 1167,486,1214,540,80 1344,472,1393,515,80 634,574,689,597,80 588,349,692,433,80 585,501,622,555,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000445.jpg 55,7,345,151,81 307,168,449,483,81 447,491,605,757,81 509,757,704,1078,81 385,7,1313,179,81 453,178,1173,486,81 607,494,1179,751,81 715,759,1113,1078,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_01006.jpg 37,209,63,236,80 58,189,72,211,80 185,111,207,159,80 178,160,194,201,80 213,149,229,200,80 233,153,297,199,80 272,135,311,191,80 342,154,385,214,80 295,95,319,132,80 478,177,491,211,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001348.jpg 142,225,160,234,80 177,286,188,297,80 369,238,415,271,80 429,282,438,300,80 208,187,220,205,80 231,187,239,208,80 240,199,250,213,80 183,216,203,290,80 169,227,182,259,80 159,233,166,255,80 140,243,154,266,80 209,245,229,282,80 340,192,357,204,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_1.jpg 438,206,500,265,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_28c91459-0a93-401f-8d0e-96edd26d4071.jpg 52,175,388,372,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001312.jpg 1076,489,1103,560,80 1234,486,1260,527,80 1264,459,1300,524,80 1310,433,1376,469,80 1306,500,1353,527,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00793.jpg 5,2,405,179,81 5,181,455,381,81 75,385,527,583,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fire104.jpg 530,410,692,665,80 451,536,484,625,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_36.jpg 310,58,874,896,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000248.jpg 148,12,230,193,81 124,192,168,310,81 231,2,633,184,81 275,188,677,263,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001354.jpg 891,57,1245,748,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_441.jpg 292,81,357,145,80 355,73,388,126,80 297,174,339,231,80 335,160,424,259,80 243,219,281,286,80 277,239,373,335,80 98,448,135,470,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_288.jpg 156,6,216,83,81 181,90,239,131,81 1,99,45,181,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000765.jpg 15,3,315,259,81 169,264,395,513,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000431.jpg 493,847,845,1037,81 405,429,721,697,81 495,9,757,415,81 731,180,986,825,81 767,9,1657,175,81 1099,184,1737,423,81 1011,455,1335,911,81 1335,432,1849,890,81 1523,997,1797,1071,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00213.jpg 638,26,928,339,81 212,390,523,583,81 532,357,717,554,81 734,364,901,482,81 422,264,532,374,81 535,195,633,326,81 160,114,355,436,81 301,2,623,112,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01248.jpg 2,3,383,93,81 39,97,554,227,81 178,228,433,327,81 213,330,352,432,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00961.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000287.jpg 226,51,331,176,81 332,38,421,160,81 422,10,497,134,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001024.jpg 353,1,1263,355,81 757,361,1069,543,81 2,1,332,357,81 359,369,687,507,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_small(39).jpg 46,46,61,84,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000137.jpg 63,1,236,210,81 123,207,227,302,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire(10).jpg 955.55,2528.55,1430.05,2827.55,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_056bfb4e-331b-4a89-b282-3bc809acb9bb.jpg 49,76,233,212,80 309,121,665,271,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_399.jpg 57,3,600,180,81 240,185,600,247,81 481,255,600,321,81 547,327,600,394,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001019.jpg 193,229,253,292,80 220,262,298,316,80 197,321,283,363,80 284,319,369,368,80 406,316,427,365,80 429,320,473,341,80 385,260,419,306,80 421,287,489,307,80 475,318,522,339,80 369,317,406,367,80 392,367,420,378,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00417.jpg 242,341,307,521,80 309,369,369,476,80 344,276,439,372,80 368,370,425,423,80 432,162,487,312,80 451,111,485,162,80 849,139,887,224,80 886,123,912,151,80 824,176,851,225,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001052.jpg 475,343,773,531,81 543,111,1065,340,81 685,1,1137,109,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001518.jpg 939,526,1051,719,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000652.jpg 811,383,1087,651,81 493,347,697,593,81 675,216,891,367,81 701,373,799,575,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001424.jpg 795,133,1157,556,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000423.jpg 757,326,839,399,81 837,237,957,387,81 933,133,1029,225,81 969,230,1158,394,81 1043,103,1265,223,81 1167,225,1267,372,81 1173,25,1261,95,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001545.jpg 464,9,1176,155,81 236,9,436,176,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000322.jpg 1047,407,1165,527,81 1167,238,1255,605,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_bee3a77e-0e77-47e1-9cc0-cb6f811ace11.jpg 1,135,499,322,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00535.jpg 74,167,84,193,80 85,220,97,244,80 97,254,125,271,80 135,267,156,279,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_349.jpg 37,1,125,57,81 81,57,110,131,81 159,3,220,69,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000244.jpg 175,2,306,119,81 188,117,329,290,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00554.jpg 6,8,213,127,81 211,12,418,120,81 63,130,228,279,81 205,114,432,281,81 225,281,429,374,81 226,372,439,476,81 437,366,511,420,81 432,7,632,131,81 645,6,796,154,81 682,147,788,359,81 574,137,653,215,81 493,198,577,262,81 539,310,636,397,81 439,180,483,322,81 622,400,662,454,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00444.jpg 765,699,852,749,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_684e6ef2-f238-4969-b412-edc9073ba904.jpg 234,228,513,315,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(100).jpg 106,120,198,166,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000528.jpg 152,164,425,470,81 396,63,502,162,81 508,13,628,173,81 432,174,586,382,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_small(71).jpg 174,42,198,77,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00663.jpg 34,201,416,394,81 10,448,380,673,81 67,204,449,482,81 319,490,584,815,81 451,823,575,937,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_f61ee5c7-3b69-49e4-bcaa-8c6ffcdf305e.jpg 52,127,95,174,80 189,180,275,364,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001788.jpg 323,7,787,259,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001180.jpg 431,359,795,557,81 537,100,1269,365,81 743,1,1047,101,81 807,369,991,473,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire(66).jpg 0.0,1.0,331.0,336.0,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_b43b2b8b-2a0b-4de6-9f38-5afc3e8c839e.jpg 6,432,488,564,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00062.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00700.jpg 265,282,353,372,81 210,237,286,308,81 217,157,308,253,81 213,91,297,180,81 121,2,243,127,81 9,9,127,137,81 129,123,206,199,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000898.jpg 4,1,126,106,81 27,106,168,183,81 132,39,184,105,81 172,150,212,196,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(204).jpg 28,4,147,69,80 151,42,216,105,80 231,41,300,88,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_95609716-b4b6-4fdb-b4f8-605ee8c43b41.jpg 44,50,598,446,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001000.jpg 2,153,52,214,81 293,1,460,186,81 176,194,258,228,81 462,103,490,207,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001327.jpg 352,276,390,337,80 386,250,420,300,80 451,279,480,342,80 425,284,449,348,80 478,215,519,236,80 503,247,525,278,80 535,225,560,246,80 551,249,601,281,80 590,235,621,268,80 576,208,603,231,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_a189d670-a87a-4b1c-829f-92f06648e9d2.jpg 5,235,319,581,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_small(110).jpg 166,67,202,133,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01222.jpg 5,1,130,174,81 139,4,328,223,81 99,177,133,215,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000215.jpg 392,69,522,187,81 523,2,709,65,81 532,71,705,185,81 403,190,673,315,81 293,210,400,318,81 248,259,292,345,81 219,341,282,399,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001077.jpg 763,338,789,549,80 786,343,818,380,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_b7a23d48-f0a8-4082-93ab-60587fd2db98.jpg 43,35,387,265,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00556.jpg 212,20,314,130,81 149,22,213,106,81 89,48,145,100,81 84,106,189,177,81 185,109,260,197,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001698.jpg 42,41,161,161,81 67,181,175,301,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(197).jpg 66,54,196,134,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00411.jpg 9,351,48,371,80 53,360,147,381,80 142,322,217,404,80 217,340,281,413,80 256,229,401,303,80 311,198,350,230,80 334,305,408,359,80 405,285,459,368,80 440,182,508,268,80 463,268,529,362,80 528,285,607,385,80 543,222,605,286,80 602,265,683,350,80 814,312,900,385,80 679,285,712,348,80 821,214,900,256,80 852,254,900,312,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_14.jpg 101,78,354,186,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_40944be0-1627-4ce0-b7ed-ec437ae28ba7.jpg 3,55,384,121,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00664.jpg 3,7,148,80,81 147,7,333,94,81 39,87,161,155,81 162,99,337,155,81 337,39,439,163,81 84,159,346,217,81 163,219,393,290,81 224,292,382,361,81 347,160,448,228,81 444,73,511,175,81 250,364,330,424,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00408.jpg 110,602,147,635,80 638,627,738,682,80 737,670,774,698,80 787,686,814,710,80 672,674,719,705,80 360,674,375,696,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_f4ad9e62-fad5-4695-bcac-96d2555a6b6b.jpg 58,74,97,110,80 134,122,165,147,80 169,145,209,169,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_148.jpg 63,1,380,83,81 88,85,366,147,81 92,146,384,217,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_d7c0e904-3dab-48ef-9b64-0c7483dd1784.jpg 134,132,281,241,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_130055ff-b422-45e1-9ff2-edc359690f32.jpg 4,220,27,274,80 66,146,443,280,80 480,228,500,277,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001282.jpg 91,110,164,225,80 590,28,633,90,80 617,66,667,182,80 599,176,645,209,80 665,383,718,426,80 709,348,740,390,80 738,255,763,290,80 700,427,745,486,80 731,398,775,452,80 733,472,764,559,80 755,439,800,512,80 778,410,812,447,80 786,571,830,635,80 820,548,859,606,80 767,535,786,601,80 782,512,824,569,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01235.jpg 2,55,248,384,81 251,135,389,301,81 382,76,505,232,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_b919b900-624f-4322-9a19-72f05fd409fa.jpg 82,89,168,173,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00040.jpg 317,4,468,211,81 308,213,427,392,81 473,5,601,206,81 428,215,637,355,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fe86317c-8f39-49bc-a78c-7e8179b8066f.jpg 2,304,129,486,80 695,404,800,517,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001456.jpg 909,431,980,484,80 977,445,1036,495,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(192).jpg 176,78,220,99,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000195.jpg 3,3,179,97,81 130,97,298,172,81 179,55,242,97,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_d15c02b4-ff5b-4cbd-b9fc-376362c6be1d.jpg 2,188,401,468,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_148.jpg 85,200,109,231,80 192,225,217,265,80 232,207,251,257,80 116,213,143,236,80 140,231,161,246,80 182,221,194,245,80 102,232,110,258,80 131,247,147,263,80 161,219,186,233,80 219,234,233,249,80 252,228,275,243,80 251,244,271,274,80 284,225,307,278,80 308,232,331,275,80 330,232,345,248,80 340,248,353,273,80 353,216,366,228,80 373,197,389,213,80 379,223,396,237,80 394,236,420,270,80 382,247,396,272,80 354,238,374,255,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_32.jpg 36,205,991,620,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000551.jpg 6,1,208,263,81 214,3,604,262,81 86,269,555,442,81 560,314,658,416,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_3c2a384f-ce1c-4077-9d68-8c48f565f0c4.jpg 5,140,256,208,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_25746caa-ac3e-4b6f-bd3e-11c5e14c04c5.jpg 126,309,390,448,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000388.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_942d0a91-3542-4c3d-b900-f1c7fddf130e.jpg 265,492,344,556,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_de456211-80c7-4703-8863-55306ad0171c.jpg 137,22,397,226,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(136).jpg 149,45,227,109,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00252.jpg 279,2,396,154,81 435,53,555,208,81 435,2,537,56,81 302,156,391,350,81 429,205,503,301,81 303,357,389,419,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_c9ccbe02-a104-4db5-8b9c-73efe5c2f4f6.jpg 378,278,491,330,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fd46a636-98ff-4b01-a931-3a566e264573.jpg 1,461,972,624,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_220.jpg 212,154,232,202,80 176,151,206,175,80 195,127,229,153,80 179,100,211,138,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001525.jpg 1133,212,1381,401,81 1167,9,1435,205,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_32.jpg 71,49,127,109,80 126,29,196,123,80 322,136,410,146,80 365,148,403,159,80 356,160,410,172,80 348,172,410,185,80 325,184,410,199,80 194,209,224,239,80 356,233,377,252,80 349,80,410,96,80 302,63,326,98,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00398.jpg 219,15,297,141,81 129,47,206,127,81 306,8,350,130,81 396,4,431,28,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_01226.jpg 205,202,233,290,80 206,178,226,198,80 235,194,259,232,80 267,270,291,287,80 258,185,281,197,80 108,277,116,288,80 117,278,126,290,80 57,271,68,287,80 70,272,81,287,80 263,300,295,308,80 212,153,228,163,80 229,155,239,171,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(104).jpg 66,101,217,180,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_71404040-521a-4fe7-899f-ccbae597a0a9.jpg 244,103,332,265,80 97,252,184,323,80 343,224,369,255,80 415,248,542,334,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001696.jpg 137,9,425,135,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_01049.jpg 398,148,479,296,80 384,29,426,70,80 438,41,485,71,80 446,70,470,107,80 492,314,554,372,80 475,243,512,289,80 563,176,591,212,80 542,367,613,441,80 508,509,525,534,80 547,469,586,503,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_u=3161218050,2497673664&fm=26&gp=0.jpg 218,132,442,213,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000022.jpg 562,334,699,413,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000413.jpg 309,280,340,317,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001764.jpg 877,103,1301,382,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_76.jpg 146,118,255,201,80 290,164,336,197,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(13).jpg 37,115,58,128,80 137,84,195,143,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000524.jpg 43,12,162,147,81 413,2,498,91,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00859.jpg 115,292,218,441,81 40,13,293,139,81 24,148,242,288,81 60,288,115,341,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00908.jpg 193,225,240,261,81 177,181,353,227,81 190,102,440,180,81 128,1,440,101,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000772.jpg 197,198,301,356,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_344.jpg 202,1,442,115,81 446,2,543,70,81 97,119,419,173,81 103,173,201,240,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_112.jpg 238,187,256,265,80 222,148,247,188,80 254,154,277,199,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001731.jpg 235,467,282,517,80 213,521,252,560,80 196,560,249,596,80 166,585,218,631,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001487.jpg 161,5,1341,321,81 1353,279,1753,438,81 633,324,1087,467,81 1095,321,1329,431,81 1329,108,1533,266,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00650.jpg 167,179,261,322,81 260,218,332,339,81 104,280,186,363,81 91,357,181,411,81 130,479,172,528,81 113,412,176,473,81 312,127,386,238,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fb498f54-105c-4074-9a3f-a875ec38fedd.jpg 173,151,376,288,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_196bc6f8-d7ce-4edc-9bed-b2db0bb0e59c.jpg 100,68,249,224,80 24,185,67,249,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_28.jpg 458,1,550,176,81 208,59,252,205,81 250,48,300,118,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00268.jpg 7,2,340,210,81 198,217,324,247,81 57,214,159,299,81 343,1,426,106,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001728.jpg 793,419,833,472,80 839,388,935,479,80 961,379,1053,452,80 582,450,638,513,80 520,456,577,514,80 349,452,401,490,80 410,476,461,507,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000913.jpg 183,246,233,261,80 212,229,229,247,80 46,215,85,226,80 82,273,117,279,80 102,253,116,267,80 245,212,258,223,80 274,212,282,219,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000680.jpg 381,3,657,122,81 510,126,624,252,81 559,252,638,324,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001198.jpg 398,368,470,426,80 484,344,540,390,80 440,451,519,516,80 351,521,414,575,80 381,492,442,543,80 424,545,514,596,80 575,490,630,532,80 144,512,193,544,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_ee8afe53-4905-420c-a537-5721c562701a.jpg 1,290,136,384,80 165,153,690,391,80 752,295,956,399,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00813.jpg 725,5,798,170,81 623,174,773,323,81 1,23,36,121,81 459,95,606,150,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fire1.jpg 960,54,1068,240,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00698.jpg 402,181,512,231,81 299,126,377,173,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fire042.jpg 503,139,1004,651,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000079.jpg 608,409,640,449,80 585,443,607,456,80 643,433,665,449,80 670,433,696,457,80 715,406,751,436,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_330.jpg 87,3,608,172,81 137,175,607,311,81 80,172,131,311,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001453.jpg 891,428,974,484,80 974,444,1030,491,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000100.jpg 157,397,185,420,80 170,467,194,492,80 182,512,200,550,80 164,542,201,571,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_32471c51-1e8e-4fb4-bae5-892cb54c37c7.jpg 184,142,204,196,80 289,162,640,358,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(159).jpg 121,68,185,131,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000344.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01240.jpg 12,3,138,136,81 138,50,238,126,81 238,79,338,153,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_118.jpg 559,102,632,214,80 593,1,650,100,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_96.jpg 69,96,97,149,81 49,188,101,223,81 256,1,303,41,81 277,42,324,84,81 192,52,228,82,81 189,133,225,159,81 193,176,226,206,81 228,173,248,197,81 89,6,120,72,81 118,11,169,45,81 75,148,106,189,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000598.jpg 795,473,1171,559,81 887,393,1093,471,81 953,110,1191,355,81 1201,66,1361,534,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000779.jpg 241,206,298,246,80 241,146,298,166,80 330,307,364,349,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000539.jpg 2,139,211,276,81 155,77,282,137,81 257,32,345,79,81 283,78,396,167,81 214,143,300,284,81 306,165,697,293,81 400,94,617,163,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00491.jpg 21,280,43,290,80 98,279,179,296,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000123.jpg 233,173,266,202,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_01063.jpg 339,369,365,403,80 386,401,415,435,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_f6de67a8-9ef1-4979-91b8-8de61545ae49.jpg 1,137,87,277,80 88,22,500,343,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00463.jpg 223,173,239,196,80 236,199,261,217,80 186,261,229,311,80 229,251,292,311,80 331,249,383,302,80 386,262,413,304,80 392,213,409,229,80 436,268,467,298,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1bffc404-8351-4615-9f20-6c80dc410d52.jpg 4,48,232,225,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_aed84c9c-357f-43a7-b3e4-ea9bc37e9679.jpg 2,381,160,421,80 192,358,561,548,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00944.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00516.jpg 141,435,165,515,81 108,325,156,430,81 188,200,249,345,81 132,287,180,321,81 253,236,337,330,81 321,103,377,225,81 244,46,355,100,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001662.jpg 287,438,381,476,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_small(105).jpg 162,114,177,133,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001060.jpg 95,2,232,99,81 121,106,187,195,81 239,90,292,184,81 190,102,232,248,81 236,189,325,240,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_76dba0e1-fc96-4263-99fb-642fe4ca2bb5.jpg 43,30,295,330,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001329.jpg 205,372,241,424,80 184,359,204,392,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001629.jpg 826,574,860,597,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001552.jpg 1364,522,1434,670,80 1407,474,1470,535,80 1426,558,1512,767,80 1510,675,1881,879,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fire112.jpg 564,476,703,600,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00352.jpg 1039,458,1078,492,80 1118,496,1139,542,80 1162,533,1195,557,80 1082,479,1116,497,80 244,394,263,416,80 268,403,292,422,80 231,503,253,533,80 236,443,257,485,80 305,489,333,521,80 263,518,297,546,80 297,536,343,555,80 361,532,383,560,80 1032,373,1054,400,80 1057,370,1094,391,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fd3930d4-c292-446a-833e-c4714bef268e.jpg 145,85,214,130,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_336d1031-4a63-4fb8-b6b3-36f0681a7fc9.jpg 228,124,315,203,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_be5c5baa-2d56-4469-849d-8de81c1b9f29.jpg 24,135,72,170,80 204,136,342,162,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000839.jpg 188,201,583,403,81 326,396,517,467,81 227,1,718,200,81 586,201,718,287,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(117).jpg 123,101,164,136,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000286.jpg 50,2,127,118,81 92,120,173,189,81 130,4,412,76,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000407.jpg 31,1,376,202,81 23,201,365,341,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001394.jpg 275,644,512,725,80 892,530,1145,691,80 1144,461,1265,686,80 1266,657,1410,712,80 1318,701,1399,766,80 724,545,892,696,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000961.jpg 325,143,343,160,80 298,175,317,191,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_92.jpg 35,1,358,53,81 78,50,359,97,81 64,99,249,139,81 47,140,108,237,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_dd311d66-f5fb-459a-9b7f-63e65b75251a.jpg 1,195,717,445,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000557.jpg 215,1,344,422,81 348,2,593,413,81 598,1,946,513,81 106,505,266,603,81 197,423,380,506,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000080.jpg 232,7,320,118,81 323,1,417,123,81 422,1,518,97,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00268.jpg 167,222,189,243,80 170,277,211,313,80 185,248,207,281,80 213,294,251,313,80 214,270,246,291,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00301.jpg 86,272,138,317,80 178,334,208,379,80 211,316,246,380,80 454,79,499,131,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00363.jpg 167,772,225,823,81 228,779,279,824,81 195,689,318,784,81 280,564,395,683,81 322,683,440,742,81 364,504,667,683,81 329,379,533,509,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(8).jpg 113,69,181,127,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000679.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_0.jpg 322,155,361,212,80 333,293,370,339,80 348,273,385,310,80 221,10,233,32,80 331,234,354,251,80 267,175,277,190,80 269,323,279,343,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01168.jpg 8,1,249,232,81 245,92,427,261,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000035.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001596.jpg 195,6,426,484,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_f37c2569-4332-4e65-a38f-fde0bd3bf59c.jpg 52,110,284,263,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00582.jpg 7,49,136,106,81 6,113,75,244,81 221,132,280,223,81 359,156,423,274,81 192,240,247,378,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_195.jpg 18,2,180,58,81 27,58,102,97,81 123,59,201,84,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000390.jpg 1100,242,1325,517,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(45).jpg 80,86,182,180,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001484.jpg 577,1,1145,493,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000941.jpg 190,158,221,220,80 281,187,315,242,80 246,112,262,165,80 284,123,304,168,80 141,235,169,244,80 250,233,283,271,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000559.jpg 301,108,409,201,81 362,47,695,107,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001575.jpg 114,704,136,733,80 134,724,156,782,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_cc563e00-2124-4ffa-b483-9222f8f73356.jpg 148,159,293,221,80 356,163,406,195,80 430,106,451,152,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_d0af5de0-1166-4f2b-9baa-f7f68d944051.jpg 4,217,182,382,80 239,264,329,388,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00443.jpg 521,82,633,165,80 540,162,619,420,80 617,169,691,253,80 681,316,769,436,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_723f379c-ccaa-42a4-b40f-0e9b58cf47a0.jpg 6,154,228,258,80 247,186,321,219,80 366,184,442,241,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(53).jpg 64,33,156,109,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001461.jpg 662,494,692,526,80 700,485,727,524,80 727,460,748,524,80 729,433,751,460,80 752,431,780,460,80 753,463,780,513,80 787,456,816,501,80 787,432,822,455,80 787,406,811,432,80 764,383,782,406,80 828,441,854,490,80 865,444,886,477,80 900,447,956,483,80 975,459,1000,498,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_33.jpg 258,47,617,549,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_199.jpg 65,63,121,173,80 124,56,177,159,80 177,115,207,158,80 68,172,85,185,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_c87e32f8-777c-45b7-8d67-3810fb2c0fe3.jpg 629,40,848,264,80 12,322,743,425,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000905.jpg 105,161,236,259,81 147,8,381,157,81 243,157,497,346,81 389,2,493,154,81 299,351,497,398,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_077a5476-360d-4405-bb2a-4b86ff69d4f3.jpg 227,470,378,768,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001395.jpg 13,11,405,406,81 585,9,1707,408,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001471.jpg 767,55,1223,281,81 743,283,1069,348,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_b854befb-a1c9-43d4-80b5-ea37810582bf.jpg 410,250,713,647,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_340.jpg 162,142,232,302,80 303,125,367,269,80 307,268,358,429,80 358,279,425,404,80 308,430,366,518,80 365,434,402,460,80 406,430,435,465,80 371,469,399,489,80 372,493,403,513,80 163,375,234,430,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_388.jpg 207,167,306,263,81 273,97,447,166,81 310,170,361,230,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_9fb13931-ee47-44f8-9636-ae01c30d70fe.jpg 139,33,211,335,80 168,385,194,419,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00575.jpg 216,238,260,262,80 174,233,201,270,80 173,262,186,286,80 254,297,263,309,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_214.jpg 125,95,200,237,80 156,212,269,383,80 366,24,426,132,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(46).jpg 118,49,244,151,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_11_10_19-mjs_ft_hotel-fire_19183862.jpg 132,8,245,255,80 364,126,430,238,80 182,325,447,384,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00402.jpg 318,258,332,271,80 346,270,361,278,80 136,228,149,240,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_187b7111-3763-4090-ba29-55f5182f9f2d.jpg 182,282,424,423,80 343,24,773,267,80 528,328,623,440,80 51,282,160,323,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00891.jpg 231,29,531,185,81 121,147,183,251,81 229,189,326,401,81 333,187,413,239,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001355.jpg 653,474,691,500,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00533.jpg 10,11,292,135,81 6,143,306,345,81 5,349,319,454,81 308,26,579,282,81 289,285,592,449,81 584,23,830,223,81 555,213,858,422,81 831,48,938,288,81 843,302,906,407,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_87.jpg 78,57,3764,2201,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_d08c73e9-5d1c-4a05-80f5-3d1dcbaf4ac3.jpg 371,174,695,268,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_01322add-8325-4971-9b82-d30209555753.jpg 98,237,127,259,80 164,235,219,260,80 143,236,161,249,80 355,250,402,284,80 483,235,521,259,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(93).jpg 65,4,175,105,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_315.jpg 334,3,498,87,81 279,89,403,122,81 333,240,485,300,81 192,172,241,209,81 234,223,318,256,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000288.jpg 839,102,1057,352,81 1057,37,1333,185,81 1055,181,1197,426,81 819,353,1041,535,81 609,417,801,597,81 333,634,629,769,81 643,606,863,733,81 847,541,1037,695,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_e5e9c618-e5e9-4bb3-8c28-66948b07e200.jpg 148,23,362,367,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001587.jpg 296,404,314,429,80 344,404,364,432,80 378,391,397,418,80 398,393,413,408,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_0dc710f6-adfa-4515-8095-a2233049802f.jpg 374,195,521,292,80 470,333,509,358,80 368,399,425,422,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_abfd74f8-e3fa-4c90-a8de-53075cf789c2.jpg 702,328,847,441,80 468,323,535,405,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(31).jpg 152,78,278,163,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000042.jpg 64,114,196,450,81 196,87,313,390,81 399,1,599,105,81 456,111,573,222,81 464,228,512,365,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_7a6a61db-edcd-4580-82cd-0ab1e98f7363.jpg 1,11,180,296,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00478.jpg 401,16,751,297,81 27,17,249,263,81 708,458,779,610,81 438,308,599,545,81 339,559,421,655,81 74,482,196,632,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000120.jpg 53,64,131,192,81 68,1,208,61,81 132,60,213,205,81 114,207,208,272,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_3d2efc34-f767-4083-a1e7-d543fc38dab9.jpg 214,329,395,438,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001568.jpg 323,345,535,397,81 511,245,637,299,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(143).jpg 116,46,214,118,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001033.jpg 593,320,1269,631,81 775,82,1299,329,81 829,1,1309,87,81 1001,637,1187,716,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_ff1aa214-0752-4a5a-950e-e84479d1c80e.jpg 311,108,585,314,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001225.jpg 597,1,1629,239,81 1179,239,1673,624,81 313,767,451,955,81 1339,690,1497,845,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_226.jpg 236,463,276,504,80 260,497,338,535,80 280,536,388,601,80 306,466,341,499,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00490.jpg 153,225,196,256,80 243,219,263,239,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_63848775-72e6-47cb-a0cc-4d6105885a3a.jpg 4,277,59,339,80 305,304,388,366,80 445,199,474,232,80 355,233,383,259,80 438,272,471,306,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001337.jpg 140,2,498,117,81 170,118,390,205,81 182,208,320,313,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000999.jpg 57,3,258,60,81 85,63,268,151,81 149,150,252,229,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001365.jpg 935,742,1017,766,80 1187,514,1263,572,80 1074,714,1164,769,80 1165,716,1271,760,80 1027,592,1085,622,80 1069,625,1134,713,80 1335,743,1399,762,80 1401,733,1472,756,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00483.jpg 504,5,784,138,81 288,10,492,99,81 26,153,145,205,81 197,22,274,89,81 230,200,308,241,81 363,108,488,168,81 610,270,681,412,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001478.jpg 666,565,744,641,80 719,497,911,541,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_169.jpg 1,53,151,239,80 136,1,590,209,80 72,238,159,319,80 152,212,521,322,80 292,321,388,370,80 230,430,448,453,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001280.jpg 616,411,693,433,80 136,312,154,335,80 110,314,130,333,80 155,311,176,335,80 183,326,209,348,80 550,422,570,451,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00465.jpg 129,4,204,132,81 73,6,118,82,81 211,4,343,124,81 346,5,373,67,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001682.jpg 1077,137,1251,338,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(198).jpg 19,94,72,136,80 28,28,97,65,80 97,8,152,40,80 150,1,201,37,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000953.jpg 152,29,202,52,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(121).jpg 133,97,227,150,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001023.jpg 559,4,873,377,81 879,36,1151,409,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001489.jpg 851,678,932,724,80 1107,644,1162,709,80 1351,638,1391,685,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_c217799f-4eef-4147-8680-b0fcb63f8a6b.jpg 3,1,688,495,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_129.jpg 6,25,287,231,81 97,233,359,368,81 92,365,359,416,81 147,413,449,514,81 357,376,433,411,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000768.jpg 561,16,662,85,81 666,2,882,85,81 772,92,846,170,81 284,131,382,278,81 185,297,350,524,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000950.jpg 229,228,247,263,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_68607dc9-a05e-412a-9c40-d118f5d97415.jpg 2,93,243,258,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001172.jpg 1245,110,1368,321,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001388.jpg 463,5,905,325,81 165,5,449,125,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001489.jpg 773,502,911,686,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_c3f2d511-18ff-4705-aa21-9dfda475211c.jpg 168,171,543,404,80 609,316,717,415,80 333,419,411,500,80 432,486,473,547,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00438.jpg 529,4,790,265,81 396,111,572,339,81 264,287,390,381,81 182,350,242,401,81 344,176,388,264,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_b7e8dfc7-508d-4e3d-a952-f854a04863ed.jpg 79,211,183,273,80 322,98,402,168,80 423,197,479,240,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(38).jpg 105,34,290,124,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000188.jpg 107,125,176,187,81 176,138,294,216,81 95,8,368,130,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00118.jpg 178,214,281,286,81 296,111,373,183,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fire_22323.jpg 96,140,314,390,80 461,14,546,192,80 587,150,666,382,80 705,156,772,369,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001660.jpg 205,21,877,448,81 335,452,547,791,81 702,454,898,753,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_204.jpg 175,207,209,228,80 240,214,270,232,80 269,193,296,229,80 416,231,426,250,80 427,220,437,238,80 478,216,499,242,80 501,209,512,226,80 474,259,494,271,80 430,253,452,261,80 442,243,464,257,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01260.jpg 263,2,624,166,81 186,164,417,340,81 66,244,183,375,81 1,305,63,364,81 188,341,262,410,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_100.jpg 215,6,379,58,81 219,63,325,100,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_20200713171941.jpg 218,185,366,294,80 380,268,404,291,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00454.jpg 438,28,490,83,81 329,81,501,233,81 447,205,549,336,81 458,390,495,439,81 379,233,447,299,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00769.jpg 954,655,1011,771,81 837,533,989,697,81 771,397,901,609,81 603,371,820,654,81 345,461,651,659,81 291,331,499,499,81 499,364,625,467,81 43,27,443,213,81 167,235,471,415,81 15,259,273,599,81 19,604,371,829,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_f8bb9f36-a7f8-43c1-97fa-d21f9f7836dc.jpg 1031,802,1884,1418,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_53c52f28-e7d4-458f-9362-d6bf9b9ec551.jpg 157,6,389,244,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_106.jpg 213,148,220,188,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_small(11).jpg 88,30,113,79,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001090.jpg 535,588,726,857,80 729,506,918,583,80 734,595,834,850,80 953,615,1141,961,80 1147,618,1350,969,80 532,419,718,567,80 940,298,1323,592,80 1323,18,1452,235,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00863.jpg 3,3,863,193,81 142,198,499,308,81 517,198,824,375,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001255.jpg 945,433,1041,503,80 977,386,1005,439,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_nederland-wildfire.jpg 4,300,1207,793,80 1325,514,1832,815,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_156.jpg 95,1,143,125,81 266,90,302,179,81 281,1,496,85,81 340,86,469,170,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00754.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000555.jpg 5,2,283,374,81 285,2,571,126,81 300,124,734,359,81 736,242,843,336,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00585.jpg 32,629,84,646,80 84,632,105,645,80 126,624,200,643,80 212,631,275,644,80 241,616,263,630,80 272,586,292,601,80 280,627,298,643,80 440,612,470,631,80 478,616,519,632,80 525,616,604,628,80 578,599,600,612,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_364.jpg 373,232,412,308,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_201307-restroom-fire-safety-fire1.jpg 222,9,429,262,80 121,193,175,317,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_9754d635-62a0-455f-b244-76346a6a656a.jpg 179,88,796,518,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001449.jpg 233,5,825,332,81 433,343,963,557,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_18657d3a-2eb2-40c1-b88a-a6d0b9c16dec.jpg 155,123,578,265,80 624,187,665,223,80 105,166,130,196,80 39,210,66,234,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_41.jpg 187,162,240,227,80 126,190,170,224,80 110,178,140,206,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(140).jpg 61,72,121,124,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000117.jpg 204,187,231,204,80 254,176,286,202,80 298,175,324,206,80 349,197,368,211,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_42dc6f71-4f5f-4a11-b6a6-394ca9490506.jpg 3,42,146,170,80 171,148,281,272,80 336,126,477,312,80 293,80,310,162,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_60.jpg 46,3,82,96,80 92,10,124,95,80 121,57,143,144,80 134,19,162,86,80 143,35,191,134,80 161,2,221,40,80 189,71,220,103,80 139,152,159,186,80 162,148,223,188,80 223,166,254,188,80 31,181,53,194,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_60.jpg 11,315,693,934,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_0588bf9b-4d8e-4bc2-bd80-10d6a4d7b4ab.jpg 202,84,386,237,80 425,207,490,250,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001323.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001265.jpg 121,1,215,119,81 390,1,487,92,81 207,242,267,363,81 390,228,476,343,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_Chimney-Fire3.jpg 389,247,491,340,80 69,334,121,401,80 1,385,24,429,80 277,320,314,371,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000459.jpg 373,606,685,757,81 679,568,913,761,81 553,417,671,603,81 655,103,1499,426,81 677,427,1133,565,81 929,567,1163,683,81 781,11,1475,101,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_995cc86e-591c-459b-87b8-851e5fef135a.jpg 134,259,451,369,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00133.jpg 596,12,798,432,81 2,315,158,526,81 412,293,488,482,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000155.jpg 230,291,280,353,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00320.jpg 5,63,179,170,81 182,52,239,147,81 115,11,168,59,81 3,175,141,214,81 247,61,280,90,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00918.jpg 357,1,500,198,81 213,1,359,133,81 292,136,358,177,81 146,79,207,136,81 70,111,109,144,81 29,158,81,195,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_3c1fde68-8648-4eba-a910-6d6dd9f76196.jpg 119,139,263,197,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_390.jpg 1,1,258,154,81 259,37,335,153,81 194,158,322,218,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_d202fd4a-5926-4e9a-83fb-3892b826a2b4.jpg 357,299,478,368,80 502,286,574,360,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001565.jpg 1,1,261,165,81 184,387,394,519,81 1,170,343,383,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_3ba8bd2c-fa62-4abb-8ca0-de37832a7119.jpg 25,115,116,191,80 165,165,400,204,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000980.jpg 59,236,99,266,80 105,232,122,264,80 197,189,214,225,80 124,281,138,297,80 126,207,152,232,80 84,265,91,283,80 81,287,92,302,80 99,263,110,282,80 193,222,204,238,80 483,295,500,324,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00256.jpg 527,230,613,407,81 477,69,605,230,81 374,4,478,229,81 265,7,373,201,81 140,1,263,152,81 8,8,134,125,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000321.jpg 861,218,1025,405,81 831,413,983,531,81 915,57,1161,213,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(34).jpg 49,96,128,172,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000751.jpg 298,381,386,485,81 386,307,508,395,81 392,395,546,487,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001372.jpg 1105,435,1331,661,81 1353,291,1879,684,81 1707,161,1915,283,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00422.jpg 64,9,354,204,81 362,6,461,108,81 8,210,171,243,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00033.jpg 102,616,369,813,81 496,693,721,813,81 451,408,728,609,81 114,413,368,615,81 197,186,502,396,81 511,196,724,401,81 213,9,501,182,81 513,13,719,194,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(189).jpg 106,7,202,192,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_150.jpg 51,1,257,45,81 86,46,317,81,81 98,81,149,154,81 153,83,210,165,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001444.jpg 815,11,1101,319,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001371.jpg 280,10,293,33,80 270,31,287,47,80 216,107,270,154,80 226,154,264,179,80 211,174,268,230,80 199,231,244,282,80 267,245,294,288,80 294,277,311,292,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001756.jpg 232,81,609,297,81 306,301,400,411,81 534,321,621,506,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01166.jpg 5,2,139,134,81 140,109,215,178,81 342,186,410,246,81 400,137,492,219,81 496,69,562,211,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000347.jpg 174,271,201,293,80 198,251,243,284,80 184,225,232,257,80 198,208,207,226,80 218,202,237,219,80 207,220,221,233,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_271.jpg 78,274,419,514,81 289,1,528,175,81 425,275,526,638,81 274,522,428,640,81 238,176,530,271,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_865be73b-2de8-41c3-bd67-f5ac76f51787.jpg 233,163,426,303,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00777.jpg 975,767,1111,909,81 753,610,943,815,81 828,487,1122,619,81 815,311,1139,495,81 667,189,972,353,81 391,185,713,375,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000143.jpg 204,356,220,399,80 255,374,278,408,80 238,399,263,423,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00098.jpg 44,72,55,85,80 88,158,124,167,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_35.jpg 124,122,193,173,80 356,119,420,186,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00706.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_83b1a6c4-6182-4d32-88bb-403182e559cc.jpg 359,104,596,272,80 116,355,213,399,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_42.jpg 470,236,632,416,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00261.jpg 441,4,597,54,81 289,10,417,45,81 145,75,272,108,81 234,21,283,74,81 176,49,227,73,81 135,109,185,140,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000033.jpg 187,5,298,74,81 515,1,641,129,81 297,5,506,229,81 191,80,296,257,81 320,266,452,437,81 525,147,663,392,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_285.jpg 33,3,213,58,81 41,61,206,138,81 57,138,158,206,81 160,138,260,204,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_COMEX-default.jpg 188,40,1213,765,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(173).jpg 133,61,238,142,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000041.jpg 306,342,362,385,80 362,335,406,372,80 398,372,426,426,80 428,394,464,425,80 459,363,488,418,80 419,334,454,364,80 511,306,542,346,80 542,299,577,336,80 580,277,626,330,80 629,276,685,329,80 669,218,694,270,80 686,263,721,308,80 691,320,721,370,80 640,359,726,388,80 531,372,566,406,80 494,388,526,406,80 556,348,575,371,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_small(93).jpg 53,15,69,44,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00529.jpg 118,386,295,558,81 272,260,514,380,81 298,391,508,565,81 512,338,629,565,81 629,418,740,583,81 742,517,808,625,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00439.jpg 902,422,1014,508,81 650,209,893,418,81 314,69,532,427,81 542,77,642,395,81 213,224,306,454,81 16,279,174,479,81 92,175,186,250,81 684,34,791,205,81 709,485,782,545,81 767,423,823,469,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_4.jpg 384,121,528,264,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001055.jpg 694,420,787,489,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000201.jpg 360,201,569,275,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_30.jpg 300,145,328,249,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_246.jpg 1,38,59,128,80 89,32,129,88,80 58,48,89,119,80 124,75,164,117,80 1,131,42,196,80 84,140,122,169,80 222,109,275,122,80 366,120,403,126,80 412,119,438,128,80 426,88,450,97,80 410,86,425,96,80 294,77,311,89,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001543.jpg 375,370,531,543,80 449,543,537,747,80 538,661,594,747,80 500,1,643,154,80 452,213,556,327,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001273.jpg 788,527,886,600,80 892,700,944,757,80 912,626,934,654,80 1303,814,1359,854,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_6bdcdc30-d501-42c7-aa52-d0d3a0c63923.jpg 59,67,260,174,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_107.jpg 271,1,500,82,81 231,84,500,140,81 178,139,500,172,81 443,177,488,206,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00812.jpg 142,94,250,165,80 267,220,302,260,80 173,206,197,216,80 171,180,200,198,80 120,207,135,223,80 236,202,245,227,80 244,176,252,196,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(48).jpg 98,75,193,141,80 125,141,177,159,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000342.jpg 781,471,937,579,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_76fff206-6f2a-4b0e-9ac6-2ab60df2035c.jpg 390,116,637,366,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(109).jpg 145,26,251,173,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_5e6dc211-ddf4-4ef9-bef1-ce0ed1c57ce4.jpg 4,204,360,430,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001443.jpg 326,389,453,508,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_3f24dafd-f3bf-4664-b80e-ecccdd0aef39.jpg 280,311,576,655,80 597,405,941,666,80 668,181,1046,317,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_40.jpg 15,60,778,960,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_small(91).jpg 196,34,215,67,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01138.jpg 8,2,214,171,81 7,177,104,319,81 104,247,206,328,81 168,174,228,239,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_3dd2a8fa-35f3-4985-8bfe-920063ea7f1b.jpg 14,126,60,164,80 194,113,364,172,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001708.jpg 368,262,406,322,80 388,314,500,382,80 439,210,518,318,80 404,274,443,316,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00677.jpg 25,12,191,102,81 190,9,357,102,81 41,105,286,207,81 103,210,326,304,81 108,308,282,360,81 184,366,259,401,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00066.jpg 49,2,124,39,81 65,42,134,70,81 84,71,142,99,81 91,102,153,123,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(25).jpg 129,1,230,64,80 237,4,308,115,80 225,128,258,151,80 159,128,196,151,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001324.jpg 332,507,352,547,80 334,564,361,601,80 302,586,314,603,80 269,587,291,605,80 236,577,269,602,80 225,600,255,615,80 195,585,218,605,80 185,603,203,617,80 143,581,164,603,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00553.jpg 56,6,217,78,81 278,7,385,103,81 34,85,244,193,81 41,188,268,322,81 266,258,304,320,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001030.jpg 403,356,477,427,80 485,344,551,386,80 455,448,528,519,80 357,515,418,568,80 427,540,482,589,80 401,489,452,534,80 582,487,636,527,80 482,547,527,597,80 163,511,198,542,80 408,439,452,468,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000422.jpg 699,304,863,455,81 935,429,1141,697,81 749,111,1223,304,81 895,7,1167,111,81 917,321,1319,437,81 1153,451,1431,729,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_277.jpg 102,2,166,39,81 208,3,342,16,81 238,18,286,46,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_37e3e2e7-0c63-4ead-a800-4370b82fc135.jpg 2,142,259,305,80 289,48,551,280,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(132).jpg 55,68,90,101,80 84,167,175,194,80 106,66,181,99,80 179,50,220,126,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fire109.jpg 456,429,743,610,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_5e848950-c0bc-4f1f-a62c-2a7f89d8d598.jpg 328,217,598,426,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00397.jpg 571,298,696,404,81 424,225,606,364,81 361,123,475,398,81 138,224,348,316,81 8,32,83,305,81 703,374,733,397,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_8665bbcd-c457-48b4-90fd-673dfb5f9b91.jpg 5,9,345,153,80 374,25,704,194,80 130,214,359,396,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001669.jpg 401,14,614,146,81 742,44,798,182,81 866,24,917,123,81 567,149,682,304,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_92f6f9f1-ad66-4e68-ae43-6d553aeb4c92.jpg 134,30,373,194,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_151.jpg 146,143,166,161,80 165,144,186,160,80 151,162,166,179,80 305,173,323,192,80 380,193,401,220,80 252,163,271,174,80 215,169,238,175,80 234,175,240,189,80 246,175,271,181,80 187,163,208,169,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000461.jpg 497,461,849,591,81 561,13,819,442,81 831,11,1133,592,81 1143,5,1669,618,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fire057.jpg 129,260,993,619,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_2CDDD98D00000578-3246257-image-a-30_1443454943645.jpg 292,49,600,551,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001251.jpg 1183,249,1328,277,80 1322,263,1368,372,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_01086.jpg 404,620,559,724,80 384,764,515,800,80 449,442,504,577,80 606,446,670,560,80 645,384,726,530,80 847,123,897,230,80 862,401,939,497,80 977,489,1042,548,80 961,456,992,487,80 342,253,401,300,80 425,333,460,386,80 705,434,705,435,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_01021.jpg 334,355,346,372,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000210.jpg 3,1,425,451,81 209,451,373,577,81 434,6,683,341,81 464,344,663,558,81 671,342,791,560,81 693,180,793,336,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001743.jpg 548,1,1113,189,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001442.jpg 760,169,969,413,81 833,14,1012,165,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_680c22f2-1748-461d-982f-42716ee44233.jpg 104,154,157,214,80 172,218,197,236,80 148,219,161,232,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_2a59c336-4aae-41ba-8d05-c9ce87efe2a2.jpg 346,247,639,453,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_16.jpg 103,135,222,281,81 169,2,638,75,81 324,75,638,238,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000352.jpg 425,3,715,221,81 719,1,1065,229,81 731,226,1019,363,81 907,367,1051,479,81 1023,227,1203,362,81 1057,387,1181,507,81 1345,153,1423,307,81 1203,273,1309,384,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_small(58).jpg 124,97,141,118,80 57,188,70,207,80 119,233,135,249,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001703.jpg 175,290,192,310,80 193,284,212,299,80 214,279,237,301,80 238,279,268,299,80 249,262,262,279,80 222,235,238,244,80 234,247,242,261,80 271,235,286,255,80 278,281,288,289,80 282,291,307,306,80 308,296,318,306,80 321,284,331,308,80 337,289,349,302,80 365,286,376,301,80 376,290,386,310,80 410,279,421,291,80 416,264,430,279,80 433,269,457,283,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_33f5317c-dea8-4aa7-9406-d747a382fc63.jpg 107,68,329,265,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_360312a2-8dbb-4a4f-af22-e975bab17d85.jpg 373,190,538,276,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00974.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00541.jpg 565,2,685,81,81 201,4,447,83,81 290,83,494,185,81 493,163,590,308,81 258,180,490,332,81 4,7,197,105,81 189,84,293,190,81 8,111,186,203,81 61,184,253,314,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000010.jpg 149,322,187,337,80 122,340,144,357,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001369.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00079.jpg 3,154,90,218,81 2,98,80,154,81 194,124,281,181,81 101,157,187,211,81 86,88,140,116,81 144,92,181,146,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_92e8dc39-1766-400b-bd17-8b7f23524a47.jpg 64,265,279,361,80 208,119,459,322,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000225.jpg 115,124,207,176,81 126,57,178,123,81 154,4,466,57,81 182,58,457,122,81 207,121,437,179,81 358,181,425,226,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001313.jpg 844,580,897,615,80 898,582,945,612,80 709,622,744,669,80 911,622,941,668,80 865,525,898,548,80 705,566,726,601,80 1622,598,1670,645,80 1612,645,1667,700,80 946,645,993,674,80 851,654,901,679,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001323.jpg 865,189,953,248,80 895,138,1017,235,80 928,78,1074,180,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001647.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_9cc4584c-9259-4ce1-a19d-2ea2f24ef211.jpg 31,146,231,236,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000402.jpg 133,169,271,214,81 305,136,421,217,81 240,4,495,61,81 354,65,454,136,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000366.jpg 885,335,939,431,81 939,269,1165,510,81 1565,37,1763,205,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00555.jpg 8,8,108,132,81 110,94,229,153,81 206,18,306,133,81 215,140,312,252,81 315,108,446,198,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_90c091d5-ab5d-4154-a9ee-7a4649c5c4fb.jpg 354,218,407,295,80 348,130,387,188,80 262,1,288,31,80 257,91,292,130,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_01054.jpg 43,18,88,69,80 27,88,86,141,80 79,126,105,161,80 139,42,171,111,80 159,65,216,148,80 192,143,250,234,80 235,113,290,189,80 269,166,365,254,80 375,210,437,269,80 412,262,462,294,80 438,279,488,351,80 507,341,569,401,80 555,386,610,459,80 472,457,515,525,80 662,449,688,474,80 321,133,356,168,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00686.jpg 315,181,401,259,80 365,281,472,355,80 474,318,556,377,80 54,274,97,296,80 84,239,111,268,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001612.jpg 1181,722,1216,761,80 1217,775,1272,803,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fire062.jpg 94,5,693,511,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01103.jpg 83,122,162,221,81 139,61,398,149,81 237,6,343,56,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_kjlkmnjkl;'.jpg 534,264,710,442,80 169,194,306,266,80 326,77,996,195,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_393.jpg 241,156,314,233,80 241,234,286,282,80 307,268,336,309,80 317,77,340,139,80 308,141,351,219,80 300,217,345,270,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_525f25f7-5a1a-4923-917e-675b88eeb421.jpg 192,34,235,250,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00475.jpg 388,13,764,249,81 253,104,426,337,81 195,260,269,365,81 489,260,787,672,81 304,410,485,759,81 2,673,150,1003,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(47).jpg 125,85,195,133,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_20200713172904.jpg 17,282,1131,615,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01216.jpg 2,1,496,145,81 58,145,240,222,81 308,145,498,228,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000090.jpg 236,1,291,129,81 296,2,367,62,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000562.jpg 107,293,238,356,81 167,183,410,284,81 201,96,597,183,81 415,191,576,299,81 348,1,590,95,81 621,6,752,251,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_4d1b8618-4a8d-4eda-8ae1-d43b7e3b6e33.jpg 227,170,322,231,80 403,153,481,228,80 378,264,493,311,80 4,175,168,224,80 104,250,146,274,80 2,283,32,301,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000138.jpg 89,5,259,74,81 133,76,211,143,81 123,142,206,193,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_333.jpg 5,4,1079,800,81 179,803,836,1034,81 556,1037,832,1166,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_318db113-d485-40f2-b88a-944aee2415a2.jpg 59,175,89,272,80 166,70,511,306,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00052.jpg 132,10,202,118,81 1,40,127,186,81 133,123,203,221,81 274,5,420,118,81 209,35,241,222,81 241,92,273,224,81 277,126,313,223,81 316,125,418,220,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001381.jpg 665,202,1091,560,80 598,1,865,207,80 448,184,663,428,80 1,1,597,182,80 19,188,445,563,80 456,427,647,556,80 272,567,405,692,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_d8a6db2e-e533-44d1-9f47-0989842b657d.jpg 179,30,627,367,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01212.jpg 1,1,449,97,81 219,97,365,237,81 151,156,216,225,81 369,101,409,281,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001738.jpg 309,78,733,337,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01213.jpg 19,5,80,131,81 79,1,268,76,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(79).jpg 105,4,206,126,80 257,90,321,121,80 216,27,252,49,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001685.jpg 369,487,499,537,81 502,282,581,349,81 406,438,536,485,81 456,393,545,434,81 499,347,570,393,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001172.jpg 75,208,551,571,81 107,571,401,977,81 87,13,599,201,81 839,5,1165,211,81 1395,9,1581,241,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00631.jpg 237,99,401,180,81 32,111,242,180,81 6,187,184,250,81 187,183,362,250,81 362,184,439,252,81 151,255,341,303,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001389.jpg 148,1,795,253,81 325,261,901,464,81 656,471,985,607,81 466,464,648,554,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001252.jpg 1185,344,1294,392,80 1319,388,1356,460,80 1306,463,1360,485,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_fire022.jpg 550,202,675,425,80 582,430,622,457,80 387,399,453,440,80 829,423,882,468,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000382.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(47).jpg 97,74,183,128,80 121,139,178,163,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_181a2007-6f90-443e-a329-0c3d561d83a5.jpg 4,3,615,213,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001030.jpg 5,4,448,352,81 447,212,554,341,81 14,351,251,572,81 253,356,381,452,81 538,371,634,451,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000754.jpg 486,1,957,119,81 657,125,969,343,81 657,357,962,523,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000098.jpg 176,1,255,51,80 237,65,256,100,80 195,97,235,120,80 219,82,236,98,80 193,121,222,151,80 168,195,187,240,80 188,225,201,242,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000075.jpg 124,318,156,373,80 159,332,175,347,80 161,351,179,367,80 261,358,269,397,80 324,360,339,401,80 356,362,393,410,80 406,337,422,375,80 435,368,456,384,80 464,375,487,387,80 492,344,530,391,80 534,338,578,393,80 586,341,664,394,80 669,306,701,360,80 692,303,779,407,80 766,274,842,331,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001416.jpg 937,1,1679,211,81 173,186,925,377,81 937,219,1373,367,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_c85664ca-3f55-428a-aa44-aec7385d3663.jpg 50,213,589,701,80 756,316,1186,697,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000998.jpg 210,205,230,236,80 219,241,235,266,80 240,240,250,264,80 194,203,211,213,80 214,102,239,126,80 240,113,263,132,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(78).jpg 61,26,155,76,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000979.jpg 221,172,244,194,80 212,192,236,224,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001267.jpg 144,165,245,297,81 170,92,330,163,81 333,1,388,144,81 396,1,786,78,81 597,72,693,131,81 552,170,586,249,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_396f209c-9f89-4871-9127-bd64e14b13e5.jpg 12,29,94,66,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00788.jpg 275,143,320,160,80 326,151,375,163,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000442.jpg 823,8,1043,403,81 895,415,1165,543,81 1047,318,1173,407,81 1051,11,1519,317,81 1173,317,1329,519,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000064.jpg 176,387,198,428,80 170,434,189,452,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00317.jpg 199,136,516,259,81 517,114,626,282,81 789,105,906,313,81 627,146,790,285,81 1097,85,1189,295,81 904,140,1096,296,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_01051.jpg 288,292,364,309,80 313,277,330,294,80 178,291,192,298,80 203,290,215,298,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001389.jpg 840,720,942,791,80 941,763,966,827,80 935,830,965,869,80 942,865,965,892,80 969,882,1012,930,80 818,621,876,667,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00834.jpg 97,1,363,105,81 112,108,376,175,81 6,121,105,150,81 231,191,268,270,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00525.jpg 883,12,1158,227,81 529,15,877,231,81 7,11,523,247,81 5,258,157,402,81 190,261,580,428,81 604,255,792,508,81 806,243,1103,494,81 289,446,460,587,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001084.jpg 243,1,857,529,81 857,264,1097,451,81 849,463,997,615,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001716.jpg 159,93,691,537,81 703,11,1323,435,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_150389db-ed76-48f2-807b-24f0abf65bca.jpg 286,191,505,436,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000115.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000996.jpg 9,1,161,97,81 332,164,433,226,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001692.jpg 156,181,168,220,80 179,192,190,229,80 195,192,211,231,80 260,184,274,226,80 280,186,289,206,80 274,186,279,207,80 276,180,291,184,80 231,216,243,232,80 172,173,187,178,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001533.jpg 559,102,783,345,81 879,301,1065,394,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000774.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000811.jpg 255,5,426,80,81 153,43,402,235,81 89,231,254,480,81 2,370,112,461,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_0f57e1e6-bbc2-43bb-a86f-05c42f6ea9d4.jpg 187,204,817,617,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_7ab8d12a-93f8-4c9c-a024-216541025203.jpg 229,181,319,278,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000084.jpg 189,1,238,63,81 262,3,409,106,81 326,104,423,206,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00717.jpg 170,9,278,57,81 180,64,279,103,81 193,124,259,168,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_b016b0a9-3c66-4326-95e3-4e8a43b7e732.jpg 313,204,461,351,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001342.jpg 77,328,304,403,81 139,225,227,316,81 200,91,321,216,81 347,343,503,409,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001256.jpg 883,491,919,525,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01010.jpg 621,367,738,419,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000274.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(21).jpg 87,3,161,81,80 149,11,223,79,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00323.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00796.jpg 327,5,798,179,81 210,183,670,317,81 107,240,209,380,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_138a6175-1bcd-435d-b742-fdfe35fea9a2.jpg 181,258,413,377,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001135.jpg 671,9,1091,439,81 855,437,999,635,81 1063,238,1247,618,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_01252.jpg 235,113,281,161,80 239,192,258,209,80 233,244,243,255,80 245,245,256,283,80 258,263,274,280,80 274,264,300,282,80 34,265,51,277,80 74,266,84,278,80 103,254,118,260,80 184,259,199,281,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_3.jpg 163,115,187,173,80 187,118,213,173,80 168,178,185,212,80 206,189,223,242,80 229,117,262,201,80 280,129,301,161,80 228,202,252,222,80 229,220,247,234,80 238,234,260,242,80 480,172,500,197,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire(3).jpg 250.0,2.82,610.3,325.11,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_c9e0dbf4-75b1-4cf5-8c9d-e5b59d6ce4b7.jpg 169,214,217,267,80 339,179,403,308,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000426.jpg 225,241,477,551,81 209,5,579,197,81 589,7,1231,203,81 475,233,853,518,81 855,226,1123,593,81 1133,293,1485,570,81 1002,599,1442,726,81 1183,723,1453,891,81 1309,891,1465,951,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_c031045c-105f-41cf-8595-e8d0980fbd66.jpg 6,1,992,694,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000416.jpg 585,325,845,599,81 750,605,1007,730,81 752,49,1007,315,81 847,318,1903,592,81 1359,592,1699,771,81 1015,101,1195,321,81 1205,13,1579,310,81 1593,39,1705,311,81 1717,141,1913,310,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001299.jpg 258,249,327,327,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00247.jpg 95,505,241,689,81 252,509,375,709,81 373,495,582,697,81 116,415,554,503,81 1,9,237,339,81 252,7,455,329,81 471,1,669,199,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_6d2fdc38-8cb6-4d15-a1c4-5554f461ce89.jpg 2,142,177,335,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000618.jpg 665,521,755,571,81 757,403,909,555,81 861,315,1121,396,81 1007,249,1723,317,81 1127,316,1657,429,81 1083,1,1799,245,81 1809,73,1905,191,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001057.jpg 599,447,728,637,80 704,527,797,691,80 809,572,883,632,80 891,532,962,616,80 894,624,950,669,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001599.jpg 314,45,613,163,81 113,173,619,282,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001601.jpg 497,276,579,375,80 504,374,587,492,80 552,493,583,591,80 402,522,446,650,80 356,637,465,698,80 306,663,354,681,80 465,665,569,710,80 511,610,580,665,80 506,56,562,279,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_144.jpg 2,1,350,138,81 66,137,231,176,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000117.jpg 117,2,498,61,81 145,61,494,173,81 342,175,498,246,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(20).jpg 107,95,153,120,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001056.jpg 595,426,698,492,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000303.jpg 537,763,677,853,81 671,660,881,847,81 885,686,1129,835,81 1057,559,1523,685,81 1175,451,1347,560,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000953.jpg 206,1,331,82,81 340,70,400,112,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(32).jpg 72,13,147,161,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00287.jpg 126,4,348,135,81 75,4,122,96,81 351,4,424,51,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(36).jpg 121,58,219,142,80 178,139,223,163,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001062.jpg 433,1,1497,317,81 987,322,1493,605,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_eb698bc8-75d5-4960-8357-d06153e0b193.jpg 292,1,496,276,80 2,62,153,280,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00522.jpg 124,11,663,199,81 165,199,551,329,81 259,335,519,457,81 307,461,521,637,81 365,635,513,763,81 387,766,501,898,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001548.jpg 180,7,552,235,81 66,165,171,318,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_33ff1f68-1fba-4d1d-8245-fbf977ffc3d8.jpg 141,299,172,347,80 247,100,614,340,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000894.jpg 62,3,397,212,81 98,216,331,369,81 28,372,280,485,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00187.jpg 50,250,103,280,80 84,315,109,336,80 96,341,134,365,80 76,350,97,369,80 71,374,107,394,80 106,365,134,384,80 137,360,175,391,80 506,65,518,80,80 372,279,386,298,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001131.jpg 891,2,1707,372,81 1145,371,1503,543,81 1279,543,1551,738,81 1559,367,1759,459,81 137,213,351,620,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00235.jpg 133,330,165,380,80 99,340,133,368,80 213,400,250,455,80 250,383,294,456,80 542,89,600,152,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_816e8bf2-5b43-4016-a7f7-64964c8dc3aa.jpg 188,34,214,150,80 128,54,146,204,80 175,180,197,232,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000701.jpg 14,2,978,630,81 14,642,714,1171,81 218,1174,702,1398,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(103).jpg 76,20,183,78,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(35).jpg 161,66,248,146,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001250.jpg 671,280,881,533,81 889,184,1259,544,81 971,545,1219,635,81 1025,13,1293,201,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_36.jpg 333,133,382,195,80 397,78,459,170,80 431,26,486,118,80 276,178,285,200,80 350,20,383,52,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_56.jpg 183,101,269,205,80 211,61,251,98,80 72,127,126,287,80 128,169,149,235,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01043.jpg 5,2,110,231,81 118,3,403,206,81 403,1,547,61,81 404,65,470,173,81 224,214,329,267,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00985.jpg 196,314,229,349,80 329,316,342,333,80 305,320,326,333,80 283,357,326,379,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00134.jpg 1657,10,1975,817,81 1330,28,1651,1081,81 922,1,1327,586,81 481,1,928,487,81 415,790,1282,1165,81 298,25,478,400,81 25,7,235,286,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_88073a6d-8aed-4272-988d-128b52052451.jpg 215,96,458,487,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00271.jpg 814,415,896,509,81 755,428,798,483,81 672,301,769,432,81 413,44,591,360,81 594,124,658,285,81 315,44,408,227,81 229,5,311,187,81 110,37,190,130,81 595,322,637,396,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_12d657fc-66f3-413f-956d-e37f52bb4c38.jpg 270,445,430,516,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_c24416e2-fa10-4755-8b48-0e95f8b1c9c2.jpg 307,406,354,455,80 456,459,498,493,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001654.jpg 12,15,444,131,81 419,199,551,371,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000743.jpg 7,1,335,439,81 117,433,406,621,81 342,123,517,449,81 371,557,475,665,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_2daa206d-f8cf-4029-89b3-a3f8100a93dd.jpg 33,276,92,333,80 131,280,197,357,80 204,270,306,360,80 317,268,487,376,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001039.jpg 940,678,977,762,80 917,857,966,914,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_burning-charcoal-briquettes.jpg 177,336,307,522,80 347,312,791,830,80 831,172,1065,492,80 1293,358,1721,770,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001184.jpg 707,3,1177,462,81 1181,130,1323,469,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_421adf54-bcd9-4340-8b02-cf3e1e6ebaac.jpg 22,3,253,209,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_1_13.jpg 92,334,395,508,80 704,241,794,329,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(171).jpg 51,17,128,138,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000101.jpg 73,13,129,108,81 130,4,246,102,81 323,5,498,116,81 288,92,362,253,81 369,114,498,186,81 260,245,334,292,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000510.jpg 71,208,265,513,81 86,4,722,202,81 579,340,755,443,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_00130.jpg 265,326,308,344,80 184,325,229,338,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_95d1ea1b-bd89-4069-b3c6-1401b8c875e1.jpg 225,354,320,401,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_7ea920e9-f57d-4293-a3b1-5ff68b85b7e1.jpg 120,215,365,280,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00332.jpg 878,422,998,530,81 706,268,797,512,81 624,321,693,449,81 6,71,125,249,81 540,185,630,225,81 807,354,958,416,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001017.jpg 5,193,527,305,81 277,59,1047,205,81 553,219,1063,512,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_23.jpg 32,334,168,460,81 185,265,353,450,81 1,123,68,227,81 73,168,176,238,81 176,103,355,234,81 303,2,653,102,81 353,100,680,232,81 680,151,840,233,81 355,234,840,439,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000055.jpg 152,238,193,259,80 201,219,221,239,80 182,236,204,252,80 244,235,281,253,80 287,216,310,251,80 314,195,337,240,80 333,250,430,299,80 429,277,471,297,80 305,246,331,300,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000275.jpg 68,2,225,99,81 232,2,355,139,81 237,139,356,206,81 253,219,350,279,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_000871.jpg 82,707,253,824,81 197,595,547,695,81 249,703,437,807,81 256,366,683,588,81 353,205,688,365,81 586,91,690,205,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_01048.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_092fb11b-48ee-4c6a-9620-b29899eac8a8.jpg 126,177,201,230,80 83,236,101,259,80 111,258,145,295,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00920.jpg
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_383.jpg 198,1,243,39,81 208,39,244,133,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_000935.jpg 250,72,289,114,80 289,81,315,118,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_eff6024d-726d-44cc-b943-a73174e23966.jpg 36,296,77,346,80 249,293,283,363,80 302,265,368,360,80 351,394,390,423,80 388,431,420,450,80 642,388,684,457,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_a2d33cb8-dae5-4b37-bddd-bde874580ebc.jpg 1,192,188,310,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_363.jpg 138,284,199,353,80 170,355,220,411,80 109,327,139,374,80 90,359,115,376,80 62,371,91,389,80 41,358,65,392,80 334,242,374,274,80 357,269,384,338,80 387,284,439,334,80 373,336,440,384,80 390,383,482,498,80 482,372,520,421,80 519,357,558,509,80 557,381,611,496,80 612,412,636,493,80 671,168,708,195,80 914,36,949,66,80 945,13,987,36,80 1001,17,1024,39,80 786,135,807,179,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001664.jpg 17,10,577,477,81 595,486,687,709,81 725,690,913,795,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_01062.jpg 158,7,404,237,81 55,249,405,555,81 67,560,421,820,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001418.jpg 1738,303,1920,444,80 1747,439,1792,490,80 71,195,154,261,80 185,114,313,192,80 247,243,304,327,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_img(119).jpg 93,79,150,111,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00028.jpg 194,5,247,87,81 141,7,196,81,81 88,1,139,73,81 19,1,86,68,81 21,69,69,104,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_small(101).jpg 54,97,71,116,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_detection_pic(59).jpg 60,41,115,156,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_00602.jpg 267,68,365,202,81 149,69,271,136,81 89,143,270,225,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_001663.jpg 327,5,793,299,81 805,174,1309,411,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_001754.jpg 300,580,314,620,80 459,588,488,634,80 313,600,330,614,80
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\smoke_fire_302.jpg 67,94,197,168,81 88,163,164,300,81 211,101,311,158,81
+C:\Users\Administrator\Desktop\yolov8-pytorch-master\VOCdevkit\VOC2007\JPEGImages\fire_fire_237.jpg 262,131,298,171,80 278,108,304,132,80 290,78,308,107,80
