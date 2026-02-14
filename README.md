@@ -1,3 +1,3 @@
 # SafeCommunity-AI
-这是一个利用yolo，yolo_pose，lstm，双流VIT，奖惩机制利用公开数据集制作的一套全方位智能监控系统，旨在实时监控社区发生的各种异常情况，包括但不限于常见coco80种、烟、火，利用yolopose识别的人体各种姿势、各种长时许异常行为，偷盗，打架，抢劫等等，如果你需要给你的社区制作一套监控系统用我的代码是不二之选，另外因为版权和一些原因，我的参数和使用数据集无法公开，如果有需要请联系我
-ps：readme我会在26年三月前详细发布并对代码和注释进行详细解释，需要注意的是目前里面的代码使用的是我的绝对路径，大家使用是可以让code软件一键更改。
+This intelligent monitoring system is built with YOLO, YOLO_pose, LSTM, two-stream VIT, and a reward-punishment mechanism (based on public datasets). It enables real-time monitoring of various community abnormal situations, covering 80 common COCO categories, smoke, fire, human postures (via YOLOpose), long-term abnormal behaviors, theft, fighting, robbery, etc.
+Ideal for community monitoring needs, the code features one-click modification of absolute paths (currently using the developer’s paths) for easy adaptation. Note that parameters and datasets are not publicly available due to copyright issues (contact the developer if needed). A detailed README (with full code explanations and comments) will be released in March 2026.
