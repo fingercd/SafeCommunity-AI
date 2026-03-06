@@ -1,0 +1,19 @@
+torch
+torchvision
+opencv-python
+numpy
+tqdm
+Pillow
+
+# ViT/Video Transformer embeddings
+transformers
+PyYAML
+
+# (后续 KMeans + One-Class SVM 会用到)
+scikit-learn
+joblib
+
+# 光流与过滤（阶段一、二）
+# 预计算光流默认用 OpenCV Farneback（已由 opencv-python 提供）
+# 可选 FlowNet2：pip install 后从 https://github.com/NVIDIA/flownet2-pytorch 安装
+scikit-image

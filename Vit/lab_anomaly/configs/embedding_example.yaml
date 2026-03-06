@@ -1,0 +1,25 @@
+dataset_root: lab_dataset
+labels_csv: lab_dataset/labels/video_labels.csv
+out_dir: lab_dataset/derived/embeddings
+enable_filtering: false   # 关闭 SSIM 过滤，让 MIL 排序损失学会忽略静态 segment
+enable_flow_filter: false
+
+encoder:
+  model_name: MCG-NJU/videomae-base
+  device: auto   # auto/cuda/cpu
+  use_half: true
+  use_dual_stream: true     # RGB + 预计算光流双流（1536 维），光流从 flows_dir 加载，不实时计算
+  fusion_method: concat
+
+flows:
+  flows_dir: lab_dataset/derived/optical_flows
+
+sampling:
+  clip_len: 16
+  frame_stride: 2
+  num_clips_per_video: 16
+
+runtime:
+  batch_size: 16
+  limit: 0
+
