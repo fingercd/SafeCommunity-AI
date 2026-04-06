@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多路监控</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: sans-serif; margin: 12px; background: #1a1a1a; color: #e0e0e0; }
+    h1 { font-size: 1.2rem; margin-bottom: 12px; }
+    .toolbar { margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .toolbar input, .toolbar button { padding: 6px 10px; }
+    .toolbar input[type="text"] { width: 280px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 12px; }
+    .card { border: 1px solid #444; border-radius: 6px; overflow: hidden; background: #252525; }
+    .card h3 { margin: 0; padding: 8px 10px; font-size: 0.95rem; background: #333; }
+    .card .video-wrap { position: relative; background: #000; min-height: 240px; }
+    .card .video-wrap img { width: 100%; height: auto; display: block; vertical-align: top; }
+    .card .status { padding: 8px 10px; font-size: 0.85rem; color: #aaa; white-space: pre-wrap; word-break: break-all; max-height: 120px; overflow-y: auto; }
+    .card .status.agent { color: #b0e0b0; }
+    .card .status.error { color: #f88; }
+    .card .status .status-agent-line { color: #f88; }
+    .card .actions { padding: 6px 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .card .actions button { padding: 4px 10px; font-size: 0.85rem; cursor: pointer; }
+    .card .actions button.stop { background: #c44; color: #fff; border: none; border-radius: 4px; }
+    .card .actions button.start { background: #4a4; color: #fff; border: none; border-radius: 4px; }
+    .card .actions button.del { background: #555; color: #fff; border: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>多路 RTSP 监控（YOLO + ViT + Agent 复核）</h1>
+  <div class="toolbar">
+    <input type="text" id="rtsp_url" placeholder="RTSP 地址" />
+    <input type="text" id="stream_name" placeholder="名称（可选）" />
+    <button type="button" id="add_btn">添加流</button>
+  </div>
+  <div class="grid" id="grid"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "streams": [
+    {
+      "id": "886bc7fa",
+      "name": "监控1",
+      "rtsp_url": "rtsp://admin:Qizitong666@192.168.1.91:554/stream1",
+      "enabled": true,
+      "resize_width": 640,
+      "resize_height": 480,
+      "vit_threshold": 0.6,
+      "agent_enabled": true,
+      "yolo_confidence": 0.5
+    }
+  ]
+}
