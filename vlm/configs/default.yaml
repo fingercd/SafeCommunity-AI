@@ -1,0 +1,124 @@
+# =============================================================================
+# 9B 大模型正式训练配置（Qwen3.5-VL-9B + QLoRA）
+# PyCharm：工作目录设为项目根 vlm，解释器选 conda env（如 yolovv），
+# 依次运行 pycharm/step01_… → step05_…，无命令行参数。
+# =============================================================================
+
+model:
+  # 本地 9B 基座（目录内含 config.json、模型权重等）
+  name_or_path: "C:/Users/Administrator/Desktop/moniter/vlm/Qwen"
+  # 备用 2B（仅当 lora_small: true 且 train 未传 --model_path 时使用）
+  name_or_path_2b: "C:/Users/Administrator/Desktop/moniter/vlm/Qwen 3.5 2b"
+  lora_small: false
+  lora_r: 32
+  lora_alpha_small: 64
+  use_4bit: true
+  bnb_4bit_compute_dtype: "bfloat16"
+  bnb_4bit_quant_type: "nf4"
+  bnb_4bit_use_double_quant: true
+
+data:
+  # build_dataset 未传 --source 时用 ecva（按 video_id 划分 + normal 抽样）；旧流水线写 legacy
+  build_dataset_source: ecva
+  ecva_root: "C:/Users/Administrator/Desktop/moniter/vlm/ECVA"
+  # false：ECVA 全量 + Normal 按 normal_ucf_max（prepare 默认 800）；true 时用下面 smoke 数字做小样本
+  use_smoke_clip_limits: false
+  smoke_ecva_max_records: 40
+  smoke_normal_ucf_max: 16
+  ecva_metadata: "data/processed/ecva_metadata.jsonl"
+  ecva_clips_dir: "data/processed/ecva_clips"
+  ecva_clips_metadata: "data/processed/ecva_clips_metadata.jsonl"
+  # generate_annotations --only_normal 输出；build_dataset ecva 会按 clip_id 合并进 normal 样本
+  normal_annotations_path: "data/processed/annotations_normal.jsonl"
+  # ucf_normal 从「注释池∩元数据」中随机保留条数；0=不抽样（元数据里有多少用多少）
+  normal_train_sample_size: 800
+  # 不填则与下方 seed 相同
+  normal_sample_seed: 42
+  ucf_video_root: "C:/Users/Administrator/Desktop/Vit/lab_dataset/raw_videos"
+  ucf_normal_root: "C:/Users/Administrator/Desktop/Vit/lab_dataset/raw_videos/normal"
+  clips_dir: "data/processed/clips"
+  clips_metadata: "data/processed/clips_metadata.jsonl"
+  annotations_path: "data/processed/annotations.jsonl"
+  train_json: "data/processed/train.json"
+  val_json: "data/processed/val.json"
+  test_json: "data/processed/test.json"
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+  seed: 42
+
+clips:
+  num_clips_per_video: 8
+  # 每 clip 采样帧数；越大显存越高（与 train 一致）
+  clip_len: 12
+  # ECVA A3 moment 按固定秒长拆子 clip（<=8s 1 个、>8～16s 2 个……）
+  ecva_seconds_per_clip: 8
+  frame_stride: 2
+  # 单帧像素乘积 w*h 上限（默认 720*720）；仅当实际像素数大于该值时等比缩小至乘积严格小于该值；0=不限制
+  max_pixel_area: 518400
+  # 训练时 Processor 的视觉 token 预算（每帧最大/最小像素数）；越小显存越省、视觉细节越少
+  # 102400 = 320×320
+  train_max_pixels: 102400
+  train_min_pixels: 3136
+
+lora:
+  # r / alpha：秩与缩放；9B 常用 r=64；过小欠拟合、过大易过拟合且占显存
+  r: 64
+  lora_alpha: 128
+  lora_dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+training:
+  output_dir: "outputs/qlora"
+  num_train_epochs: 5
+  per_device_train_batch_size: 1
+  # 梯度累积步数；有效 batch ≈ 1×8=8，只增训练稳定度、不线性减显存峰值
+  gradient_accumulation_steps: 8
+  learning_rate: 1.0e-4
+  lr_scheduler_type: "cosine"
+  warmup_ratio: 0.05
+  weight_decay: 0.01
+  bf16: true
+  gradient_checkpointing: true
+  max_grad_norm: 1.0
+  # 超长易 OOM；省显存可 1024
+  max_seq_length: 1024
+  # 验证：no | epoch | steps。epoch=每个 epoch 整集验证，耗时常接近再跑一遍 val，训练会明显变慢
+  eval_strategy: no
+  # eval_strategy 为 steps 时生效（例如每 500 步验证一次，比每 epoch 全时验证省时间）
+  eval_steps: 500
+  per_device_eval_batch_size: 1
+  # 第 0 step 也打一条 log，图表从起点开始
+  logging_first_step: true
+  # 8bit 分页优化器：显存比默认 AdamW 省 ~75% 优化器状态（约 1-2GB）
+  # 若 Windows 下 paged 不兼容，可退回 "adamw_8bit" 或 "adamw_torch"
+  optim: "paged_adamw_8bit"
+  # Ampere+ GPU 启用 TF32 矩阵运算，免费提速 ~10-15%
+  tf32: true
+  logging_steps: 10
+  # 每 100 step 额外补齐一个可直接 evaluate 的完整 LoRA checkpoint
+  save_steps: 100
+  save_total_limit: 3
+  # 实验追踪：[] 关闭；启用 SwanLab 请 pip install swanlab，并建议 transformers>=4.50
+  report_to: [swanlab]
+  # run_name: "qwen35vl-ecva-qlora"
+  # 可选：写入环境变量（亦可直接在系统 / PyCharm 里配置）
+  # swanlab_project: ""
+  # swanlab_workspace: ""
+
+inference:
+  confidence_threshold: 0.7
+  consecutive_anomaly_clips: 2
+  max_tokens: 256
+  temperature: 0.0
+  # evaluate.py 未指定 --batch_size 时使用；9B 视频建议 1～2
+  eval_batch_size: 16

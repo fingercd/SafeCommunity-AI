@@ -1,0 +1,45 @@
+{
+  "n_samples": 475,
+  "n_skipped": 0,
+  "binary_metrics": {
+    "accuracy": 0.7852631578947369,
+    "auc": 0.8530259365994236,
+    "macro_precision": 0.7782608695652173,
+    "macro_recall": 0.8530259365994236,
+    "macro_f1": 0.7713932507926922,
+    "precision": 1.0,
+    "recall": 0.7060518731988472,
+    "f1": 0.8277027027027027
+  },
+  "text_similarity": {
+    "rouge_l": 0.0,
+    "bertscore_f1": 0.0,
+    "n_with_reference": 347,
+    "ecva_explanation_vector_cosine_mean": 0.5581970933326593,
+    "n_with_ecva_text": 230
+  },
+  "auc": 0.8530259365994236,
+  "accuracy": 0.7852631578947369,
+  "json_compliance_rate": 0.4842105263157895,
+  "fpr_at_95_tpr": 1.0,
+  "fpr_at_tpr_levels": {
+    "fpr_at_tpr_0.5": 0.0,
+    "fpr_at_tpr_0.7": 0.0,
+    "fpr_at_tpr_0.8": 0.0,
+    "fpr_at_tpr_0.9": 1.0,
+    "fpr_at_tpr_0.95": 1.0
+  },
+  "run_seconds": 1077.98,
+  "clips_per_sec": 0.4406,
+  "run_config": {
+    "model_tag": "single",
+    "base_model_path": "C:/Users/Administrator/Desktop/moniter/vlm/Qwen",
+    "adapter_path": "C:\\Users\\Administrator\\Desktop\\moniter\\vlm\\outputs\\qlora\\checkpoint-100",
+    "use_4bit": true,
+    "batch_size": 16,
+    "max_new_tokens": 160,
+    "bertscore_lang": "en",
+    "predictions_jsonl": "C:\\Users\\Administrator\\Desktop\\moniter\\vlm\\outputs\\finetuned_report_predictions.jsonl",
+    "predictions_json": "C:\\Users\\Administrator\\Desktop\\moniter\\vlm\\outputs\\finetuned_report_predictions.json"
+  }
+}

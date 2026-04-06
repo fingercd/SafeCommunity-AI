@@ -1,0 +1,22 @@
+# VLM 安防视频异常检测 - Qwen3.5-9B 全流程
+# RTX 4090 24GB 单卡
+
+torch>=2.3.0
+transformers>=5.2.0
+peft>=0.14.0
+bitsandbytes>=0.43.0
+accelerate>=0.30.0
+vllm>=0.8.0
+qwen-vl-utils>=0.0.14
+decord>=0.6.0
+opencv-python>=4.8.0
+Pillow>=10.0.0
+pyyaml>=6.0
+tqdm>=4.66.0
+scikit-learn>=1.3.0
+numpy>=1.24.0
+scipy>=1.11.0
+openpyxl>=3.1.0
+rouge-score>=0.1.2
+bert-score>=0.3.13
+swanlab>=0.4.0

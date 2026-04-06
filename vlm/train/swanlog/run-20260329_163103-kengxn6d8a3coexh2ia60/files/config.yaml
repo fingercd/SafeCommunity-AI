@@ -1,0 +1,689 @@
+FRAMEWORK:
+  desc: ''
+  sort: 0
+  value: 🤗transformers
+_name_or_path:
+  desc: ''
+  sort: 18
+  value: C:/Users/Administrator/Desktop/moniter/vlm/Qwen
+accelerator_config:
+  desc: ''
+  sort: 104
+  value:
+    dispatch_batches: null
+    even_batches: true
+    gradient_accumulation_kwargs: null
+    non_blocking: false
+    split_batches: false
+    use_seedable_sampler: true
+adam_beta1:
+  desc: ''
+  sort: 35
+  value: 0.9
+adam_beta2:
+  desc: ''
+  sort: 36
+  value: 0.999
+adam_epsilon:
+  desc: ''
+  sort: 37
+  value: 1.0e-08
+architectures:
+  desc: ''
+  sort: 14
+  value:
+  - Qwen3_5ForConditionalGeneration
+auto_find_batch_size:
+  desc: ''
+  sort: 57
+  value: false
+average_tokens_across_devices:
+  desc: ''
+  sort: 40
+  value: true
+batch_eval_metrics:
+  desc: ''
+  sort: 81
+  value: false
+bf16:
+  desc: ''
+  sort: 43
+  value: true
+bf16_full_eval:
+  desc: ''
+  sort: 45
+  value: false
+chunk_size_feed_forward:
+  desc: ''
+  sort: 12
+  value: 0
+data_seed:
+  desc: ''
+  sort: 102
+  value: null
+dataloader_drop_last:
+  desc: ''
+  sort: 106
+  value: false
+dataloader_num_workers:
+  desc: ''
+  sort: 107
+  value: 20
+dataloader_persistent_workers:
+  desc: ''
+  sort: 109
+  value: false
+dataloader_pin_memory:
+  desc: ''
+  sort: 108
+  value: true
+dataloader_prefetch_factor:
+  desc: ''
+  sort: 110
+  value: null
+ddp_backend:
+  desc: ''
+  sort: 118
+  value: null
+ddp_broadcast_buffers:
+  desc: ''
+  sort: 117
+  value: null
+ddp_bucket_cap_mb:
+  desc: ''
+  sort: 116
+  value: null
+ddp_find_unused_parameters:
+  desc: ''
+  sort: 115
+  value: null
+ddp_timeout:
+  desc: ''
+  sort: 119
+  value: 1800
+debug:
+  desc: ''
+  sort: 123
+  value: []
+deepspeed:
+  desc: ''
+  sort: 122
+  value: null
+disable_tqdm:
+  desc: ''
+  sort: 66
+  value: false
+do_eval:
+  desc: ''
+  sort: 126
+  value: false
+do_predict:
+  desc: ''
+  sort: 127
+  value: false
+do_train:
+  desc: ''
+  sort: 125
+  value: false
+dtype:
+  desc: ''
+  sort: 11
+  value: bfloat16
+enable_jit_checkpoint:
+  desc: ''
+  sort: 87
+  value: false
+eval_accumulation_steps:
+  desc: ''
+  sort: 79
+  value: null
+eval_delay:
+  desc: ''
+  sort: 73
+  value: 0
+eval_do_concat_batches:
+  desc: ''
+  sort: 77
+  value: true
+eval_on_start:
+  desc: ''
+  sort: 76
+  value: false
+eval_steps:
+  desc: ''
+  sort: 72
+  value: null
+eval_strategy:
+  desc: ''
+  sort: 71
+  value: 'no'
+eval_use_gather_object:
+  desc: ''
+  sort: 78
+  value: false
+fp16:
+  desc: ''
+  sort: 44
+  value: false
+fp16_full_eval:
+  desc: ''
+  sort: 46
+  value: false
+fsdp:
+  desc: ''
+  sort: 120
+  value: []
+fsdp_config:
+  desc: ''
+  sort: 121
+  value:
+    min_num_params: 0
+    xla: false
+    xla_fsdp_grad_ckpt: false
+    xla_fsdp_v2: false
+full_determinism:
+  desc: ''
+  sort: 100
+  value: false
+gradient_accumulation_steps:
+  desc: ''
+  sort: 39
+  value: 8
+gradient_checkpointing:
+  desc: ''
+  sort: 48
+  value: false
+gradient_checkpointing_kwargs:
+  desc: ''
+  sort: 49
+  value: null
+greater_is_better:
+  desc: ''
+  sort: 97
+  value: null
+hub_always_push:
+  desc: ''
+  sort: 93
+  value: false
+hub_model_id:
+  desc: ''
+  sort: 91
+  value: null
+hub_private_repo:
+  desc: ''
+  sort: 90
+  value: null
+hub_revision:
+  desc: ''
+  sort: 94
+  value: null
+hub_strategy:
+  desc: ''
+  sort: 92
+  value: every_save
+hub_token:
+  desc: ''
+  sort: 89
+  value: <HUB_TOKEN>
+id2label:
+  desc: ''
+  sort: 15
+  value:
+    '0': LABEL_0
+    '1': LABEL_1
+ignore_data_skip:
+  desc: ''
+  sort: 98
+  value: false
+image_token_id:
+  desc: ''
+  sort: 4
+  value: 248056
+include_for_metrics:
+  desc: ''
+  sort: 80
+  value: []
+include_num_input_tokens_seen:
+  desc: ''
+  sort: 63
+  value: 'no'
+is_encoder_decoder:
+  desc: ''
+  sort: 13
+  value: false
+label2id:
+  desc: ''
+  sort: 16
+  value:
+    LABEL_0: 0
+    LABEL_1: 1
+label_names:
+  desc: ''
+  sort: 112
+  value: null
+label_smoothing_factor:
+  desc: ''
+  sort: 42
+  value: 0.0
+learning_rate:
+  desc: ''
+  sort: 28
+  value: 0.0001
+length_column_name:
+  desc: ''
+  sort: 114
+  value: length
+liger_kernel_config:
+  desc: ''
+  sort: 54
+  value: null
+load_best_model_at_end:
+  desc: ''
+  sort: 95
+  value: false
+local_rank:
+  desc: ''
+  sort: 131
+  value: -1
+log_level:
+  desc: ''
+  sort: 64
+  value: passive
+log_level_replica:
+  desc: ''
+  sort: 65
+  value: warning
+log_on_each_node:
+  desc: ''
+  sort: 61
+  value: true
+logging_dir:
+  desc: ''
+  sort: 130
+  value: null
+logging_first_step:
+  desc: ''
+  sort: 60
+  value: false
+logging_nan_inf_filter:
+  desc: ''
+  sort: 62
+  value: true
+logging_steps:
+  desc: ''
+  sort: 59
+  value: 10
+logging_strategy:
+  desc: ''
+  sort: 58
+  value: steps
+lr_scheduler_kwargs:
+  desc: ''
+  sort: 30
+  value: null
+lr_scheduler_type:
+  desc: ''
+  sort: 29
+  value: cosine
+max_grad_norm:
+  desc: ''
+  sort: 41
+  value: 1.0
+max_steps:
+  desc: ''
+  sort: 27
+  value: -1
+metric_for_best_model:
+  desc: ''
+  sort: 96
+  value: null
+model_num_parameters:
+  desc: ''
+  sort: 132
+  value: 9526205680
+model_type:
+  desc: ''
+  sort: 20
+  value: qwen3_5
+neftune_noise_alpha:
+  desc: ''
+  sort: 55
+  value: null
+num_train_epochs:
+  desc: ''
+  sort: 26
+  value: 5
+optim:
+  desc: ''
+  sort: 32
+  value: adamw_torch_fused
+optim_args:
+  desc: ''
+  sort: 33
+  value: null
+optim_target_modules:
+  desc: ''
+  sort: 38
+  value: null
+output_attentions:
+  desc: ''
+  sort: 23
+  value: false
+output_dir:
+  desc: ''
+  sort: 24
+  value: C:\Users\Administrator\Desktop\moniter\vlm\outputs\qlora
+output_hidden_states:
+  desc: ''
+  sort: 10
+  value: false
+parallelism_config:
+  desc: ''
+  sort: 105
+  value: null
+peft_config:
+  desc: ''
+  sort: 1
+  value:
+    default: 'LoraConfig(task_type=''CAUSAL_LM'', peft_type=<PeftType.LORA: ''LORA''>,
+      auto_mapping=None, peft_version=''0.18.1'', base_model_name_or_path=''C:/Users/Administrator/Desktop/moniter/vlm/Qwen'',
+      revision=None, inference_mode=False, r=64, target_modules={''up_proj'', ''o_proj'',
+      ''q_proj'', ''down_proj'', ''k_proj'', ''gate_proj'', ''v_proj''}, exclude_modules=None,
+      lora_alpha=128, lora_dropout=0.05, fan_in_fan_out=False, bias=''none'', use_rslora=False,
+      modules_to_save=None, init_lora_weights=True, layers_to_transform=None, layers_pattern=None,
+      rank_pattern={}, alpha_pattern={}, megatron_config=None, megatron_core=''megatron.core'',
+      trainable_token_indices=None, loftq_config={}, eva_config=None, corda_config=None,
+      use_dora=False, alora_invocation_tokens=None, use_qalora=False, qalora_group_size=16,
+      layer_replication=None, runtime_config=LoraRuntimeConfig(ephemeral_gpu_offload=False),
+      lora_bias=False, target_parameters=None, arrow_config=None, ensure_weight_tying=False)'
+per_device_eval_batch_size:
+  desc: ''
+  sort: 74
+  value: 8
+per_device_train_batch_size:
+  desc: ''
+  sort: 25
+  value: 1
+prediction_loss_only:
+  desc: ''
+  sort: 75
+  value: false
+problem_type:
+  desc: ''
+  sort: 17
+  value: null
+project:
+  desc: ''
+  sort: 69
+  value: huggingface
+push_to_hub:
+  desc: ''
+  sort: 88
+  value: false
+quantization_config:
+  desc: ''
+  sort: 21
+  value:
+    _load_in_4bit: true
+    _load_in_8bit: false
+    bnb_4bit_compute_dtype: bfloat16
+    bnb_4bit_quant_storage: uint8
+    bnb_4bit_quant_type: nf4
+    bnb_4bit_use_double_quant: true
+    llm_int8_enable_fp32_cpu_offload: false
+    llm_int8_has_fp16_weight: false
+    llm_int8_skip_modules: null
+    llm_int8_threshold: 6.0
+    load_in_4bit: true
+    load_in_8bit: false
+    quant_method: QuantizationMethod.BITS_AND_BYTES
+remove_unused_columns:
+  desc: ''
+  sort: 111
+  value: true
+report_to:
+  desc: ''
+  sort: 67
+  value:
+  - swanlab
+restore_callback_states_from_checkpoint:
+  desc: ''
+  sort: 99
+  value: false
+resume_from_checkpoint:
+  desc: ''
+  sort: 128
+  value: null
+return_dict:
+  desc: ''
+  sort: 9
+  value: true
+run_name:
+  desc: ''
+  sort: 68
+  value: null
+save_on_each_node:
+  desc: ''
+  sort: 85
+  value: false
+save_only_model:
+  desc: ''
+  sort: 82
+  value: false
+save_steps:
+  desc: ''
+  sort: 84
+  value: 200
+save_strategy:
+  desc: ''
+  sort: 83
+  value: steps
+save_total_limit:
+  desc: ''
+  sort: 86
+  value: 3
+seed:
+  desc: ''
+  sort: 101
+  value: 42
+skip_memory_metrics:
+  desc: ''
+  sort: 124
+  value: true
+text_config:
+  desc: ''
+  sort: 3
+  value:
+    _name_or_path: ''
+    architectures: null
+    attention_bias: false
+    attention_dropout: 0.0
+    attn_output_gate: true
+    bos_token_id: null
+    chunk_size_feed_forward: 0
+    dtype: bfloat16
+    eos_token_id: 248044
+    full_attention_interval: 4
+    head_dim: 256
+    hidden_act: silu
+    hidden_size: 4096
+    id2label:
+      '0': LABEL_0
+      '1': LABEL_1
+    initializer_range: 0.02
+    intermediate_size: 12288
+    is_encoder_decoder: false
+    label2id:
+      LABEL_0: 0
+      LABEL_1: 1
+    layer_types:
+    - linear_attention
+    - linear_attention
+    - linear_attention
+    - full_attention
+    - linear_attention
+    - linear_attention
+    - linear_attention
+    - full_attention
+    - linear_attention
+    - linear_attention
+    - linear_attention
+    - full_attention
+    - linear_attention
+    - linear_attention
+    - linear_attention
+    - full_attention
+    - linear_attention
+    - linear_attention
+    - linear_attention
+    - full_attention
+    - linear_attention
+    - linear_attention
+    - linear_attention
+    - full_attention
+    - linear_attention
+    - linear_attention
+    - linear_attention
+    - full_attention
+    - linear_attention
+    - linear_attention
+    - linear_attention
+    - full_attention
+    linear_conv_kernel_dim: 4
+    linear_key_head_dim: 128
+    linear_num_key_heads: 16
+    linear_num_value_heads: 32
+    linear_value_head_dim: 128
+    mamba_ssm_dtype: float32
+    max_position_embeddings: 262144
+    mlp_only_layers: []
+    model_type: qwen3_5_text
+    mtp_num_hidden_layers: 1
+    mtp_use_dedicated_embeddings: false
+    num_attention_heads: 16
+    num_hidden_layers: 32
+    num_key_value_heads: 4
+    output_attentions: false
+    output_hidden_states: false
+    pad_token_id: null
+    partial_rotary_factor: 0.25
+    problem_type: null
+    return_dict: true
+    rms_norm_eps: 1.0e-06
+    rope_parameters:
+      mrope_interleaved: true
+      mrope_section:
+      - 11
+      - 11
+      - 10
+      partial_rotary_factor: 0.25
+      rope_theta: 10000000
+      rope_type: default
+    tie_word_embeddings: false
+    use_cache: true
+    vocab_size: 248320
+tf32:
+  desc: ''
+  sort: 47
+  value: null
+tie_word_embeddings:
+  desc: ''
+  sort: 8
+  value: false
+torch_compile:
+  desc: ''
+  sort: 50
+  value: false
+torch_compile_backend:
+  desc: ''
+  sort: 51
+  value: null
+torch_compile_mode:
+  desc: ''
+  sort: 52
+  value: null
+torch_empty_cache_steps:
+  desc: ''
+  sort: 56
+  value: null
+trackio_space_id:
+  desc: ''
+  sort: 70
+  value: trackio
+train_sampling_strategy:
+  desc: ''
+  sort: 113
+  value: random
+transformers_version:
+  desc: ''
+  sort: 19
+  value: 5.3.0
+use_cache:
+  desc: ''
+  sort: 22
+  value: false
+use_cpu:
+  desc: ''
+  sort: 103
+  value: false
+use_liger_kernel:
+  desc: ''
+  sort: 53
+  value: false
+video_token_id:
+  desc: ''
+  sort: 5
+  value: 248057
+vision_config:
+  desc: ''
+  sort: 2
+  value:
+    _name_or_path: ''
+    architectures: null
+    chunk_size_feed_forward: 0
+    deepstack_visual_indexes: []
+    depth: 27
+    dtype: bfloat16
+    hidden_act: gelu_pytorch_tanh
+    hidden_size: 1152
+    id2label:
+      '0': LABEL_0
+      '1': LABEL_1
+    in_channels: 3
+    initializer_range: 0.02
+    intermediate_size: 4304
+    is_encoder_decoder: false
+    label2id:
+      LABEL_0: 0
+      LABEL_1: 1
+    model_type: qwen3_5
+    num_heads: 16
+    num_position_embeddings: 2304
+    out_hidden_size: 4096
+    output_attentions: false
+    output_hidden_states: false
+    patch_size: 16
+    problem_type: null
+    return_dict: true
+    spatial_merge_size: 2
+    temporal_patch_size: 2
+vision_end_token_id:
+  desc: ''
+  sort: 7
+  value: 248054
+vision_start_token_id:
+  desc: ''
+  sort: 6
+  value: 248053
+warmup_ratio:
+  desc: ''
+  sort: 129
+  value: 0.05
+warmup_steps:
+  desc: ''
+  sort: 31
+  value: 0.05
+weight_decay:
+  desc: ''
+  sort: 34
+  value: 0.01

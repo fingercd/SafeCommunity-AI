@@ -1,0 +1,38 @@
+{
+  "n_samples": 4,
+  "n_skipped": 0,
+  "binary_metrics": {
+    "accuracy": 1.0,
+    "auc": NaN,
+    "macro_precision": 1.0,
+    "macro_recall": 1.0,
+    "macro_f1": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "text_similarity": {
+    "rouge_l": 0.0,
+    "bertscore_f1": 0.0,
+    "n_with_reference": 4
+  },
+  "auc": NaN,
+  "accuracy": 1.0,
+  "json_compliance_rate": 0.0,
+  "fpr_at_95_tpr": NaN,
+  "fpr_at_tpr_levels": {
+    "fpr_at_tpr_0.5": NaN,
+    "fpr_at_tpr_0.7": NaN,
+    "fpr_at_tpr_0.8": NaN,
+    "fpr_at_tpr_0.9": NaN,
+    "fpr_at_tpr_0.95": NaN
+  },
+  "run_seconds": 88.43,
+  "clips_per_sec": 0.0452,
+  "run_config": {
+    "use_4bit": true,
+    "batch_size": 1,
+    "max_new_tokens": 160,
+    "bertscore_lang": "en"
+  }
+}
