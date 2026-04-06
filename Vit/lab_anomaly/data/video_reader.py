@@ -1,8 +1,9 @@
 """
-视频读取：获取元信息、按帧索引读取帧、均匀 clip 采样索引。
+视频读取：获取元信息、按帧索引读取帧、按时长切分 clip 并在每段内均匀采样帧索引。
 """
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -56,11 +57,9 @@ def read_frames_by_indices_cv2(
         cap.set(cv2.CAP_PROP_POS_FRAMES, float(max(0, int(idx))))
         ok, frame = cap.read()
         if not ok or frame is None:
-            # 读取失败时用最后一帧补齐（或黑帧）
             if frames:
                 frame = frames[-1].copy()
             else:
-                # 尝试读第一帧
                 cap.set(cv2.CAP_PROP_POS_FRAMES, 0.0)
                 ok2, frame2 = cap.read()
                 if ok2 and frame2 is not None:
@@ -74,40 +73,95 @@ def read_frames_by_indices_cv2(
     return frames
 
 
-def uniform_clip_indices(
-    frame_count: int,
-    clip_len: int,
-    frame_stride: int,
-    clip_idx: int,
-    num_clips: int,
-) -> tuple[list[int], int, int]:
+def compute_num_clips(
+    duration_sec: float,
+    interval_sec: float = 8.0,
+    max_clips: int = 0,
+) -> int:
     """
-    在 [0, frame_count) 内均匀取第 clip_idx 个 clip 的帧索引。
-
-    返回：(indices, start_frame, end_frame_exclusive)
+    按时长决定 clip 个数：0~8s 为 1 个，8~16s 为 2 个，以此类推。
+    duration_sec <= 0 时返回 0。
+    max_clips > 0 时上限为该值（训练时控显存）。
     """
-    frame_count = max(0, int(frame_count))
-    clip_len = int(clip_len)
-    frame_stride = int(frame_stride)
-    assert clip_len > 0 and frame_stride > 0
-    assert num_clips > 0 and 0 <= clip_idx < num_clips
+    if duration_sec <= 0:
+        return 0
+    n = int(math.ceil(float(duration_sec) / float(interval_sec)))
+    n = max(1, n)
+    if max_clips and int(max_clips) > 0:
+        n = min(n, int(max_clips))
+    return n
 
-    clip_span = (clip_len - 1) * frame_stride + 1
-    if frame_count <= 0:
-        start = 0
-    elif frame_count <= clip_span:
-        start = 0
-    else:
-        max_start = frame_count - clip_span
-        # 均匀分布到 [0, max_start]
-        if num_clips == 1:
-            start = max_start // 2
-        else:
-            start = int(round(clip_idx * max_start / (num_clips - 1)))
 
-    indices = [start + i * frame_stride for i in range(clip_len)]
-    # clamp
-    indices = [min(max(0, x), max(0, frame_count - 1)) for x in indices]
-    end_excl = start + clip_span
-    return indices, int(start), int(end_excl)
+def count_clips_for_span(
+    span_frames: int,
+    fps: float,
+    interval_sec: float = 8.0,
+    max_clips: int = 0,
+) -> int:
+    """由有效帧区间长度与 fps 计算 clip 数量（与 compute_num_clips 一致）。"""
+    span_frames = max(0, int(span_frames))
+    if span_frames <= 0:
+        return 0
+    fps_eff = float(fps) if float(fps) > 1e-6 else 25.0
+    duration_sec = span_frames / fps_eff
+    return compute_num_clips(duration_sec, interval_sec, max_clips)
 
+
+def _uniform_indices_in_closed_range(lo: int, hi_inclusive: int, n_samples: int) -> list[int]:
+    """在 [lo, hi_inclusive] 上均匀取 n_samples 个整数帧索引（含端点）。"""
+    lo, hi_inclusive = int(lo), int(hi_inclusive)
+    n_samples = int(n_samples)
+    if n_samples <= 0:
+        return []
+    if hi_inclusive < lo:
+        return [lo] * n_samples
+    if n_samples == 1:
+        return [lo]
+    span = hi_inclusive - lo
+    out: list[int] = []
+    for i in range(n_samples):
+        x = lo + int(round(i * span / max(n_samples - 1, 1)))
+        x = min(max(x, lo), hi_inclusive)
+        out.append(x)
+    return out
+
+
+def duration_based_clip_specs(
+    range_start: int,
+    span_frames: int,
+    fps: float,
+    *,
+    frames_per_clip: int = 16,
+    interval_sec: float = 8.0,
+    max_clips: int = 0,
+) -> list[tuple[list[int], int, int]]:
+    """
+    按时长将 [range_start, range_start+span) 切成多个时间段，每段内均匀采样 frames_per_clip 帧。
+
+    返回：[(abs_indices, segment_start_frame, segment_end_exclusive), ...]
+    """
+    span_frames = max(0, int(span_frames))
+    range_start = int(range_start)
+    frames_per_clip = max(1, int(frames_per_clip))
+    if span_frames <= 0:
+        return []
+
+    fps_eff = float(fps) if float(fps) > 1e-6 else 25.0
+    duration_sec = span_frames / fps_eff
+    num_clips = compute_num_clips(duration_sec, interval_sec, max_clips)
+    if num_clips <= 0:
+        return []
+
+    specs: list[tuple[list[int], int, int]] = []
+    for ci in range(num_clips):
+        seg_lo = int(ci * span_frames / num_clips)
+        seg_hi_excl = int((ci + 1) * span_frames / num_clips)
+        if seg_hi_excl <= seg_lo:
+            seg_hi_excl = min(seg_lo + 1, span_frames)
+        hi_inclusive = range_start + seg_hi_excl - 1
+        lo = range_start + seg_lo
+        if hi_inclusive < lo:
+            hi_inclusive = lo
+        abs_idx = _uniform_indices_in_closed_range(lo, hi_inclusive, frames_per_clip)
+        specs.append((abs_idx, lo, range_start + seg_hi_excl))
+    return specs

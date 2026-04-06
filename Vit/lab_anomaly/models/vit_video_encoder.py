@@ -1,13 +1,10 @@
 """
-HuggingFace VideoMAE ViT 视频编码器封装。
-
-- RGB 分支：AutoImageProcessor + AutoModel，输出 768 维 embedding
-- 可选双流：RGB + 光流（FlowCNNEncoder），concat/add/mlp 融合 → 1536 维或 1024 维
+VideoMAE v2（HuggingFace OpenGVLab）视频编码器：训练时可反传，支持冻结与按层解冻。
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Iterable, Optional, Sequence
+from typing import Any, Optional, Sequence
 
 import numpy as np
 import torch
@@ -15,187 +12,183 @@ import torch.nn as nn
 
 
 @dataclass(frozen=True)
-class HfVideoEncoderConfig:
-    """ViT 编码器配置：模型名、图像尺寸、FP16、池化方式、双流/融合等"""
-    model_name: str = "MCG-NJU/videomae-base"  # 需要首次联网下载
+class VideoMAEv2EncoderConfig:
+    """VideoMAE v2 配置"""
+    model_name: str = "OpenGVLab/VideoMAEv2-Base"
     image_size: int = 224
+    num_frames: int = 16
+    # 与训练里 encoder_use_half 对齐：表示「在 CUDA 上是否配合 torch.amp」，不再把骨干权重 .half()
     use_half: bool = True
-    pooling: str = "auto"  # auto/pooler/cls/mean
-
-    # 双流：RGB + 光流
-    use_dual_stream: bool = False
-    flow_branch_type: str = "cnn"  # "cnn" | "vit"
-    flow_embedding_dim: int = 768
-    fusion_method: str = "concat"  # "concat" | "add" | "mlp"
+    pooling: str = "auto"  # auto / cls / mean / pooler
 
 
-class FlowCNNEncoder(nn.Module):
+class VideoMAEv2Encoder(nn.Module):
     """
-    光流 3D CNN 分支：输入 (B, T, 2, H, W)，输出 (B, D)。
-    轻量级 3D Conv + 全局池化 + Linear，不依赖 torchvision 内部结构。
+    VideoMAE v2 封装。输入可为：
+    - pixel_values: (B, C, T, H, W) float，已由 processor 处理好；或
+    - list[list[np.ndarray]]：每个样本一段视频，长度为 T 的 RGB HWC uint8 帧列表
+    输出：(B, D) embedding。
     """
 
-    def __init__(self, flow_embedding_dim: int = 768, flow_input_size: int = 224):
-        super().__init__()
-        self.flow_input_size = flow_input_size
-        self._out_dim = flow_embedding_dim
-        self.conv = nn.Sequential(
-            nn.Conv3d(2, 32, kernel_size=(3, 5, 5), stride=(1, 2, 2), padding=(1, 2, 2)),
-            nn.BatchNorm3d(32),
-            nn.ReLU(inplace=True),
-            nn.Conv3d(32, 64, kernel_size=(3, 3, 3), stride=(2, 2, 2), padding=1),
-            nn.BatchNorm3d(64),
-            nn.ReLU(inplace=True),
-            nn.Conv3d(64, 128, kernel_size=(3, 3, 3), stride=(2, 2, 2), padding=1),
-            nn.BatchNorm3d(128),
-            nn.ReLU(inplace=True),
-            nn.Conv3d(128, 256, kernel_size=(3, 3, 3), stride=(2, 2, 2), padding=1),
-            nn.BatchNorm3d(256),
-            nn.ReLU(inplace=True),
-        )
-        self.pool = nn.AdaptiveAvgPool3d(1)
-        self.fc = nn.Linear(256, flow_embedding_dim)
-
-    @property
-    def out_dim(self) -> int:
-        return self._out_dim
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        if x.dim() == 4:
-            x = x.unsqueeze(0)
-        if x.shape[1] == 2 and x.shape[2] != 2:
-            pass
-        else:
-            if x.size(2) == 2:
-                x = x.permute(0, 2, 1, 3, 4)
-        if x.size(-2) != self.flow_input_size or x.size(-1) != self.flow_input_size:
-            x = torch.nn.functional.interpolate(
-                x, size=(x.size(2), self.flow_input_size, self.flow_input_size), mode="trilinear", align_corners=False
-            )
-        x = self.conv(x)
-        x = self.pool(x)
-        x = x.flatten(1)
-        x = self.fc(x)
-        return x
-
-
-class HfVideoEncoder(nn.Module):
-    """
-    HuggingFace 视频编码器封装。
-
-    输入：list[list[np.ndarray(H,W,3) uint8 RGB]] 或 torch tensor (B,T,C,H,W) float
-    输出：embedding (B, D)
-    """
-
-    def __init__(self, cfg: HfVideoEncoderConfig, device: Optional[str] = None):
+    def __init__(self, cfg: VideoMAEv2EncoderConfig, device: Optional[str] = None):
         super().__init__()
         self.cfg = cfg
         self.device_str = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.use_half = bool(cfg.use_half and self.device_str.startswith("cuda"))
 
         try:
-            from transformers import AutoImageProcessor, AutoModel
+            from transformers import AutoConfig, AutoModel, AutoImageProcessor
         except Exception as e:  # pragma: no cover
-            raise RuntimeError(
-                "缺少 transformers 依赖。请安装：pip install transformers"
-            ) from e
+            raise RuntimeError("缺少 transformers。请安装：pip install transformers") from e
 
-        self.processor = AutoImageProcessor.from_pretrained(cfg.model_name)
-        self.model = AutoModel.from_pretrained(cfg.model_name)
-        self.model.eval()
-        self.model.to(self.device_str)
-        if self.use_half:
-            self.model.half()
+        config = AutoConfig.from_pretrained(cfg.model_name, trust_remote_code=True)
+        try:
+            from transformers import VideoMAEImageProcessor
 
-        rgb_dim = getattr(self.model.config, "hidden_size", None) or getattr(self.model.config, "dim", None)
-        self.embedding_dim = rgb_dim
+            self.processor = VideoMAEImageProcessor.from_pretrained(cfg.model_name, trust_remote_code=True)
+        except Exception:
+            self.processor = AutoImageProcessor.from_pretrained(cfg.model_name, trust_remote_code=True)
+        self.backbone = AutoModel.from_pretrained(
+            cfg.model_name,
+            config=config,
+            low_cpu_mem_usage=False,
+            trust_remote_code=True,
+        )
+        self.backbone.to(self.device_str)
+        # 权重始终保持 FP32；半精度由训练端的 torch.amp.autocast 完成，避免与 GradScaler 冲突（FP16 梯度 unscale 报错）。
 
-        if getattr(cfg, "use_dual_stream", False):
-            self.flow_encoder = FlowCNNEncoder(
-                flow_embedding_dim=getattr(cfg, "flow_embedding_dim", 768),
-                flow_input_size=getattr(cfg, "image_size", 224),
-            )
-            self.flow_encoder.to(self.device_str)
-            self.flow_encoder.eval()
-            flow_dim = self.flow_encoder.out_dim
-            if getattr(cfg, "fusion_method", "concat") == "concat":
-                self.embedding_dim = (rgb_dim or 768) + flow_dim
-            elif getattr(cfg, "fusion_method", "") == "mlp":
-                self.fusion_proj = nn.Linear((rgb_dim or 768) + flow_dim, 1024)
-                self.fusion_proj.to(self.device_str)
-                self.embedding_dim = 1024
-            else:
-                self.embedding_dim = rgb_dim or 768
-        else:
-            self.flow_encoder = None
-            self.fusion_proj = None
+        hid = getattr(config, "hidden_size", None) or getattr(config, "embed_dim", None) or 768
+        self.embedding_dim = int(hid)
 
-    def _forward_rgb_branch(self, clips: Any) -> torch.Tensor:
-        """RGB 分支：processor → model → pooling（pooler/cls/mean）"""
-        if isinstance(clips, torch.Tensor):
-            pixel_values = clips.to(self.device_str)
-        else:
-            try:
-                inputs = self.processor(clips, return_tensors="pt")
-            except TypeError:
-                inputs = self.processor(videos=clips, return_tensors="pt")
-            pixel_values = inputs["pixel_values"].to(self.device_str)
-        if self.use_half:
-            pixel_values = pixel_values.half()
-        outputs = self.model(pixel_values=pixel_values)
+    def _get_encoder_layers(self) -> Optional[nn.ModuleList]:
+        def _get_by_path(root: nn.Module, path: tuple[str, ...]) -> Optional[nn.Module]:
+            cur: Any = root
+            for name in path:
+                if not hasattr(cur, name):
+                    return None
+                cur = getattr(cur, name)
+            return cur if isinstance(cur, nn.Module) else None
+
+        def _looks_like_blocks(mod: Optional[nn.Module]) -> Optional[nn.ModuleList]:
+            if not isinstance(mod, nn.ModuleList) or len(mod) == 0:
+                return None
+            first = mod[0]
+            if any(hasattr(first, name) for name in ("attn", "mlp", "norm1", "norm2")):
+                return mod
+            return None
+
+        m = self.backbone
+        for path in (
+            ("videomae", "encoder", "layer"),
+            ("encoder", "layer"),
+            ("model", "blocks"),
+            ("blocks",),
+        ):
+            layers = _looks_like_blocks(_get_by_path(m, path))
+            if layers is not None:
+                return layers
+
+        # 兜底：递归找最像 Transformer block 列表的 ModuleList。
+        best: Optional[nn.ModuleList] = None
+        best_len = -1
+        for _, mod in m.named_modules():
+            layers = _looks_like_blocks(mod)
+            if layers is not None and len(layers) > best_len:
+                best = layers
+                best_len = len(layers)
+        return best
+
+    def freeze_backbone(self) -> None:
+        """冻结整个 backbone 参数。"""
+        for p in self.backbone.parameters():
+            p.requires_grad = False
+
+    def unfreeze_last_n_blocks(self, n: int) -> None:
+        """
+        先全部冻结，再解冻最后 n 个 Transformer block（以及 layernorm 等常见附加层可按需扩展）。
+        n<=0 等价于全部冻结。
+        """
+        self.freeze_backbone()
+        layers = self._get_encoder_layers()
+        if layers is None or n <= 0:
+            return
+        n = min(int(n), len(layers))
+        for i in range(len(layers) - n, len(layers)):
+            for p in layers[i].parameters():
+                p.requires_grad = True
+
+    def trainable_param_count(self) -> int:
+        """当前 requires_grad=True 的参数数量。"""
+        return sum(p.numel() for p in self.parameters() if p.requires_grad)
+
+    def get_trainable_param_count(self) -> int:
+        return self.trainable_param_count()
+
+    def set_gradient_checkpointing(self, enabled: bool) -> None:
+        if hasattr(self.backbone, "gradient_checkpointing_enable") and enabled:
+            self.backbone.gradient_checkpointing_enable()
+        elif hasattr(self.backbone, "gradient_checkpointing_disable") and not enabled:
+            self.backbone.gradient_checkpointing_disable()
+
+    def _pool(self, outputs: Any) -> torch.Tensor:
+        if isinstance(outputs, torch.Tensor):
+            t = outputs.float()
+            if t.dim() == 1:
+                return t.unsqueeze(0)
+            if t.dim() == 2:
+                return t
+            return t.mean(dim=tuple(range(1, t.dim())))
+
         pooling = (self.cfg.pooling or "auto").lower().strip()
         if pooling in {"auto", "pooler"} and hasattr(outputs, "pooler_output") and outputs.pooler_output is not None:
             return outputs.pooler_output.float()
-        if pooling in {"auto", "cls"} and hasattr(outputs, "last_hidden_state") and outputs.last_hidden_state is not None:
+        if hasattr(outputs, "last_hidden_state") and outputs.last_hidden_state is not None:
             lhs = outputs.last_hidden_state
             if lhs.dim() == 3:
-                return lhs[:, 0].float()
-            return lhs.float()
-        if pooling in {"auto", "mean"}:
+                if pooling in {"auto", "cls"}:
+                    return lhs[:, 0].float()
+                return lhs.mean(dim=1).float()
+            return lhs.float().mean(dim=tuple(range(1, lhs.dim())))
+        if hasattr(outputs, "__dict__"):
             for v in outputs.__dict__.values():
                 if isinstance(v, torch.Tensor):
                     return v.mean(dim=tuple(range(1, v.dim()))).float()
-            raise RuntimeError("cannot extract embedding from HF model outputs")
-        raise ValueError(f"unknown pooling: {self.cfg.pooling!r}")
+        raise RuntimeError("无法从模型输出中取出 embedding")
 
-    def _forward_flow_branch(self, clips_flow: Any) -> torch.Tensor:
-        """光流分支：3D CNN → 768 维"""
-        if isinstance(clips_flow, torch.Tensor):
-            x = clips_flow.to(self.device_str)
+    def _tensor_from_rgb_lists(self, clips: Sequence[Sequence[np.ndarray]]) -> torch.Tensor:
+        """list[list[HWC uint8]] -> processor -> (B,C,T,H,W) 与骨干期望一致。"""
+        proc_list = []
+        for clip in clips:
+            frames = list(clip)
+            if len(frames) != self.cfg.num_frames:
+                raise ValueError(
+                    f"每段需 {self.cfg.num_frames} 帧，当前 {len(frames)}"
+                )
+            proc_list.append([np.asarray(f, dtype=np.uint8) for f in frames])
+
+        try:
+            inputs = self.processor(proc_list, return_tensors="pt")
+        except TypeError:
+            inputs = self.processor(videos=proc_list, return_tensors="pt")
+
+        pv = inputs["pixel_values"]
+        if pv.dim() == 5 and pv.shape[1] != 3 and pv.shape[2] == 3:
+            # (B, T, C, H, W) -> (B, C, T, H, W)
+            pv = pv.permute(0, 2, 1, 3, 4)
+        return pv
+
+    def forward(self, clips: Any) -> torch.Tensor:
+        """
+        clips: torch.Tensor (B,C,T,H,W) 或 list[list[np.ndarray]] RGB uint8
+        返回 (B, D) float32
+        """
+        if isinstance(clips, torch.Tensor):
+            pixel_values = clips.to(self.device_str)
         else:
-            tensors = []
-            for item in clips_flow:
-                t = torch.from_numpy(np.asarray(item, dtype=np.float32)).to(self.device_str)
-                if t.dim() == 3:
-                    t = t.unsqueeze(0)
-                tensors.append(t)
-            x = torch.stack(tensors, dim=0)
-        if x.size(2) == 2:
-            x = x.permute(0, 2, 1, 3, 4)
-        return self.flow_encoder(x).float()
+            pixel_values = self._tensor_from_rgb_lists(clips).to(self.device_str)
 
-    @torch.no_grad()
-    def forward(self, clips: Any, clips_flow: Optional[Any] = None) -> torch.Tensor:
-        """
-        clips: list of RGB clips or tensor (B,T,C,H,W)
-        clips_flow: optional list of (T-1,2,H,W) per clip or tensor (B,T-1,2,H,W)
-        """
-        emb_rgb = self._forward_rgb_branch(clips)
-        if not getattr(self.cfg, "use_dual_stream", False) or self.flow_encoder is None or clips_flow is None:
-            return emb_rgb
-        emb_flow = self._forward_flow_branch(clips_flow)
-        fusion = getattr(self.cfg, "fusion_method", "concat")
-        if fusion == "concat":
-            return torch.cat([emb_rgb, emb_flow], dim=-1)
-        if fusion == "add":
-            return (emb_rgb + emb_flow)
-        if fusion == "mlp" and self.fusion_proj is not None:
-            return self.fusion_proj(torch.cat([emb_rgb, emb_flow], dim=-1))
-        return torch.cat([emb_rgb, emb_flow], dim=-1)
+        # 与骨干权重 dtype 一致；CUDA 上半精度由外层 autocast 负责，勿手动 .half() 以免产生 FP16 梯度。
+        pixel_values = pixel_values.float()
 
-
-def freeze_module(m: nn.Module) -> None:
-    """冻结模块参数（requires_grad=False）"""
-    for p in m.parameters():
-        p.requires_grad = False
-
+        outputs = self.backbone(pixel_values=pixel_values)
+        return self._pool(outputs)

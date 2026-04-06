@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-读取 train_known_classifier 输出的训练日志，解析 epoch / loss / acc / 混淆矩阵 等，并绘图保存。
+读取旧版文本训练日志，解析 epoch / loss / acc 等并绘图。
+端到端训练请直接使用 train_end2end 写出的 history.json。
 
 用法:
   python -m lab_anomaly.train.plot_training_log  < 训练日志.txt

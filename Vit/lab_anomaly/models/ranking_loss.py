@@ -30,8 +30,8 @@ def masked_max(scores: torch.Tensor, mask: Optional[torch.Tensor]) -> torch.Tens
         (B,) 每行的最大分数
     """
     if mask is not None:
-        # 将无效位置设为极小值，不影响 max
-        scores = scores.masked_fill(~mask, -1e9)
+        fill_val = torch.finfo(scores.dtype).min
+        scores = scores.masked_fill(~mask, fill_val)
     return scores.max(dim=1).values
 
 

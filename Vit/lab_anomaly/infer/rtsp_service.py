@@ -2,19 +2,17 @@ from __future__ import annotations
 
 """
 RTSP 实时推理服务（实验室异常行为识别）：
-  抽帧/滑窗 → 视频 encoder embedding → 已知异常分类 + 开放集异常分数 → 报警输出（日志/截图/API）。
+  抽帧/滑窗 → VideoMAE v2 编码 → MIL 二分类 + ranking 分数 → 报警输出（日志/截图/API）。
 
 特点：
   - 支持 `yaml/json` 配置（见 `lab_anomaly/configs/rtsp_service_example.yaml`）
   - 抽帧：按 `sample_fps` 从 RTSP 降采样
-  - 滑窗 clip：按 `clip_len` + `frame_stride` 组帧（即 clip 覆盖帧数 = (clip_len-1)*frame_stride+1）
+  - 缓冲区存最近 `clip_len` 帧，推理时在缓冲区内均匀取 `clip_len` 帧送编码器（当前默认 16 帧，与训练一致）
   - 去抖：`min_consecutive` + `cooldown_sec`
   - 输出：`events.jsonl`、可选截图、可选 HTTP POST(JSON)
 
 依赖：
-  - opencv-python, numpy, torch
-  - transformers（HfVideoEncoder）
-  - scikit-learn + joblib（OpenSetScorer）
+  - opencv-python, numpy, torch, transformers（VideoMAE v2）
   - PyYAML（如用 yaml 配置）
 """
 
@@ -22,7 +20,7 @@ import argparse
 import json
 import time
 from collections import deque
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
@@ -32,17 +30,17 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from lab_anomaly.infer.scoring import OpenSetScore, fuse_known_and_open_set, load_known_classifier
-from lab_anomaly.models.vit_video_encoder import HfVideoEncoder, HfVideoEncoderConfig
+from lab_anomaly.infer.scoring import load_known_classifier, predict_fusion
 
 
-def _get_ckpt_embedding_dim(checkpoint_path: str | Path) -> int:
-    """从已知分类器 checkpoint 中读取 embedding_dim，用于与编码器输出维度对齐。"""
-    ckpt = torch.load(str(checkpoint_path), map_location="cpu", weights_only=False)
-    cfg_d = ckpt.get("cfg", None)
-    if not cfg_d:
-        raise RuntimeError("checkpoint 缺少 cfg，无法读取 embedding_dim")
-    return int(cfg_d.get("embedding_dim", 768))
+def _uniform_positions(buf_len: int, num_frames: int) -> list[int]:
+    """在缓冲区下标 [0, buf_len-1] 上均匀取 num_frames 个位置。"""
+    if buf_len <= 0 or num_frames <= 0:
+        return []
+    if num_frames == 1:
+        return [0]
+    hi = buf_len - 1
+    return [min(max(0, int(round(i * hi / (num_frames - 1)))), hi) for i in range(num_frames)]
 
 
 def _now_ts() -> float:
@@ -86,23 +84,6 @@ def _cfg_get(cfg: dict[str, Any], path: str, default: Any) -> Any:
             return default
         cur = cur[k]
     return cur
-
-
-def _compute_flow_clip_farneback(clip_frames: list[np.ndarray]) -> np.ndarray:
-    """对 clip 内连续帧用 Farneback 计算光流。返回 (T-1, 2, H, W) float32。"""
-    if len(clip_frames) < 2:
-        return np.zeros((0, 2, 224, 224), dtype=np.float32)
-    flows = []
-    for i in range(len(clip_frames) - 1):
-        g0 = cv2.cvtColor(clip_frames[i], cv2.COLOR_RGB2GRAY)
-        g1 = cv2.cvtColor(clip_frames[i + 1], cv2.COLOR_RGB2GRAY)
-        flow = cv2.calcOpticalFlowFarneback(
-            g0, g1, None, pyr_scale=0.5, levels=2, winsize=15,
-            iterations=2, poly_n=5, poly_sigma=1.2, flags=0,
-        )
-        flow = np.asarray(flow, dtype=np.float32).transpose(2, 0, 1)
-        flows.append(flow)
-    return np.stack(flows, axis=0)
 
 
 def _post_json(url: str, payload: dict[str, Any], timeout_sec: float) -> tuple[bool, str]:
@@ -255,7 +236,9 @@ def _build_config(args: argparse.Namespace) -> ServiceConfig:
     if not device or device.lower() == "auto":
         device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    encoder_model_name = str(args.model_name).strip() or str(_cfg_get(cfg, "encoder.model_name", "MCG-NJU/videomae-base")).strip()
+    encoder_model_name = str(args.model_name).strip() or str(
+        _cfg_get(cfg, "encoder.model_name", "OpenGVLab/VideoMAEv2-Base")
+    ).strip()
     use_half = bool(args.use_half) if args.use_half else bool(_cfg_get(cfg, "encoder.use_half", False))
     use_dual_stream = bool(_cfg_get(cfg, "encoder.use_dual_stream", False))
     inference_use_rgb_only = bool(_cfg_get(cfg, "runtime.inference_use_rgb_only", False))
@@ -317,7 +300,7 @@ def _build_config(args: argparse.Namespace) -> ServiceConfig:
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="RTSP 实时异常推理：抽帧/滑窗 → embedding → 已知分类 + 开放集 → 报警")
+    ap = argparse.ArgumentParser(description="RTSP 实时异常推理：VideoMAE v2 + MIL 二分类")
     ap.add_argument("--config", type=str, default="", help="yaml/json 配置文件（可选）")
 
     ap.add_argument("--video", "--video_path", dest="video_path", type=str, default="", help="本地视频路径；非空则从视频读取，否则用 --rtsp")
@@ -376,7 +359,6 @@ def main() -> None:
         "device": cfg.device,
         "encoder": cfg.encoder_model_name,
         "clip_len": cfg.clip_len,
-        "frame_stride": cfg.frame_stride,
         "sample_fps": cfg.sample_fps,
         "window_stride": cfg.window_stride,
         "known_checkpoint": cfg.known_checkpoint,
@@ -389,33 +371,24 @@ def main() -> None:
     print("[INIT]", json.dumps(init_info, ensure_ascii=False))
 
     if not str(cfg.known_checkpoint).strip():
-        raise ValueError("请提供 known_checkpoint（已知分类器权重路径）。")
-    ckpt_embed_dim = _get_ckpt_embedding_dim(cfg.known_checkpoint)
-    use_dual = (ckpt_embed_dim == 1536) or (cfg.use_dual_stream and not cfg.inference_use_rgb_only)
-    enc_cfg = HfVideoEncoderConfig(
-        model_name=cfg.encoder_model_name,
-        use_half=cfg.use_half,
-        use_dual_stream=use_dual,
-        fusion_method="concat",
-    )
-    enc = HfVideoEncoder(enc_cfg, device=cfg.device)
+        raise ValueError("请提供 known_checkpoint（端到端 checkpoint_best.pt）。")
+    bundle = load_known_classifier(cfg.known_checkpoint, device=cfg.device)
+    enc = bundle.encoder
+    if enc is None:
+        raise RuntimeError("checkpoint 中缺少 encoder_state，请使用 train_end2end 保存的权重。")
     enc.eval()
-    if getattr(enc, "embedding_dim", 768) != ckpt_embed_dim:
-        raise RuntimeError(
-            f"编码器输出维度 {getattr(enc, 'embedding_dim', 768)} 与 checkpoint embedding_dim {ckpt_embed_dim} 不一致。"
-        )
-    known = load_known_classifier(cfg.known_checkpoint, device=cfg.device)
-    # 开放集不在预测中使用，仅用已知分类器 + MIL ranking
-    open_set = None
+    known = bundle
 
     known_normal_label = "normal"
     if known is not None:
         known_normal_label = "normal" if "normal" in known.label2idx else str(known.idx2label.get(0, "normal"))
 
-    # buffer：存抽帧后的 RGB（frame_stride 在 clip 组装时再用）
-    clip_total = (int(cfg.clip_len) - 1) * int(cfg.frame_stride) + 1
+    normal_cls_idx = int(known.label2idx.get("normal", 0))
+
+    # 缓冲区：最近 clip_len 个采样帧（RGB）
+    clip_total = int(cfg.clip_len)
     if clip_total <= 0:
-        raise ValueError("clip_len/frame_stride 非法。")
+        raise ValueError("clip_len 须为正整数。")
     buf_rgb: deque[np.ndarray] = deque(maxlen=int(clip_total))
     last_bgr: Optional[np.ndarray] = None
 
@@ -510,53 +483,43 @@ def main() -> None:
                     continue
                 last_infer_push_count = push_count
 
-                # 组装 clip：长度 clip_len，内部按 frame_stride 取帧
-                clip_frames = [buf_rgb[i * int(cfg.frame_stride)] for i in range(int(cfg.clip_len))]
+                buf_list = list(buf_rgb)
+                pos = _uniform_positions(len(buf_list), int(cfg.clip_len))
+                clip_frames = [buf_list[i].copy() for i in pos]
 
                 with torch.no_grad():
-                    if getattr(enc.cfg, "use_dual_stream", False):
-                        clip_flows = [_compute_flow_clip_farneback(clip_frames)]
-                        emb_t = enc([clip_frames], clip_flows)
-                    else:
-                        emb_t = enc([clip_frames])
+                    emb_t = enc([clip_frames])
                 emb_np = emb_t.detach().cpu().numpy().astype(np.float32).reshape(-1)
 
                 probs: Optional[np.ndarray] = None
                 pred_label = "unknown"
                 pred_prob = 0.0
-                ranking_score = 0.0  # MIL ranking 异常分数
+                ranking_score = 0.0
 
-                if known is not None:
-                    x = torch.from_numpy(emb_np).view(1, 1, -1).to(known.device)
-                    mask = torch.ones((1, 1), device=known.device, dtype=torch.bool)
-                    with torch.no_grad():
-                        logits, details = known.model(x, mask=mask, y=None, return_details=True)
-                        probs = F.softmax(logits, dim=-1).detach().cpu().numpy().reshape(-1)
-                        # 获取 MIL ranking 异常分数（若模型有异常分支）
-                        if "anomaly_scores" in details:
-                            ranking_score = float(details["anomaly_scores"].max().item())
-
-                # 开放集未启用，使用占位结果（不参与判定）
-                os = OpenSetScore(cluster_id=-1, decision_score=0.0, anomaly_score=0.0, threshold=float("inf"), is_anomaly=False)
+                x = torch.from_numpy(emb_np).view(1, 1, -1).to(known.device)
+                mask = torch.ones((1, 1), device=known.device, dtype=torch.bool)
+                with torch.no_grad():
+                    logits, details = known.model(x, mask=mask, y=None, return_details=True)
+                    probs = F.softmax(logits, dim=-1).detach().cpu().numpy().reshape(-1)
+                    if "anomaly_scores" in details:
+                        ranking_score = float(details["anomaly_scores"].max().item())
 
                 idx2label = known.idx2label
-
-                fused = fuse_known_and_open_set(
+                fused = predict_fusion(
                     known_probs=probs,
                     idx2label=idx2label,
-                    open_set=os,
-                    min_known_prob=float(cfg.min_known_prob),
-                    treat_low_conf_as_unknown=bool(cfg.treat_low_conf_as_unknown),
                     ranking_anomaly_score=ranking_score,
                     ranking_alarm_threshold=float(cfg.ranking_alarm_threshold),
+                    min_known_prob=float(cfg.min_known_prob),
+                    treat_low_conf_as_unknown=bool(cfg.treat_low_conf_as_unknown),
+                    normal_idx=normal_cls_idx,
                 )
 
                 pred_label = str(fused.predicted_label)
                 pred_prob = float(fused.predicted_prob)
 
                 known_trigger = (
-                    known is not None
-                    and pred_label not in {known_normal_label, "unknown"}
+                    pred_label not in {known_normal_label, "unknown"}
                     and pred_prob >= float(cfg.known_alarm_prob)
                 )
                 unknown_trigger = bool(cfg.unknown_alarm) and bool(fused.is_anomaly)
@@ -564,7 +527,7 @@ def main() -> None:
 
                 if cfg.show:
                     rank_txt = f" rank={fused.ranking_anomaly_score:.2f}" if fused.ranking_anomaly_score > 0 else ""
-                    text = f"{pred_label} p={pred_prob:.2f} anom={float(fused.anomaly_score):.3f}{rank_txt}"
+                    text = f"{pred_label} p={pred_prob:.2f} rank={ranking_score:.2f}{rank_txt}"
                     cv2.putText(frame_bgr, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
                     cv2.imshow(f"rtsp_service:{cfg.camera_id}", frame_bgr)
                     if cv2.waitKey(1) & 0xFF == 27:
@@ -584,8 +547,12 @@ def main() -> None:
                     "event_type": event_type,
                     "predicted_label": pred_label,
                     "predicted_prob": pred_prob,
-                    "open_set": asdict(os),
-                    "fusion": asdict(fused),
+                    "fusion": {
+                        "predicted_label": fused.predicted_label,
+                        "predicted_prob": fused.predicted_prob,
+                        "is_anomaly": fused.is_anomaly,
+                        "ranking_anomaly_score": fused.ranking_anomaly_score,
+                    },
                 }
                 if use_video_file:
                     event["video_path"] = cfg.video_path
@@ -641,14 +608,13 @@ def main() -> None:
 #   out_dir          ：输出目录，events.jsonl、截图等会写在这里。
 #
 # --- 编码器与设备 ---
-#   model_name ：HuggingFace 视频编码器名称，如 MCG-NJU/videomae-base。
+#   model_name ：应与训练时一致，如 OpenGVLab/VideoMAEv2-Base（权重内已存配置时可忽略）。
 #   device     ："auto" / "cuda" / "cpu"。auto 表示有 GPU 则用 cuda。
 #   use_half   ：是否用 FP16（仅 CUDA 时有效），部分环境可能不稳定。
 #
 # --- 抽帧与滑窗（与训练时保持一致效果更好）---
-#   clip_len     ：一个 clip 的帧数（如 16）。
-#   frame_stride ：clip 内相邻采样帧的步长（如 2 表示每隔 2 帧取一帧组成 clip）。
-#   sample_fps   ：从视频中抽帧的目标帧率，例如 5 表示每秒取约 5 帧再组 clip。
+#   clip_len     ：编码器输入帧数（当前默认 16），缓冲区保持最近 clip_len 个采样帧。
+#   sample_fps   ：从视频中抽帧的目标帧率，例如 5 表示每秒取约 5 帧入缓冲。
 #   window_stride：每隔多少「个采样帧」做一次推理；越大推理越稀疏，延迟越高。
 #                  调节：想更实时可减小 window_stride；想省算力可增大。
 #
@@ -678,11 +644,10 @@ BUILDIN_DEFAULTS = {
     "loop_video": False,
     "camera_id": "cam0",
     "out_dir": "lab_dataset/derived/realtime",
-    "known_checkpoint": r"C:\Users\Administrator\Desktop\Vit\lab_dataset\derived\known_classifier\checkpoint_best.pt",
-    "model_name": "MCG-NJU/videomae-base",
+    "known_checkpoint": r"C:\Users\Administrator\Desktop\Vit\lab_dataset\derived\end2end_classifier\checkpoint_best.pt",
+    "model_name": "OpenGVLab/VideoMAEv2-Base",
     "device": "auto",
     "clip_len": 16,
-    "frame_stride": 2,
     "sample_fps": 5.0,
     "window_stride": 4,
     "min_known_prob": 0.5,

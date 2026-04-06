@@ -1,0 +1,48 @@
+# 可选：与 train/train_end2end.py 中 CONFIG 合并（存在则覆盖同名键）
+dataset_root: lab_dataset
+labels_csv: lab_dataset/labels/video_labels.csv
+out_dir: lab_dataset/derived/end2end_classifier
+exclude_unknown: true
+normal_label: normal
+frames_per_clip: 12
+interval_sec: 8.0
+max_clips_per_video: 16
+encoder_model_name: OpenGVLab/VideoMAEv2-Base
+encoder_use_half: true
+micro_batch_clips: 4
+clip_encode_eval_mode_when_frozen: true
+batch_size: 4
+val_ratio: 0.2
+seed: 420
+num_workers: 4
+target_acc: 0.0
+use_anomaly_branch: true
+lambda_rank: 0.7
+lambda_sparse: 8.0e-5
+lambda_smooth: 8.0e-5
+class_weight: true
+device: ""
+
+stages:
+  - name: head_only
+    epochs: 30
+    lr: 1.0e-3
+    unfreeze_blocks: 0
+    weight_decay: 0.01
+  - name: unfreeze_2
+    epochs: 20
+    lr: 5.0e-5
+    unfreeze_blocks: 2
+    weight_decay: 0.01
+  - name: unfreeze_4
+    epochs: 15
+    lr: 2.0e-5
+    unfreeze_blocks: 4
+    weight_decay: 0.01
+
+mil_pooling: attn
+mil_topk: 3
+mil_attn_hidden: 256
+mil_dropout: 0.35
+mil_use_layernorm: true
+anomaly_hidden: 256

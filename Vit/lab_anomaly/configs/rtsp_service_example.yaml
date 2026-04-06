@@ -1,39 +1,38 @@
-# RTSP 实时推理服务示例配置（输入源二选一：video_path 或 rtsp_url）
-# source:
-#   video_path: "D:/data/test.mp4"  # 非空则从本地视频读取；留空则用 rtsp_url
+# RTSP / 本地视频推理示例（需 train_end2end 导出的 checkpoint，内含 encoder + MIL）
 rtsp_url: "rtsp://user:pass@ip:554/xxx"
 camera_id: cam0
 out_dir: lab_dataset/derived/realtime
 
 artifacts:
-  known_checkpoint: lab_dataset/derived/known_classifier/checkpoint_best.pt
-  open_set_dir: lab_dataset/derived/open_set
+  known_checkpoint: lab_dataset/derived/end2end_classifier/checkpoint_best.pt
+  open_set_dir: ""
 
 encoder:
-  model_name: MCG-NJU/videomae-base
-  device: auto   # auto/cuda/cpu
+  model_name: OpenGVLab/VideoMAEv2-Base
+  device: auto
   use_half: false
 
 sampling:
-  clip_len: 16
+  clip_len: 12
   frame_stride: 2
   sample_fps: 5.0
   window_stride: 4
 
 fusion:
   min_known_prob: 0.5
+  known_alarm_prob: 0.5
   treat_low_conf_as_unknown: true
-  ranking_alarm_threshold: 0.5   # MIL ranking 异常分数报警阈值（0~1，需启用 anomaly_branch 训练）
+  unknown_alarm: true
+  ranking_alarm_threshold: 0.5
 
 outputs:
   save_snapshot: true
-  api_url: ""              # 例如 "http://127.0.0.1:8000/event"
+  api_url: ""
   api_timeout_sec: 3.0
 
 runtime:
+  min_consecutive: 1
   cooldown_sec: 3.0
   open_timeout_sec: 10.0
   reconnect_wait_sec: 3.0
   show: false
-  # loop_video: false   # 仅视频文件时有效：播完后是否循环
-
