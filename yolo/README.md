@@ -1,181 +1,380 @@
-## YOLOV8：You Only Look Once目标检测模型在pytorch当中的实现
----
+# YOLO 模块说明
 
-## 目录
-1. [仓库更新 Top News](#仓库更新)
-2. [相关仓库 Related code](#相关仓库)
-3. [性能情况 Performance](#性能情况)
-4. [所需环境 Environment](#所需环境)
-5. [文件下载 Download](#文件下载)
-6. [训练步骤 How2train](#训练步骤)
-7. [预测步骤 How2predict](#预测步骤)
-8. [评估步骤 How2eval](#评估步骤)
-9. [参考资料 Reference](#Reference)
+`yolo/` 是整个项目里最基础的一层，负责把“画面里有什么”先识别出来。
 
-## Top News
-**`2023-03`**:**仓库创建，支持step、cos学习率下降法、支持adam、sgd优化器选择、支持学习率根据batch_size自适应调整、新增图片裁剪、支持多GPU训练、支持各个种类目标数量计算、支持heatmap、支持EMA。**  
+这一层做好之后，上层的跟踪、规则、ViT、网页展示才能继续工作。
 
-## 相关仓库
-| 模型 | 路径 |
-| :----- | :----- |
-YoloV3 | https://github.com/bubbliiiing/yolo3-pytorch  
-Efficientnet-Yolo3 | https://github.com/bubbliiiing/efficientnet-yolo3-pytorch  
-YoloV4 | https://github.com/bubbliiiing/yolov4-pytorch
-YoloV4-tiny | https://github.com/bubbliiiing/yolov4-tiny-pytorch
-Mobilenet-Yolov4 | https://github.com/bubbliiiing/mobilenet-yolov4-pytorch
-YoloV5-V5.0 | https://github.com/bubbliiiing/yolov5-pytorch
-YoloV5-V6.1 | https://github.com/bubbliiiing/yolov5-v6.1-pytorch
-YoloX | https://github.com/bubbliiiing/yolox-pytorch
-YoloV7 | https://github.com/bubbliiiing/yolov7-pytorch
-YoloV7-tiny | https://github.com/bubbliiiing/yolov7-tiny-pytorch
+## 这一层到底负责什么
 
-## 性能情况
-| 训练数据集 | 权值文件名称 | 测试数据集 | 输入图片大小 | mAP 0.5:0.95 | mAP 0.5 |
-| :-----: | :-----: | :------: | :------: | :------: | :-----: |
-| COCO-Train2017 | [yolov8_n.pth](https://github.com/bubbliiiing/yolov8-pytorch/releases/download/v1.0/yolov8_n.pth) | COCO-Val2017 | 640x640 | 36.7 | 52.1
-| COCO-Train2017 | [yolov8_s.pth](https://github.com/bubbliiiing/yolov8-pytorch/releases/download/v1.0/yolov8_s.pth) | COCO-Val2017 | 640x640 | 44.1 | 61.0
-| COCO-Train2017 | [yolov8_m.pth](https://github.com/bubbliiiing/yolov8-pytorch/releases/download/v1.0/yolov8_m.pth) | COCO-Val2017 | 640x640 | 49.3 | 66.3
-| COCO-Train2017 | [yolov8_l.pth](https://github.com/bubbliiiing/yolov8-pytorch/releases/download/v1.0/yolov8_l.pth) | COCO-Val2017 | 640x640 | 52.0 | 68.9
-| COCO-Train2017 | [yolov8_x.pth](https://github.com/bubbliiiing/yolov8-pytorch/releases/download/v1.0/yolov8_x.pth) | COCO-Val2017 | 640x640 | 52.9 | 69.9
+简单说，它做 4 件事：
 
-## 所需环境
-torch==1.2.0    
-为了使用amp混合精度，推荐使用torch1.7.1以上的版本。
+1. 训练目标检测模型。
+2. 加载训练好的权重做推理。
+3. 把多路视频送进实时检测管线。
+4. 给上层提供稳定的检测结果、类别名和画框结果。
 
-## 文件下载
-训练所需的权值可在百度网盘中下载。  
-链接: https://pan.baidu.com/s/1-khkEUiH-J3YJHVaYuuVbw      
-提取码: ss9t     
+## 和主项目的关系
 
-VOC数据集下载地址如下，里面已经包括了训练集、测试集、验证集（与测试集一样），无需再次划分：  
-链接: https://pan.baidu.com/s/19Mw2u_df_nBzsC2lg20fQA    
-提取码: j5ge   
+| 位置 | 作用 |
+|------|------|
+| `moniter/predict.py` | 会直接导入 `yolo.YOLO` 和 `yolo.realtime.pipeline`。 |
+| `web/services/runtime_manager.py` | 启动网页监控时，也会调用这里的实时管线。 |
+| `Vit/` | 不负责检测本身，而是接在 YOLO 之后看一段视频事件。 |
 
-## 训练步骤
-### a、训练VOC07+12数据集
-1. 数据集的准备   
-**本文使用VOC格式进行训练，训练前需要下载好VOC07+12的数据集，解压后放在根目录**  
+所以你可以把它理解成：
 
-2. 数据集的处理   
-修改voc_annotation.py里面的annotation_mode=2，运行voc_annotation.py生成根目录下的2007_train.txt和2007_val.txt。   
+- `yolo/` 是“基础视觉层”
+- `Vit/` 是“视频事件层”
+- `vlm/` 是“解释层”
+- `web/` 是“展示层”
 
-3. 开始网络训练   
-train.py的默认参数用于训练VOC数据集，直接运行train.py即可开始训练。   
+## 目录结构
 
-4. 训练结果预测   
-训练结果预测需要用到两个文件，分别是yolo.py和predict.py。我们首先需要去yolo.py里面修改model_path以及classes_path，这两个参数必须要修改。   
-**model_path指向训练好的权值文件，在logs文件夹里。   
-classes_path指向检测类别所对应的txt。**   
-完成修改后就可以运行predict.py进行检测了。运行后输入图片路径即可检测。   
-
-### b、训练自己的数据集
-1. 数据集的准备  
-**本文使用VOC格式进行训练，训练前需要自己制作好数据集，**    
-训练前将标签文件放在VOCdevkit文件夹下的VOC2007文件夹下的Annotation中。   
-训练前将图片文件放在VOCdevkit文件夹下的VOC2007文件夹下的JPEGImages中。   
-
-2. 数据集的处理  
-在完成数据集的摆放之后，我们需要利用voc_annotation.py获得训练用的2007_train.txt和2007_val.txt。   
-修改voc_annotation.py里面的参数。第一次训练可以仅修改classes_path，classes_path用于指向检测类别所对应的txt。   
-训练自己的数据集时，可以自己建立一个cls_classes.txt，里面写自己所需要区分的类别。   
-model_data/cls_classes.txt文件内容为：      
-```python
-cat
-dog
-...
+```text
+yolo/
+├── yolo.py
+├── train.py
+├── predict.py
+├── run_realtime.py
+├── coco_annotation.py
+├── extra_annotation.py
+├── mixture.py
+├── get_map.py
+├── summary.py
+├── check.py
+├── fix.py
+├── Class/
+├── logs/
+├── model_data/
+├── nets/
+├── realtime/
+├── utils/
+└── Datasets/
 ```
-修改voc_annotation.py中的classes_path，使其对应cls_classes.txt，并运行voc_annotation.py。  
 
-3. 开始网络训练  
-**训练的参数较多，均在train.py中，大家可以在下载库后仔细看注释，其中最重要的部分依然是train.py里的classes_path。**  
-**classes_path用于指向检测类别所对应的txt，这个txt和voc_annotation.py里面的txt一样！训练自己的数据集必须要修改！**  
-修改完classes_path后就可以运行train.py开始训练了，在训练多个epoch后，权值会生成在logs文件夹中。  
+## 顶层文件怎么分工
 
-4. 训练结果预测  
-训练结果预测需要用到两个文件，分别是yolo.py和predict.py。在yolo.py里面修改model_path以及classes_path。  
-**model_path指向训练好的权值文件，在logs文件夹里。  
-classes_path指向检测类别所对应的txt。**  
-完成修改后就可以运行predict.py进行检测了。运行后输入图片路径即可检测。  
+### `yolo.py`
 
-## 预测步骤
-### a、使用预训练权重
-1. 下载完库后解压，在百度网盘下载权值，放入model_data，运行predict.py，输入  
-```python
-img/street.jpg
+这是检测推理核心类。
+
+它主要做这些事：
+
+- 加载模型权重。
+- 读取类别文件。
+- 处理图片输入。
+- 调用网络前向。
+- 解码检测框并做 NMS。
+
+如果你想修改：
+
+- 权重路径
+- 类别文件
+- 置信度
+- 输入尺寸
+
+通常第一眼应该看这里。
+
+### `train.py`
+
+这是训练入口。
+
+适合在 PyCharm 中直接打开后修改顶部参数，比如：
+
+- `phi`
+- `input_shape`
+- `Cuda`
+- `fp16`
+- `mosaic`
+- 数据路径
+- 预训练权重路径
+
+训练完成后，产物一般会放到 `logs/`。
+
+### `predict.py`
+
+这是离线推理入口。
+
+它支持多种模式，一般通过文件里的 `mode` 切换：
+
+- 单图预测
+- 视频预测
+- 文件夹预测
+- FPS 测试
+- 热力图
+- ONNX 导出
+
+如果你只是想先快速验证一个模型能不能看懂图片，先看这个文件最合适。
+
+### `run_realtime.py`
+
+这是不接 ViT 的实时入口。
+
+适合这种场景：
+
+- 你先只想跑检测、跟踪、规则。
+- 暂时不想接 `Vit/`。
+- 想先把视频源、区域、多路逻辑跑通。
+
+### `coco_annotation.py`、`extra_annotation.py`、`mixture.py`
+
+这几个文件负责数据准备。
+
+简单理解：
+
+- `coco_annotation.py`：把 COCO 标注转成当前训练脚本认得的格式。
+- `extra_annotation.py`：把自定义 XML 标注转成当前训练格式。
+- `mixture.py`：把不同来源的数据合并成最终训练索引。
+
+## 重要子文件夹说明
+
+### `nets/`
+
+放模型结构本体。
+
+主要内容：
+
+- `backbone.py`：骨干网络
+- `yolo.py`：检测头和整网结构
+- `yolo_training.py`：训练损失
+
+这一层更偏“模型内部结构”。
+
+如果你要改网络规模、特征融合、损失逻辑，这里最重要。
+
+### `utils/`
+
+放训练和推理会复用的工具。
+
+主要内容：
+
+- 数据读取
+- 图片预处理
+- 框解码
+- NMS
+- 坐标转换
+- 单轮训练逻辑
+- 训练日志与评估回调
+
+如果你要查：
+
+- 为什么框坐标不对
+- 为什么训练 loss 异常
+- 为什么 mAP 没记录
+
+一般先看这里。
+
+### `realtime/`
+
+这是整个 `yolo/` 模块里最重要的业务层。
+
+它把下面这些东西串起来：
+
+- 多路采集
+- 队列
+- 批量检测
+- ByteTrack 跟踪
+- ROI 规则
+- 滞留告警
+- 车辆告警
+- 画框和显示
+
+如果你的目标是“把摄像头监控跑起来”，那实际最关键的目录就是这里。
+
+### `Class/`
+
+放类别文件和部分模型相关资源。
+
+最常用的是：
+
+- `coco_classes.txt`
+
+这个文件的行号就是类别编号，所以训练和推理必须对齐。
+
+### `model_data/`
+
+主要放显示相关资源，比如中文字体。
+
+当前常见用途：
+
+- `simhei.ttf`
+
+它主要影响中文横幅、中文标签显示。
+
+### `logs/`
+
+放训练结果。
+
+常见内容：
+
+- 最优权重
+- 中间 checkpoint
+- loss 记录
+- 验证结果
+
+### `Datasets/`
+
+放数据集和训练索引。
+
+这部分不是完全标准化的数据平台，而是更偏“本地工程式数据目录”，所以你在 GitHub README 里最好说明：
+
+- 实际训练前要核对自己的图片路径
+- 训练索引是否还是本机绝对路径
+
+## 真实工作流程
+
+### 场景 1：训练检测模型
+
+在 PyCharm 里建议按这个顺序理解：
+
+1. 先准备 `Datasets/` 下的数据和索引。
+2. 核对 `Class/coco_classes.txt`。
+3. 打开 `train.py` 修改训练参数。
+4. 训练产物输出到 `logs/`。
+5. 再到 `yolo.py` 或上层入口中切换到新权重。
+
+### 场景 2：先离线测效果
+
+适合先验证单张图、一个视频的检测质量。
+
+建议看：
+
+1. `predict.py`
+2. `yolo.py`
+3. `Class/coco_classes.txt`
+
+### 场景 3：跑实时多路监控
+
+适合摄像头、监控视频、区域告警。
+
+建议看：
+
+1. `run_realtime.py`
+2. `realtime/config.py`
+3. `realtime/pipeline.py`
+4. `realtime/display.py`
+
+如果你最终要跑的是根目录 `predict.py`，这里仍然是底层主干。
+
+## 实时管线怎么串起来
+
+```text
+视频源
+  ↓
+采集线程
+  ↓
+推理队列
+  ↓
+YOLO 批量检测
+  ↓
+ByteTrack 跟踪
+  ↓
+规则判断
+  ↓
+画框与显示
 ```
-2. 在predict.py里面进行设置可以进行fps测试和video视频检测。  
-### b、使用自己训练的权重
-1. 按照训练步骤训练。  
-2. 在yolo.py文件里面，在如下部分修改model_path和classes_path使其对应训练好的文件；**model_path对应logs文件夹下面的权值文件，classes_path是model_path对应分的类**。  
-```python
-_defaults = {
-    #--------------------------------------------------------------------------#
-    #   使用自己训练好的模型进行预测一定要修改model_path和classes_path！
-    #   model_path指向logs文件夹下的权值文件，classes_path指向model_data下的txt
-    #
-    #   训练好后logs文件夹下存在多个权值文件，选择验证集损失较低的即可。
-    #   验证集损失较低不代表mAP较高，仅代表该权值在验证集上泛化性能较好。
-    #   如果出现shape不匹配，同时要注意训练时的model_path和classes_path参数的修改
-    #--------------------------------------------------------------------------#
-    "model_path"        : 'model_data/yolov8_s.pth',
-    "classes_path"      : 'model_data/coco_classes.txt',
-    #---------------------------------------------------------------------#
-    #   anchors_path代表先验框对应的txt文件，一般不修改。
-    #   anchors_mask用于帮助代码找到对应的先验框，一般不修改。
-    #---------------------------------------------------------------------#
-    "anchors_path"      : 'model_data/yolo_anchors.txt',
-    "anchors_mask"      : [[6, 7, 8], [3, 4, 5], [0, 1, 2]],
-    #---------------------------------------------------------------------#
-    #   输入图片的大小，必须为32的倍数。
-    #---------------------------------------------------------------------#
-    "input_shape"       : [640, 640],
-    #------------------------------------------------------#
-    #   所使用到的yolov8的版本：
-    #   n : 对应yolov8_n
-    #   s : 对应yolov8_s
-    #   m : 对应yolov8_m
-    #   l : 对应yolov8_l
-    #   x : 对应yolov8_x
-    #------------------------------------------------------#
-    "phi"               : 's',
-    #---------------------------------------------------------------------#
-    #   只有得分大于置信度的预测框会被保留下来
-    #---------------------------------------------------------------------#
-    "confidence"        : 0.5,
-    #---------------------------------------------------------------------#
-    #   非极大抑制所用到的nms_iou大小
-    #---------------------------------------------------------------------#
-    "nms_iou"           : 0.3,
-    #---------------------------------------------------------------------#
-    #   该变量用于控制是否使用letterbox_image对输入图像进行不失真的resize，
-    #   在多次测试后，发现关闭letterbox_image直接resize的效果更好
-    #---------------------------------------------------------------------#
-    "letterbox_image"   : True,
-    #-------------------------------#
-    #   是否使用Cuda
-    #   没有GPU可以设置成False
-    #-------------------------------#
-    "cuda"              : True,
-}
+
+对应的关键文件关系：
+
+| 文件 | 作用 |
+|------|------|
+| `realtime/capture_rtsp.py` | 采集 RTSP。 |
+| `realtime/capture_file.py` | 采集本地视频。 |
+| `realtime/batch_aggregator.py` | 从队列收集一批帧。 |
+| `realtime/yolo_batch.py` | 真批量推理。 |
+| `realtime/bytetrack_wrapper.py` | 跟踪。 |
+| `realtime/dwell.py` | 滞留统计。 |
+| `realtime/alarm.py` | 报警逻辑。 |
+| `realtime/display.py` | 画框和提示。 |
+| `realtime/pipeline.py` | 总循环。 |
+
+## 训练数据格式要点
+
+当前训练脚本读的是文本索引，不是直接扫目录自动训练。
+
+每一行大致长这样：
+
+```text
+图片路径 x1,y1,x2,y2,cls_id x1,y1,x2,y2,cls_id
 ```
-3. 运行predict.py，输入  
-```python
-img/street.jpg
-```
-4. 在predict.py里面进行设置可以进行fps测试和video视频检测。  
 
-## 评估步骤 
-### a、评估VOC07+12的测试集
-1. 本文使用VOC格式进行评估。VOC07+12已经划分好了测试集，无需利用voc_annotation.py生成ImageSets文件夹下的txt。
-2. 在yolo.py里面修改model_path以及classes_path。**model_path指向训练好的权值文件，在logs文件夹里。classes_path指向检测类别所对应的txt。**  
-3. 运行get_map.py即可获得评估结果，评估结果会保存在map_out文件夹中。
+这意味着：
 
-### b、评估自己的数据集
-1. 本文使用VOC格式进行评估。  
-2. 如果在训练前已经运行过voc_annotation.py文件，代码会自动将数据集划分成训练集、验证集和测试集。如果想要修改测试集的比例，可以修改voc_annotation.py文件下的trainval_percent。trainval_percent用于指定(训练集+验证集)与测试集的比例，默认情况下 (训练集+验证集):测试集 = 9:1。train_percent用于指定(训练集+验证集)中训练集与验证集的比例，默认情况下 训练集:验证集 = 9:1。
-3. 利用voc_annotation.py划分测试集后，前往get_map.py文件修改classes_path，classes_path用于指向检测类别所对应的txt，这个txt和训练时的txt一样。评估自己的数据集必须要修改。
-4. 在yolo.py里面修改model_path以及classes_path。**model_path指向训练好的权值文件，在logs文件夹里。classes_path指向检测类别所对应的txt。**  
-5. 运行get_map.py即可获得评估结果，评估结果会保存在map_out文件夹中。
+- 第一段是图片路径。
+- 后面每一段是一个框。
+- `cls_id` 必须和 `Class/coco_classes.txt` 的行号一致。
 
-## Reference
-https://github.com/ultralytics/ultralytics
+## 你最可能要改的地方
+
+| 目标 | 主要位置 |
+|------|----------|
+| 改检测权重 | `yolo.py` |
+| 改类别文件 | `yolo.py`、`Class/coco_classes.txt` |
+| 改训练参数 | `train.py` |
+| 改数据增强 | `utils/dataloader.py`、`train.py` |
+| 改检测后处理 | `utils/utils_bbox.py` |
+| 改实时流配置 | `run_realtime.py` 或上层 `config.yaml` |
+| 改实时显示 | `realtime/display.py` |
+| 改 ROI 规则 | `realtime/dwell.py`、`realtime/alarm.py` |
+
+## 这个模块里最容易踩坑的地方
+
+### 1. 路径可能写死了
+
+这个工程有比较明显的本地开发痕迹。
+
+所以你在交给别人前，最好提醒：
+
+- 某些图片路径可能是绝对路径
+- 某些权重路径可能是绝对路径
+- 某些脚本默认目录是按你本机写的
+
+### 2. 类别名必须完全一致
+
+规则里如果写：
+
+- `person`
+- `car`
+- `dog`
+
+那它们必须和 `Class/coco_classes.txt` 里的名字一致。
+
+只要大小写或拼写不一样，就会出现：
+
+- 不统计
+- 不报警
+- 不显示轨迹
+
+### 3. ROI 坐标必须和原始帧一致
+
+很多人会误以为 ROI 要按缩放后图片尺寸写，其实这里主要看原图像素坐标。
+
+如果区域框得不准，第一优先去查：
+
+- 视频原始分辨率
+- ROI 坐标来源
+- `display.py` 里画出来的位置是不是和想象一致
+
+### 4. 实时入口和根目录入口不是一个东西
+
+- `yolo/run_realtime.py`：只跑 YOLO + 规则
+- `moniter/predict.py`：会再往上接 ViT
+
+文档里一定要写清楚，否则很容易混淆。
+
+## 推荐阅读顺序
+
+如果你主要关心：
+
+- 模型结构：先看 `nets/`
+- 训练流程：先看 `train.py` + `utils/`
+- 实时监控：先看 `realtime/`
+- 纯推理：先看 `yolo.py` + `predict.py`
+
+## 本目录下建议继续阅读的文档
+
+- `realtime/README.md`
+- `nets/README.md`
+- `utils/README.md`
+
+这三个 README 更像是“往里一层”的展开说明。
