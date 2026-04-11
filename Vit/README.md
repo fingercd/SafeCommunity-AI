@@ -1,257 +1,379 @@
-﻿
+# Vit 模块说明
 
-# Vit 视频异常检测训练流程说明
+`Vit/` 这一层负责的不是“检测画面里有什么”，而是“看一小段视频里发生了什么”。
 
-本文档说明在 PyCharm 下（无需命令行）完成「双流 ViT（RGB + 光流）→ 先提 embedding → 已知类分类 + normal 聚类画边界」的完整操作流程。  
-不使用 SSIM 与光流过滤，所有步骤均可通过 Run Configuration 一键运行。
+在整个项目里，它是事件识别层。
 
----
+## 先说最重要的一句话
 
-## 一、流程概览
+**当前仓库里真正完整、能和代码对应上的最新 ViT 主线，是 `VideoMAE v2 + MIL + 端到端训练`。**
 
-顺序  步骤                     脚本                                输入依赖                输出目录
-1     预计算光流               precompute_optical_flow.py          视频 + video_labels.csv  lab_dataset/derived/optical_flows
-2     提取 embedding           extract_embeddings.py               步骤 1 的 flows_dir      lab_dataset/derived/embeddings
-3     已知类分类               train_known_classifier.py           步骤 2 的 embeddings    lab_dataset/derived/known_classifier
-4     normal 聚类与边界        fit_kmeans_ocsvm.py                 步骤 2 的 embeddings    lab_dataset/derived/open_set
-4b    评估边界                 eval_open_set.py                    步骤 4 的 open_set 产物  控制台报告
-4c    按簇导出样本             export_clusters_to_folders.py       步骤 2 + 4             lab_dataset/derived/cluster_samples
+这一点很重要，因为 `Vit/` 目录里还保留了一些历史说明文档，里面写的是另一套更老的流程。  
+如果你以后把这个项目放到 GitHub，上来就应该把这句话写清楚，避免别人一开始就走错方向。
 
-重要：步骤 2 依赖步骤 1 的光流目录；步骤 3、4 依赖步骤 2 的 embedding 目录。请按顺序执行。
+## 这个模块在整个项目里的位置
 
----
+你可以这样理解：
 
-## 二、环境与依赖
+- `yolo/` 先找出目标。
+- `Vit/` 再看连续的一段视频片段，判断是不是异常事件。
+- `vlm/` 在需要时再进一步做文字复核。
 
-- Python：建议 3.9+
-- 工作目录：所有 Run Configuration 的 Working directory 请设为项目根目录，例如：
-  C:\Users\Administrator\Desktop\Vit
-- 依赖安装（在项目根或虚拟环境下）：
-  pip install -r lab_anomaly/requirements.txt
-  主要包含：torch、torchvision、opencv-python、numpy、transformers、PyYAML、scikit-learn、joblib、scikit-image
+也就是说，`Vit/` 处理的是“时间上的变化”，不是单帧检测。
 
----
+## 顶层结构
 
-## 三、数据与目录约定
+```text
+Vit/
+├── README.md
+├── README.VIT.md
+├── docs/
+├── lab_anomaly/
+└── lab_dataset/
+```
 
-- 视频标签：lab_dataset/labels/video_labels.csv，需包含列：video_id、video_path、label（如 normal、Abuse、Shoplifting 等）
-- 视频文件：video_path 为相对 lab_dataset 的路径（如 raw_videos/Abuse/Abuse001_x264.mp4），即实际路径为 lab_dataset/raw_videos/Abuse/Abuse001_x264.mp4
-- 相对路径：脚本内 lab_dataset、lab_anomaly 等均相对于项目根目录解析；在 PyCharm 中设置好 Working directory 后即可直接使用相对路径
+## 每个子目录是干什么的
 
----
+### `lab_anomaly/`
 
-## 四、步骤 1：预计算光流
+这是核心代码目录。
 
-双流 ViT 需要预先算好的光流，与 extract_embeddings 使用相同的 clip 采样（clip_len、frame_stride、num_clips_per_video），保证帧索引一致。
+主要负责：
 
-### 4.1 脚本位置
-lab_anomaly/train/precompute_optical_flow.py
+- 读取视频片段数据
+- 定义 VideoMAE v2 编码器
+- 定义 MIL 分类头
+- 训练端到端事件分类模型
+- 提供实时推理运行时
 
-### 4.2 PyCharm Run Configuration
-Script path: 选择 lab_anomaly/train/precompute_optical_flow.py
-Working directory: C:\Users\Administrator\Desktop\Vit（或你的项目根）
-Parameters: 
---dataset_root lab_dataset --labels_csv lab_dataset/labels/video_labels.csv --out_dir lab_dataset/derived/optical_flows --clip_len 16 --frame_stride 2 --num_clips_per_video 32 --backend farneback --skip_existing
+如果你只保留一个目录来代表“ViT 真正的实现”，那就是它。
 
-- --backend farneback：使用 OpenCV 在 CPU 上计算光流
-- --skip_existing：若某视频已存在 flows.npz 则跳过
+### `lab_dataset/`
 
-### 4.3 常用参数说明
-参数                    默认值         说明
---dataset_root          lab_dataset    数据集根目录
---labels_csv            lab_dataset/labels/video_labels.csv  视频标签 CSV
---out_dir               lab_dataset/derived/optical_flows  光流输出目录
---clip_len              16             每个 clip 的帧数
---frame_stride          2              帧步长
---num_clips_per_video   32             每视频 clip 数
---backend               raft           farneback（CPU）或 raft（GPU）
---device                auto           光流计算设备：cpu/cuda/auto
---resize                384,384        光流计算分辨率 W,H
---skip_existing         无             已存在 flows.npz 的视频跳过
+这是数据目录约定。
 
-### 4.4 输出
-- 每个视频一个子目录：lab_dataset/derived/optical_flows//flows.npz
-- flows_meta.jsonl（记录视频与路径对应关系）
-- 步骤 2 的 flows_dir 指向该 optical_flows 目录
+主要负责：
 
----
+- 保存原始视频
+- 保存 `video_labels.csv`
+- 保存预切片结果
+- 保存训练产物
 
-## 五、步骤 2：提取 Embedding（双流 ViT，无过滤）
+### `docs/`
 
-使用 RGB + 光流 双流 ViT 提取 clip 级 embedding，不启用 SSIM 与光流过滤。
+这是补充说明目录。
 
-### 5.1 脚本位置
-lab_anomaly/train/extract_embeddings.py
+适合做：
 
-### 5.2 方式 A：使用 YAML 配置（推荐）
-配置文件：lab_anomaly/configs/embedding_example.yaml
+- 学习笔记
+- 代码功能总览
+- 路径修改说明
 
-PyCharm Run Configuration:
-Script path: lab_anomaly/train/extract_embeddings.py
-Working directory: 项目根目录
-Parameters: --config lab_anomaly/configs/embedding_example.yaml
+但这里有一个现实问题：
 
-YAML 中已设置：
-enable_filtering: false
-enable_flow_filter: false
-encoder.use_dual_stream: true
-flows.flows_dir: lab_dataset/derived/optical_flows
+**部分文档描述的是旧流程，不完全等于当前代码。**
 
-### 5.3 方式 B：不用 YAML，纯命令行参数
-Parameters:
---config "" --dataset_root lab_dataset --labels_csv lab_dataset/labels/video_labels.csv --out_dir lab_dataset/derived/embeddings --use_dual_stream --no_filtering --flows_dir lab_dataset/derived/optical_flows --clip_len 16 --frame_stride 2 --num_clips_per_video 32 --batch_size 32
+所以在对外 README 里，应该把它定义为“补充资料”，而不是“唯一正确流程”。
 
-- --no_filtering：关闭 SSIM 与光流过滤
-- --use_dual_stream：启用双流（embedding 维度 1536）
+### `README.VIT.md`
 
-### 5.4 常用参数说明
-参数                    默认值         说明
---config                lab_anomaly/configs/embedding_example.yaml  YAML 配置文件
---out_dir               lab_dataset/derived/embeddings  embedding 输出目录
---use_dual_stream       由 YAML/默认      启用 RGB+光流双流
---no_filtering          无             关闭 SSIM 与光流过滤
---flows_dir             lab_dataset/derived/optical_flows  预计算光流目录
---clip_len              16             与步骤 1 一致
---frame_stride          2              与步骤 1 一致
---num_clips_per_video   32             与步骤 1 一致
---save_format           npy_per_clip   npy_per_clip 或 npz_per_video
---batch_size            32             批大小
---limit                 0              仅处理前 N 个 clip
+这是历史留下来的训练流程说明。
 
-### 5.5 输出
-- 目录：lab_dataset/derived/embeddings
-- embeddings_meta.jsonl：每行记录 video_id、label、embedding_path
-- npy_per_clip：每个视频子目录含 clip_000.npy 等（长度 1536）
-- npz_per_video：每个视频一个 xxx.npz（含 embeddings 数组）
+它有参考价值，但不能直接当成当前仓库的真实主线。
 
----
+因为它写的是：
 
-## 六、步骤 3：已知类 MIL 分类训练
+- 双流
+- 光流预计算
+- embedding 提取
+- 开放集边界
 
-在步骤 2 的 clip embeddings 上训练「已知类」MIL 分类器（normal/Abuse/Shoplifting 等）。
+而当前仓库里最完整的主线并不是这一套。
 
-### 6.1 脚本位置
-lab_anomaly/train/train_known_classifier.py
+## 当前最新 ViT 主线
 
-### 6.2 PyCharm Run Configuration
-Script path: lab_anomaly/train/train_known_classifier.py
-Working directory: 项目根目录
-Parameters: 
---embeddings_dir lab_dataset/derived/embeddings --out_dir lab_dataset/derived/known_classifier --pooling attn --epochs 200 --batch_size 16
+### 真实流程
 
-### 6.3 常用参数说明
-参数                    默认值         说明
---embeddings_dir        见脚本默认    步骤 2 的 embedding 目录
---out_dir               见脚本默认    分类器输出目录
---pooling               attn          聚合方式：attn 或 topk
---topk                  2             pooling=topk 时的 k
---epochs                200           训练轮数
---batch_size            16            批大小
---lr                    3e-4          学习率
---val_ratio             0.2           验证集比例
---expected_num_clips    0             每视频 clip 数
---resume                空            从 checkpoint 恢复
---use_anomaly_branch    无            启用异常分数分支
---normal_label          normal        正常类标签名
+当前建议在 GitHub 上这样介绍：
 
-### 6.4 输出
-- checkpoint_best.pt / checkpoint_last.pt：模型与优化器状态
-- labels.json：label2idx、idx2label
+1. 准备视频和标签。
+2. 用 `precompute_clips.py` 先离线切 clip。
+3. 用 `train_end2end.py` 训练 `VideoMAE v2 + MIL`。
+4. 用 `known_event_runtime.py` 或 `rtsp_service.py` 做实时推理。
 
----
+### 真实对应文件
 
-## 七、步骤 4：Normal 聚类与边界（KMeans + OCSVM）
+| 路径 | 作用 |
+|------|------|
+| `lab_anomaly/tool/precompute_clips.py` | 先把视频切成训练要用的 clip。 |
+| `lab_anomaly/train/train_end2end.py` | 端到端训练主入口。 |
+| `lab_anomaly/models/vit_video_encoder.py` | VideoMAE v2 编码器封装。 |
+| `lab_anomaly/models/mil_head.py` | MIL 分类头。 |
+| `lab_anomaly/infer/known_event_runtime.py` | 实时推理运行时。 |
+| `lab_anomaly/infer/rtsp_service.py` | RTSP 服务版推理。 |
+| `lab_anomaly/infer/scoring.py` | checkpoint 加载和打分。 |
 
-仅使用 label=normal 的 clip embedding，先做 KMeans 聚类，再对每个簇训练 One-Class SVM。
+## 为什么说这是“最新主线”
 
-### 7.1 脚本位置
-lab_anomaly/train/fit_kmeans_ocsvm.py
+因为当前仓库里，这条链最完整：
 
-### 7.2 PyCharm Run Configuration
-Script path: lab_anomaly/train/fit_kmeans_ocsvm.py
-Working directory: 项目根目录
-Parameters: 
---embeddings_dir lab_dataset/derived/embeddings --out_dir lab_dataset/derived/open_set --normal_label normal --k 16 --quantile 0.95 --min_cluster_size 20
+- 有数据读法
+- 有训练入口
+- 有模型实现
+- 有推理入口
+- 有配置文件
 
-### 7.3 常用参数说明
-参数                    默认值         说明
---embeddings_dir        lab_dataset/derived/embeddings  步骤 2 的 embedding 目录
---out_dir               lab_dataset/derived/open_set  KMeans/OCSVM 输出目录
---normal_label          normal         视为「正常」的标签名
---k                     16             KMeans 簇数
---min_cluster_size      20             样本数少于此值的簇回退到全局
---nu                    0.05           OCSVM 的 nu 参数
---gamma                 scale          OCSVM 核参数：scale/auto/数值
---quantile              0.95           normal 上取 anomaly_score 的分位数
---limit                 0              仅用前 N 条 normal clip
---seed                  42             随机种子
+而旧流程里提到的很多脚本，在当前仓库里已经不完整了，或者压根找不到对应文件。
 
-### 7.4 输出与「画边界」含义
-- kmeans.joblib：KMeans 模型
-- ocsvm_global.joblib：全局 OCSVM
-- ocsvm_cluster_*.joblib：每个簇的 OCSVM
-- thresholds.json：global_threshold、cluster_thresholds
+## 目录深入说明
 
-「画边界」指：决策边界由 OCSVM 的 decision_function 定义，anomaly_score = -decision_function(x)，大于阈值判为异常。
+## `lab_anomaly/`
 
----
+这是最重要的目录。
 
-## 八、可选：评估边界与导出簇样本
+你可以把它再拆成 5 层来理解。
 
-### 8.1 评估开放集边界（eval_open_set.py）
-Script: lab_anomaly/train/eval_open_set.py
-Parameters: 
---open_set_dir lab_dataset/derived/open_set --embeddings_dir lab_dataset/derived/embeddings
-输出：控制台报告（簇质量、边界有效性）
+### 1. `data/`
 
-### 8.2 按簇导出样本（export_clusters_to_folders.py）
-Script: lab_anomaly/train/export_clusters_to_folders.py
-Parameters: 
---embeddings_dir lab_dataset/derived/embeddings --open_set_dir lab_dataset/derived/open_set --dataset_root lab_dataset --out_dir lab_dataset/derived/cluster_samples --max_per_cluster 50
-输出：cluster_samples/cluster_* 文件夹（每簇导出的 clip 样本）
+负责把视频和标签变成模型可读的数据。
 
----
+常见职责：
 
-## 九、配置文件说明（YAML）
+- 读取 `video_labels.csv`
+- 读取视频帧
+- 构造 clip 数据集
+- 建立索引
 
-lab_anomaly/configs/embedding_example.yaml 关键配置：
+### 2. `models/`
 
-配置项                            说明                              推荐（双流、无过滤）
-enable_filtering                  是否启用 SSIM 过滤                false
-enable_flow_filter                是否启用光流幅值过滤              false
-encoder.use_dual_stream           是否使用 RGB+光流双流             true
-encoder.fusion_method             双流融合方式                      concat
-flows.flows_dir                   预计算光流目录                    lab_dataset/derived/optical_flows
-sampling.clip_len                 与步骤 1 一致                     16
-sampling.frame_stride             与步骤 1 一致                     2
-sampling.num_clips_per_video      与步骤 1 一致                     32
-runtime.batch_size                批大小                            32（按显存调整）
-runtime.limit                     限制处理 clip 数，0 为不限制       0
+负责模型结构。
 
----
+主要是两块：
 
-## 十、输出文件一览
+- `vit_video_encoder.py`
+  - 封装 `VideoMAE v2`
+  - 负责把一段视频变成特征向量
 
-步骤  输出目录/文件                              说明
-1     lab_dataset/derived/optical_flows//flows.npz  每视频每 clip 的光流数组
-2     lab_dataset/derived/embeddings/embeddings_meta.jsonl    embedding 元信息索引
-2     lab_dataset/derived/embeddings//clip_*.npy   clip 级 embedding 文件
-3     lab_dataset/derived/known_classifier/checkpoint_best.pt 最佳分类模型
-3     lab_dataset/derived/known_classifier/labels.json        类别映射
-4     lab_dataset/derived/open_set/kmeans.joblib             KMeans 模型
-4     lab_dataset/derived/open_set/ocsvm_global.joblib       全局 OCSVM
-4     lab_dataset/derived/open_set/ocsvm_cluster_*.joblib     簇 OCSVM
-4     lab_dataset/derived/open_set/thresholds.json           异常阈值
-4c    lab_dataset/derived/cluster_samples/cluster_*/         每簇导出的 clip 样本
+- `mil_head.py`
+  - 负责把多个 clip 的特征聚合起来
+  - 最终输出正常/异常结果
 
----
+### 3. `tool/`
 
-## 快速检查清单（PyCharm）
+主要是训练前准备工具。
 
-[ ] Working directory 设为项目根（如 C:\Users\Administrator\Desktop\Vit）
-[ ] 步骤 1 已跑完，lab_dataset/derived/optical_flows 下有各视频的 flows.npz
-[ ] 步骤 2 使用 embedding_example.yaml 或 --use_dual_stream --no_filtering --flows_dir ...，且未开启 SSIM/光流过滤
-[ ] 步骤 2 输出目录与步骤 3、4 的 --embeddings_dir 一致
-[ ] 步骤 4 的 --normal_label 与 CSV 中正常类标签一致（默认 normal）
+当前最关键的是：
 
-按上述顺序在 PyCharm 中配置并运行各脚本即可完成全流程。
+- `precompute_clips.py`
+
+它不是训练本身，而是先把视频切成后续训练能直接复用的 `.npz` clip。
+
+### 4. `train/`
+
+负责训练。
+
+当前最关键的是：
+
+- `train_end2end.py`
+
+它是目前最值得在 README 里重点讲的训练入口。
+
+### 5. `infer/`
+
+负责推理和部署。
+
+常见入口：
+
+- `known_event_runtime.py`
+- `rtsp_service.py`
+- `scoring.py`
+
+如果你想把 ViT 挂进实时监控系统，这一层最关键。
+
+## `lab_dataset/`
+
+这里不是模型代码，而是数据约定。
+
+### 建议理解方式
+
+- `raw_videos/`：原始视频
+- `labels/`：标签文件
+- `derived/`：中间产物和训练产物
+
+### 重点文件
+
+| 路径 | 作用 |
+|------|------|
+| `lab_dataset/labels/video_labels.csv` | 视频级标签清单。 |
+| `lab_dataset/derived/preclips/` | 离线预切后的 clip。 |
+| `lab_dataset/derived/end2end_classifier/` | 当前主线训练产物。 |
+
+## 当前训练主流程，按 PyCharm 思路解释
+
+### 第一步：准备视频标签
+
+你需要先确保：
+
+- `lab_dataset/labels/video_labels.csv` 存在
+- 每一行视频路径是对得上的
+- `label` 字段能区分正常和异常
+
+### 第二步：预切片
+
+打开：
+
+- `lab_anomaly/tool/precompute_clips.py`
+
+在文件顶部配置区改好：
+
+- 数据根目录
+- 标签 CSV
+- 输出目录
+- 每个 clip 多少帧
+- 采样间隔
+- 每个视频最多切多少个 clip
+
+它会把结果写到：
+
+- `lab_dataset/derived/preclips/`
+
+### 第三步：端到端训练
+
+打开：
+
+- `lab_anomaly/train/train_end2end.py`
+
+这里是当前主训练入口。
+
+你需要重点看这些参数：
+
+- `dataset_root`
+- `labels_csv`
+- `preclip_root`
+- `out_dir`
+- `frames_per_clip`
+- `encoder_model_name`
+- `batch_size`
+- `stages`
+- `val_ratio`
+
+### 第四步：用训练结果做推理
+
+训练完成后，结果一般输出到：
+
+- `lab_dataset/derived/end2end_classifier/`
+
+然后可以由下面两种方式使用：
+
+- `known_event_runtime.py`：嵌入到整个监控工程
+- `rtsp_service.py`：单独作为 RTSP 推理服务
+
+## 当前主模型是怎么组成的
+
+### 1. 视频编码器
+
+由 `vit_video_encoder.py` 提供。
+
+它本质上是：
+
+- 载入预训练的 `VideoMAE v2`
+- 把一段视频 clip 编码成向量
+
+### 2. MIL 头
+
+由 `mil_head.py` 提供。
+
+它负责：
+
+- 把一个视频里的多个 clip 特征汇总
+- 输出最终分类结果
+
+### 3. 排序损失
+
+由 `ranking_loss.py` 提供。
+
+它主要是为了帮助模型更稳定地区分正常和异常片段。
+
+## 当前配置文件有哪些
+
+### `lab_anomaly/configs/train_end2end.yaml`
+
+这是当前主训练配置文件。
+
+它和 `train_end2end.py` 的关系是：
+
+- Python 文件里先有一套默认值
+- YAML 再去覆盖它
+
+这意味着：
+
+- 你不能只改一边不看另一边
+- 如果 YAML 里没写某个值，就会回退到 Python 默认值
+
+### `lab_anomaly/configs/rtsp_service_example.yaml`
+
+这是推理服务示例配置。
+
+适合查看：
+
+- checkpoint 放哪
+- 输出日志放哪
+- RTSP 服务期望的字段有哪些
+
+## 当前目录里最容易误解的地方
+
+### 1. 旧文档还在，但不代表就是当前主线
+
+比如 `README.VIT.md` 里说的是：
+
+- 光流
+- embedding
+- 已知类分类
+- KMeans + OCSVM
+
+这套流程作为历史背景可以看，但不应该当作当前仓库唯一正确流程。
+
+### 2. 文档中的某些脚本，当前仓库里并不存在
+
+对外写 README 时，最好不要把这些脚本再当成核心入口。
+
+否则别人一搜发现文件没有，会直接怀疑仓库不完整。
+
+### 3. 训练和推理的帧数必须一致
+
+比如：
+
+- `frames_per_clip`
+- `clip_len`
+- 滑窗设置
+
+这些值一旦前后不一致，很容易出问题。
+
+### 4. 模型名要前后一致
+
+当前实现更偏向：
+
+- `OpenGVLab/VideoMAEv2-Base`
+
+而不是旧文档里常出现的另一套名字。
+
+README 里最好明确说明：
+
+- 以当前训练脚本和 checkpoint 实际配置为准
+
+## 你如果是小白，建议怎么读
+
+最省事的顺序是：
+
+1. 先看本文件，搞清楚当前主线不是旧文档那套。
+2. 再看 `lab_anomaly/README.md`，知道代码怎么分层。
+3. 再看 `lab_dataset/README.md`，知道数据该怎么摆。
+4. 如果还想看历史背景，再去看 `README.VIT.md` 和 `docs/`。
+
+## 推荐你在 GitHub 上怎么介绍“最新 ViT”
+
+可以直接用下面这句话当摘要：
+
+> 本项目当前的视频事件识别主线基于 `VideoMAE v2 + MIL`。训练流程采用“先离线预切 clip，再端到端训练，再挂入实时推理”的方式；仓库中保留的旧版双流光流文档仅作历史参考。
+
+这句话非常重要，能帮读者少走很多弯路。
