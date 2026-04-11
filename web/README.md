@@ -1,36 +1,229 @@
-# Web 多路监控
+﻿# Web 模块说明
 
-Flask + MJPEG 多路 RTSP 监控，YOLO 框图 + ViT 异常初筛 + Agent 复核，流配置 JSON 持久化。
+`web/` 是这个项目的网页监控层。
 
-## 运行
+它的作用不是重新实现检测模型，而是把已经有的能力串成一个可操作、可展示的页面。
 
-从项目根目录执行（保证可导入 yolo、vlm、Vit/lab_anomaly）：
+## 这层负责什么
 
-```bash
-cd c:\Users\Administrator\Desktop\moniter
-set PYTHONPATH=%CD%;%CD%\Vit
-python -m web.app
+简单说，它负责 4 件事：
+
+1. 管理多路视频流。
+2. 启动后台实时监控。
+3. 在网页上显示视频画面和状态。
+4. 把 YOLO、ViT、VLM 的结果统一展示出来。
+
+## 整体关系
+
+你可以这样理解：
+
+- `yolo/`：负责检测和跟踪。
+- `Vit/`：负责视频片段异常判断。
+- `vlm/`：负责异常后的二次复核。
+- `web/`：负责把前面三层串起来展示给人看。
+
+## 目录结构
+
+```text
+web/
+├── app.py
+├── README.md
+├── config/
+├── services/
+├── static/
+└── templates/
 ```
 
-浏览器打开 http://127.0.0.1:5000/ ，添加 RTSP 地址即可。
+## 顶层文件和子目录分别做什么
 
-## 环境变量（可选）
+### `app.py`
 
-- `YOLO_WEIGHTS`：YOLO 权重路径，默认 `yolo/logs/best_epoch_weights.pth`
-- `YOLO_CLASSES`：类别文件，默认 `yolo/Class/coco_classes.txt`
-- `VIT_CHECKPOINT`：ViT 已知分类器，默认 `Vit/lab_dataset/derived/known_classifier/checkpoint_best.pt`
-- `VLM_MERGED`：Agent 合并后模型目录，默认 `vlm/outputs/merged`（需先执行 `vlm/train/merge_lora.py`）
+这是网页入口。
 
-## 2–3 路调试验证项
+它主要负责：
 
-1. 用 2～3 路 RTSP（或本地视频改为 RTSP 测试）跑通页面，添加/删除流会写入 `web/config/streams.json`。
-2. 停止某路：点击「停止」后该路从 pipeline 中移除（enabled=false 并重启 pipeline）；再点「启动」可重新加入。
-3. 页面视频均为 640×480；YOLO 检测框、类别、置信度在画面上实时显示。
-4. ViT 未达阈值（默认 0.6）时不触发 Agent；达阈值后提交 clip 给 Agent，页面状态区出现「Agent复核」及置信度、解释。
-5. 单路断流或失败不影响其他路；状态区可显示错误信息。
+- 起 Flask 服务
+- 提供页面路由
+- 提供增删改查流的接口
+- 提供视频流接口
+- 提供状态接口
 
-## 后续升级到生产级视频架构的保留点
+### `config/`
 
-- **视频传输**：当前 `/video/<id>` 为 MJPEG；可改为 WebSocket 或 HLS/WebRTC，仅替换该路由与前端 `<img>` 消费方式，推理与 `FrameStateCache` 不变。
-- **流管理与状态**：`stream_store`、`frame_state`、`runtime_manager` 与 Flask 解耦，可拆成独立服务或换用 SQLite/PostgreSQL 持久化。
-- **推理编排**：ViT 阈值、Agent 冷却、clip 长度等均在配置或 `VlmReviewRuntime`/`MonitorRuntimeManager` 中可调，便于后续多路扩展与算力中心部署。
+放网页监控的持久化配置。
+
+当前最重要的是：
+
+- `config/streams.json`
+
+里面会保存：
+
+- 每一路流的名称
+- RTSP 地址
+- 是否启用
+- 一些阈值信息
+
+### `services/`
+
+这是整个 `web/` 目录里最重要的一层。
+
+它不是给页面看的，而是后台真正干活的地方。
+
+包括：
+
+- 读取流配置
+- 启动和停止实时管线
+- 缓存最新画面
+- 缓存 ViT 和 VLM 结果
+
+### `templates/`
+
+放页面模板。
+
+当前核心是主页模板。
+
+### `static/`
+
+放前端静态文件，比如页面脚本。
+
+## 页面背后到底怎么跑
+
+### 后台流程
+
+```text
+浏览器页面
+  ↓
+Flask 接口
+  ↓
+runtime_manager 启动后台监控
+  ↓
+YOLO 实时管线跑起来
+  ↓
+ViT 拿 clip 做异常判断
+  ↓
+如果异常达到阈值，再交给 VLM 复核
+  ↓
+frame_state 保存最新画面和状态
+  ↓
+浏览器轮询状态、拉取视频流
+```
+
+## 最重要的后台文件
+
+### `services/runtime_manager.py`
+
+这是总调度器。
+
+它负责：
+
+- 从 `streams.json` 读启用中的流
+- 创建 YOLO
+- 尝试加载 ViT
+- 尝试加载 VLM
+- 启动 `yolo.realtime.pipeline`
+- 把结果回写到缓存
+
+如果你要搞懂网页端到底怎么把三个模型层串起来，优先看它。
+
+### `services/frame_state.py`
+
+负责保存：
+
+- 每一路的最新画面
+- 每一路的状态
+
+这就是为什么页面能够一边显示视频，一边显示当前结果。
+
+### `services/stream_store.py`
+
+负责读写：
+
+- `config/streams.json`
+
+也就是“网页里新增、删除、启停流”背后的存储层。
+
+### `services/vlm_review_runtime.py`
+
+负责大模型复核。
+
+工作方式很简单：
+
+1. 先等 ViT 判断异常。
+2. 再看是否超过阈值。
+3. 再从最近缓存的一段 clip 中取帧。
+4. 交给 `vlm` 引擎分析。
+5. 把结果写回状态。
+
+## 当前这层最适合怎么在 PyCharm 里用
+
+建议直接打开：
+
+- `web/app.py`
+
+然后重点看：
+
+- `web/services/runtime_manager.py`
+- `web/config/streams.json`
+
+如果你要改默认模型路径，也主要看 `runtime_manager.py`。
+
+## 当前默认会连到哪些模型
+
+后台默认会尝试找：
+
+- YOLO 权重
+- 类别文件
+- ViT checkpoint
+- VLM 合并后模型目录
+
+如果这些路径不存在，不同层的表现会不一样：
+
+- YOLO 缺失：网页主功能直接受影响
+- ViT 缺失：还能显示视频和检测，但没有 ViT 异常结果
+- VLM 缺失：还能显示视频和 ViT，但没有大模型复核
+
+## 小白最容易踩的坑
+
+### 1. Web 页面不是单独完整系统
+
+它依赖：
+
+- `yolo`
+- `Vit`
+- 可选的 `vlm`
+
+所以页面能不能完整显示，取决于这些底层模块有没有准备好。
+
+### 2. 流列表改了以后，后台通常会重启监控
+
+也就是说：
+
+- 新增流
+- 删除流
+- 启停流
+
+这类操作通常不是无感热更新，而是会触发后台重新组织监控流程。
+
+
+
+### 3. 前端显示逻辑和后台阈值可能不是完全同一个值
+
+所以如果你感觉：
+
+- 后台已经触发了
+- 页面看起来却没按预期显示
+
+第一件事是同时检查：
+
+- 后台阈值
+- 前端显示条件
+
+## 推荐阅读顺序
+
+如果你主要想看懂网页监控这一层：
+
+1. 先看本 README
+2. 再看 `services/README.md`
+3. 再看 `config/README.md`
+
+这样最容易把“页面是什么”和“后台怎么跑”连起来。
