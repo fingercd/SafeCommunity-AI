@@ -1,40 +1,113 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>多路监控</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { font-family: sans-serif; margin: 12px; background: #1a1a1a; color: #e0e0e0; }
-    h1 { font-size: 1.2rem; margin-bottom: 12px; }
-    .toolbar { margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-    .toolbar input, .toolbar button { padding: 6px 10px; }
-    .toolbar input[type="text"] { width: 280px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 12px; }
-    .card { border: 1px solid #444; border-radius: 6px; overflow: hidden; background: #252525; }
-    .card h3 { margin: 0; padding: 8px 10px; font-size: 0.95rem; background: #333; }
-    .card .video-wrap { position: relative; background: #000; min-height: 240px; }
-    .card .video-wrap img { width: 100%; height: auto; display: block; vertical-align: top; }
-    .card .status { padding: 8px 10px; font-size: 0.85rem; color: #aaa; white-space: pre-wrap; word-break: break-all; max-height: 120px; overflow-y: auto; }
-    .card .status.agent { color: #b0e0b0; }
-    .card .status.error { color: #f88; }
-    .card .status .status-agent-line { color: #f88; }
-    .card .actions { padding: 6px 10px; display: flex; gap: 6px; flex-wrap: wrap; }
-    .card .actions button { padding: 4px 10px; font-size: 0.85rem; cursor: pointer; }
-    .card .actions button.stop { background: #c44; color: #fff; border: none; border-radius: 4px; }
-    .card .actions button.start { background: #4a4; color: #fff; border: none; border-radius: 4px; }
-    .card .actions button.del { background: #555; color: #fff; border: none; border-radius: 4px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能安防监控</title>
+<link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <h1>多路 RTSP 监控（YOLO + ViT + Agent 复核）</h1>
-  <div class="toolbar">
-    <input type="text" id="rtsp_url" placeholder="RTSP 地址" />
-    <input type="text" id="stream_name" placeholder="名称（可选）" />
-    <button type="button" id="add_btn">添加流</button>
+
+<nav class="navbar">
+  <div class="logo">智能安防监控</div>
+  <div class="spacer"></div>
+  <span class="status-dot off" id="vit_dot"></span>
+  <span class="status-label" id="vit_label">ViT: --</span>
+  <span class="status-dot off" id="vlm_dot"></span>
+  <span class="status-label" id="vlm_label">大模型: 未加载</span>
+  <button class="btn btn-primary" id="toggle_add_btn">+ 添加视频流</button>
+</nav>
+
+<div class="main">
+  <div class="add-form" id="add_form">
+    <div class="field">
+      <label>RTSP 地址</label>
+      <input type="text" id="inp_url" placeholder="rtsp://user:pass@ip:554/stream1">
+    </div>
+    <div class="field">
+      <label>名称（可选）</label>
+      <input type="text" id="inp_name" placeholder="监控名称" style="width:160px">
+    </div>
+    <button class="btn btn-primary" id="do_add_btn">添加</button>
+    <button class="btn btn-outline" id="cancel_add_btn">取消</button>
   </div>
+
   <div class="grid" id="grid"></div>
-  <script src="/static/app.js"></script>
+  <div class="empty-state" id="empty_state" style="display:none">
+    暂无视频流，点击右上角"添加视频流"开始
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-overlay" id="modal_overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modal_title">流设置</h2>
+      <button class="close-btn" id="modal_close">&times;</button>
+    </div>
+    <div class="modal-tabs">
+      <button class="active" data-tab="tab_basic">基础设置</button>
+      <button data-tab="tab_roi">禁区设置</button>
+      <button data-tab="tab_alarm">告警物品</button>
+    </div>
+    <div class="modal-body">
+      <!-- Tab: Basic -->
+      <div id="tab_basic">
+        <div class="setting-row">
+          <label>YOLO 检测置信度 <span class="range-val" id="val_yolo">0.50</span></label>
+          <input type="range" id="rng_yolo" min="0.1" max="1" step="0.05" value="0.5">
+        </div>
+        <div class="setting-row">
+          <label>ViT 异常阈值 <span class="range-val" id="val_vit">0.60</span></label>
+          <input type="range" id="rng_vit" min="0.1" max="1" step="0.05" value="0.6">
+        </div>
+        <div class="setting-row">
+          <label>AI 大模型复核（ViT 判为异常时自动触发）</label>
+          <label class="switch">
+            <input type="checkbox" id="chk_agent" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <label>大模型自动定时检测间隔（秒）</label>
+          <input type="number" id="inp_vlm_interval" min="0" max="300" step="1" value="16">
+          <div class="setting-hint">0 = 关闭定时检测，仅在 ViT 判为异常时触发。建议 16~60 秒。</div>
+        </div>
+      </div>
+      <!-- Tab: ROI -->
+      <div id="tab_roi" style="display:none">
+        <p style="font-size:.82rem;color:var(--text2);margin-bottom:10px">在下方截图上点击画出禁区多边形，双击完成一个禁区。可添加多个。</p>
+        <div class="roi-area" id="roi_area">
+          <img id="roi_img" src="">
+          <canvas id="roi_canvas"></canvas>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn btn-sm btn-outline" id="roi_undo_btn">撤销上一点</button>
+          <button class="btn btn-sm btn-primary" id="roi_finish_btn">完成当前禁区</button>
+          <button class="btn btn-sm btn-danger" id="roi_clear_btn">清除全部</button>
+        </div>
+        <div class="roi-list" id="roi_list"></div>
+        <div class="roi-hint">提示：每个禁区至少 3 个点。禁区内检测到指定物品将触发告警。</div>
+      </div>
+      <!-- Tab: Alarm -->
+      <div id="tab_alarm" style="display:none">
+        <div class="class-group">
+          <h4>禁区内告警物品（在 ROI 内检测到时告警）</h4>
+          <div class="class-tags" id="roi_class_tags"></div>
+        </div>
+        <div class="class-group">
+          <h4>全局告警物品（画面任意位置检测到即告警）</h4>
+          <div class="class-tags" id="global_class_tags"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" id="modal_cancel">取消</button>
+      <button class="btn btn-primary" id="modal_save">保存设置</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/app.js"></script>
 </body>
 </html>
