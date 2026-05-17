@@ -1,332 +1,160 @@
-﻿# Vit 模块说明
+# Vit — 视频异常检测模块
 
-`Vit/` 这一层负责的不是“检测画面里有什么”，而是“看一小段视频里发生了什么”。
+> 负责"看一小段视频里发生了什么"。基于 VideoMAE v2 + MIL（Multiple Instance Learning）实现视频级异常行为识别。
 
-在整个项目里，它是事件识别层。
+---
 
+## 这个模块能做什么
 
-## 顶层结构
+| 能力 | 说明 |
+|------|------|
+| **视频异常检测** | 对一段连续视频（如 16 帧）判断是"正常"还是"异常" |
+| **端到端训练** | 从原始视频 → 预切 clip → 训练 VideoMAE + MIL → 输出 checkpoint |
+| **异步实时推理** | 缓存最近帧组成滑动窗口，异步线程推理，不阻塞主循环 |
+| **独立 RTSP 服务** | 可脱离主项目，单独作为视频流异常检测服务运行 |
 
-```text
-Vit/
-├── README.md
-├── README.VIT.md
-├── docs/
-├── lab_anomaly/
-└── lab_dataset/
+---
+
+## 在整个项目中的位置
+
+```
+yolo/（看见目标）
+    ↓ 提供视频帧
+Vit/（判断异常）
+    ↓ 触发可疑时
+vlm/（解释异常）
+    ↓ 输出结论
+web/（展示结果）
 ```
 
-## 每个子目录是干什么的
-
-### `lab_anomaly/`
-
-这是核心代码目录。
-
-主要负责：
-
-- 读取视频片段数据
-- 定义 VideoMAE v2 编码器
-- 定义 MIL 分类头
-- 训练端到端事件分类模型
-- 提供实时推理运行时
-
-如果你只保留一个目录来代表“ViT 真正的实现”，那就是它。
-
-### `lab_dataset/`
-
-这是数据目录约定。
-
-主要负责：
-
-- 保存原始视频
-- 保存 `video_labels.csv`
-- 保存预切片结果
-- 保存训练产物
-
-### `docs/`
-
-这是补充说明目录。
-
-适合做：
-
-- 学习笔记
-- 代码功能总览
-- 路径修改说明
-
-## 当前最新 ViT 主线
-
-### 真实流程
-
-当前建议在 GitHub 上这样介绍：
-
-1. 准备视频和标签。
-2. 用 `precompute_clips.py` 先离线切 clip。
-3. 用 `train_end2end.py` 训练 `VideoMAE v2 + MIL`。
-4. 用 `known_event_runtime.py` 或 `rtsp_service.py` 做实时推理。
-
-### 真实对应文件
-
-| 路径 | 作用 |
-|------|------|
-| `lab_anomaly/tool/precompute_clips.py` | 先把视频切成训练要用的 clip。 |
-| `lab_anomaly/train/train_end2end.py` | 端到端训练主入口。 |
-| `lab_anomaly/models/vit_video_encoder.py` | VideoMAE v2 编码器封装。 |
-| `lab_anomaly/models/mil_head.py` | MIL 分类头。 |
-| `lab_anomaly/infer/known_event_runtime.py` | 实时推理运行时。 |
-| `lab_anomaly/infer/rtsp_service.py` | RTSP 服务版推理。 |
-| `lab_anomaly/infer/scoring.py` | checkpoint 加载和打分。 |
-
-
-因为当前仓库里，这条链最完整：
-
-- 有数据读法
-- 有训练入口
-- 有模型实现
-- 有推理入口
-- 有配置文件
-## 目录深入说明
-
-## `lab_anomaly/`
-
-这是最重要的目录。
-
-你可以把它再拆成 5 层来理解。
-
-### 1. `data/`
-
-负责把视频和标签变成模型可读的数据。
-
-常见职责：
-
-- 读取 `video_labels.csv`
-- 读取视频帧
-- 构造 clip 数据集
-- 建立索引
-
-### 2. `models/`
-
-负责模型结构。
-
-主要是两块：
-
-- `vit_video_encoder.py`
-  - 封装 `VideoMAE v2`
-  - 负责把一段视频变成特征向量
-
-- `mil_head.py`
-  - 负责把多个 clip 的特征聚合起来
-  - 最终输出正常/异常结果
-
-### 3. `tool/`
-
-主要是训练前准备工具。
-
-当前最关键的是：
-
-- `precompute_clips.py`
-
-它不是训练本身，而是先把视频切成后续训练能直接复用的 `.npz` clip。
-
-### 4. `train/`
-
-负责训练。
-
-当前最关键的是：
-
-- `train_end2end.py`
-
-它是目前最值得在 README 里重点讲的训练入口。
-
-### 5. `infer/`
-
-负责推理和部署。
-
-常见入口：
-
-- `known_event_runtime.py`
-- `rtsp_service.py`
-- `scoring.py`
-
-如果你想把 ViT 挂进实时监控系统，这一层最关键。
-
-## `lab_dataset/`
-
-这里不是模型代码，而是数据约定。
-
-### 建议理解方式
-
-- `raw_videos/`：原始视频
-- `labels/`：标签文件
-- `derived/`：中间产物和训练产物
-
-### 重点文件
-
-| 路径 | 作用 |
-|------|------|
-| `lab_dataset/labels/video_labels.csv` | 视频级标签清单。 |
-| `lab_dataset/derived/preclips/` | 离线预切后的 clip。 |
-| `lab_dataset/derived/end2end_classifier/` | 当前主线训练产物。 |
-
-## 当前训练主流程，按 PyCharm 思路解释
-
-### 第一步：准备视频标签
-
-你需要先确保：
-
-- `lab_dataset/labels/video_labels.csv` 存在
-- 每一行视频路径是对得上的
-- `label` 字段能区分正常和异常
-
-### 第二步：预切片
-
-打开：
-
-- `lab_anomaly/tool/precompute_clips.py`
-
-在文件顶部配置区改好：
-
-- 数据根目录
-- 标签 CSV
-- 输出目录
-- 每个 clip 多少帧
-- 采样间隔
-- 每个视频最多切多少个 clip
-
-它会把结果写到：
-
-- `lab_dataset/derived/preclips/`
+Vit 是**事件识别层**：YOLO 告诉系统"画面里有什么"，ViT 告诉系统"这段视频发生了什么"。
+
+---
+
+## 技术架构
+
+### 模型组成
+
+```
+视频片段 (B, C, T, H, W)
+    ↓
+VideoMAE v2 Encoder
+    - Patch Embedding
+    - 12 层 Transformer
+    - CLS Token / Mean Pooling
+    ↓
+特征向量 (B, D)  D=768
+    ↓
+MIL Head
+    - Attention Pooling 或 Top-K 聚合
+    - 异常分数分支（可选）
+    ↓
+分类结果 (normal / anomaly) + 异常概率 + ranking 分数
+```
+
+### 核心组件
+
+| 组件 | 文件 | 作用 |
+|------|------|------|
+| **VideoMAE v2 编码器** | `lab_anomaly/models/vit_video_encoder.py` | 把视频 clip 编码成 768 维特征向量 |
+| **MIL 分类头** | `lab_anomaly/models/mil_head.py` | 聚合多 clip 特征，输出视频级分类 |
+| **排序损失** | `lab_anomaly/models/ranking_loss.py` | 训练时帮助区分正常/异常片段 |
+
+---
+
+## 目录结构
+
+```
+Vit/
+├── README.md                  # 本文件（模块总览）
+├── docs/                      # 补充学习笔记和历史设计思路
+│
+├── lab_anomaly/               # 核心代码（训练 + 推理）
+│   ├── data/                  # 数据读取与预处理
+│   ├── models/                # VideoMAE v2 + MIL 模型定义
+│   ├── tool/                  # 训练前准备工具
+│   ├── train/                 # 训练入口
+│   ├── infer/                 # 推理入口
+│   └── configs/               # YAML 配置文件
+│
+└── lab_dataset/               # 数据目录约定
+    ├── raw_videos/            # 原始视频
+    ├── labels/                # video_labels.csv 标签文件
+    └── derived/               # 中间产物和训练输出
+        ├── preclips/          # 离线预切 clip
+        └── end2end_classifier/# 训练产物（checkpoint）
+```
+
+---
+
+## 主流程（当前推荐）
+
+### 第一步：准备视频和标签
+
+```
+lab_dataset/raw_videos/        ← 放入原始视频
+lab_dataset/labels/video_labels.csv  ← 编辑标签
+```
+
+CSV 格式：
+```csv
+video_id,video_path,label,camera_id,start_time,end_time,note
+```
+- `label`：`normal` 或异常类名（如 `fall`、`violent`、`fire_smoke`）
+- `video_path`：相对于 `lab_dataset/` 的路径
+
+### 第二步：离线预切 clip
+
+```bash
+python Vit/lab_anomaly/tool/precompute_clips.py
+```
+
+- 读取 `video_labels.csv` 和原始视频
+- 按配置参数切成固定长度的 clip（`.npz` 格式）
+- 输出到 `lab_dataset/derived/preclips/`
 
 ### 第三步：端到端训练
 
-打开：
+```bash
+python Vit/lab_anomaly/train/train_end2end.py
+```
 
-- `lab_anomaly/train/train_end2end.py`
+- 读取预切 clip
+- 三阶段渐进解冻训练：
+  1. **head_only**：30 epochs，lr=1e-3，冻结全部 backbone
+  2. **unfreeze_2**：20 epochs，lr=5e-5，解冻最后 2 层
+  3. **unfreeze_4**：15 epochs，lr=2e-5，解冻最后 4 层
+- 损失：CE Loss + λ * MIL Ranking Loss
+- 输出到 `lab_dataset/derived/end2end_classifier/`
 
-这里是当前主训练入口。
+### 第四步：实时推理
 
-你需要重点看这些参数：
+**接入主项目**：
+- 被 `web/services/runtime_manager.py` 调用
+- 使用 `lab_anomaly/infer/known_event_runtime.py`
 
-- `dataset_root`
-- `labels_csv`
-- `preclip_root`
-- `out_dir`
-- `frames_per_clip`
-- `encoder_model_name`
-- `batch_size`
-- `stages`
-- `val_ratio`
+**独立运行**：
+```bash
+python Vit/lab_anomaly/infer/rtsp_service.py
+```
 
-### 第四步：用训练结果做推理
+---
 
-训练完成后，结果一般输出到：
+## 关键参数对齐表
 
-- `lab_dataset/derived/end2end_classifier/`
+| 参数 | 预切阶段 | 训练阶段 | 推理阶段 | 说明 |
+|------|----------|----------|----------|------|
+| `frames_per_clip` / `clip_len` | ✅ | ✅ | ✅ | 每片段多少帧，必须一致 |
+| `encoder_model_name` | — | ✅ | ✅ | 编码器名称，必须一致 |
+| `window_stride` | — | — | ✅ | 滑窗步长，控制推理频率 |
 
-然后可以由下面两种方式使用：
+> ⚠️ 这些参数前后不一致，轻则效果变差，重则直接报错。
 
-- `known_event_runtime.py`：嵌入到整个监控工程
-- `rtsp_service.py`：单独作为 RTSP 推理服务
+---
 
-## 当前主模型是怎么组成的
+## 注意事项
 
-### 1. 视频编码器
-
-由 `vit_video_encoder.py` 提供。
-
-它本质上是：
-
-- 载入预训练的 `VideoMAE v2`
-- 把一段视频 clip 编码成向量
-
-### 2. MIL 头
-
-由 `mil_head.py` 提供。
-
-它负责：
-
-- 把一个视频里的多个 clip 特征汇总
-- 输出最终分类结果
-
-### 3. 排序损失
-
-由 `ranking_loss.py` 提供。
-
-它主要是为了帮助模型更稳定地区分正常和异常片段。
-
-## 当前配置文件有哪些
-
-### `lab_anomaly/configs/train_end2end.yaml`
-
-这是当前主训练配置文件。
-
-它和 `train_end2end.py` 的关系是：
-
-- Python 文件里先有一套默认值
-- YAML 再去覆盖它
-
-这意味着：
-
-- 你不能只改一边不看另一边
-- 如果 YAML 里没写某个值，就会回退到 Python 默认值
-
-### `lab_anomaly/configs/rtsp_service_example.yaml`
-
-这是推理服务示例配置。
-
-适合查看：
-
-- checkpoint 放哪
-- 输出日志放哪
-- RTSP 服务期望的字段有哪些
-
-## 当前目录里最容易误解的地方
-
-### 1. 旧文档还在，但不代表就是当前主线
-
-比如 `README.VIT.md` 里说的是：
-
-- 光流
-- embedding
-- 已知类分类
-- KMeans + OCSVM
-
-这套流程作为历史背景可以看，但不应该当作当前仓库唯一正确流程。
-
-### 2. 文档中的某些脚本，当前仓库里并不存在
-
-对外写 README 时，最好不要把这些脚本再当成核心入口。
-
-否则别人一搜发现文件没有，会直接怀疑仓库不完整。
-
-### 3. 训练和推理的帧数必须一致
-
-比如：
-
-- `frames_per_clip`
-- `clip_len`
-- 滑窗设置
-
-这些值一旦前后不一致，很容易出问题。
-
-### 4. 模型名要前后一致
-
-当前实现更偏向：
-
-- `OpenGVLab/VideoMAEv2-Base`
-
-而不是旧文档里常出现的另一套名字。
-
-README 里最好明确说明：
-
-- 以当前训练脚本和 checkpoint 实际配置为准
-
-## 你如果是小白，建议怎么读
-
-最省事的顺序是：
-
-1. 先看本文件，搞清楚当前主线不是旧文档那套。
-2. 再看 `lab_anomaly/README.md`，知道代码怎么分层。
-3. 再看 `lab_dataset/README.md`，知道数据该怎么摆。
-
-
-> 本项目当前的视频事件识别主线基于 `VideoMAE v2 + MIL`。训练流程采用“先离线预切 clip，再端到端训练，再挂入实时推理”的方式；
+1. **编码器模型名**：当前主线使用 `OpenGVLab/VideoMAEv2-Base`，首次运行会自动下载预训练权重
+2. **Meta Tensor 修复**：某些 transformers 版本下 `pos_embed` 可能残留 meta tensor，代码中已包含自动修复（重建正弦位置编码）
+3. **训练/推理帧数对齐**：`clip_len`、`frame_stride`、`window_stride` 在训练脚本和推理代码中必须一致
+4. **数据路径**：`video_labels.csv` 中的路径建议使用相对于 `lab_dataset/` 的路径，便于迁移
