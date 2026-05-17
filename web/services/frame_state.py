@@ -36,8 +36,8 @@ class FrameStateCache:
                 self._status[stream_id] = {
                     "running": True,
                     "last_frame_ts": ts,
-                    "vit_result": st.get("vit_event"),
-                    "agent_result": st.get("agent_result"),
+                    "vit_result": getattr(st, "vit_event", None),
+                    "agent_result": getattr(st, "agent_result", None),
                     "error_message": None,
                 }
             else:

@@ -1,5 +1,6 @@
 """
-当 ViT 判定异常且置信度 >= 阈值时，将同一 clip 送 Agent 复核；限流与冷却。
+When ViT detects anomaly above threshold, queue the same clip for VLM review.
+Results are stored internally and polled by runtime_manager into pipeline state.
 """
 from __future__ import annotations
 
@@ -13,31 +14,30 @@ import numpy as np
 
 class VlmReviewRuntime:
     """
-    维护每流 last_clip；当 ViT 结果满足阈值时提交到 Agent 队列。
-    Worker 线程调用 VLMEngine.analyze_clip 并写回 state[stream_id]["agent_result"]。
+    Maintains per-stream last_clip; when ViT triggers, submits to review queue.
+    Worker thread calls VLMEngine.analyze_clip; results stored in _results dict
+    for the runtime_manager to poll and write into pipeline StreamState.
     """
 
     def __init__(
         self,
         engine: Any,
-        state_ref: Dict[str, Any],
         vit_threshold: float = 0.6,
         cooldown_sec: float = 15.0,
         max_queue_size: int = 8,
     ):
         self.engine = engine
-        self.state_ref = state_ref
         self.vit_threshold = float(vit_threshold)
         self.cooldown_sec = float(cooldown_sec)
         self._last_clip: Dict[str, List[np.ndarray]] = {}
         self._last_fire_ts: Dict[str, float] = {}
+        self._results: Dict[str, Dict[str, Any]] = {}
         self._queue: queue.Queue = queue.Queue(maxsize=max_queue_size)
         self._lock = threading.Lock()
         self._worker = threading.Thread(target=self._worker_loop, daemon=True)
         self._worker.start()
 
     def set_last_clip(self, stream_id: str, clip_frames_rgb: List[np.ndarray]) -> None:
-        """Pipeline 在组成与 ViT 相同的 clip 后调用，用于后续触发 Agent 时提交。"""
         with self._lock:
             self._last_clip[stream_id] = [f.copy() for f in clip_frames_rgb]
 
@@ -47,11 +47,6 @@ class VlmReviewRuntime:
         vit_result: Optional[Any],
         vit_threshold_override: Optional[float] = None,
     ) -> bool:
-        """
-        若 ViT 结果为异常且置信度 >= 阈值、冷却已过、且有 last_clip，则提交到 Agent 队列。
-        vit_result 可为 dict(pred_label, pred_prob, ranking_score) 或 VitEventResult。
-        返回是否已提交。
-        """
         threshold = vit_threshold_override if vit_threshold_override is not None else self.vit_threshold
         if vit_result is None:
             return False
@@ -77,6 +72,24 @@ class VlmReviewRuntime:
             except queue.Full:
                 return False
 
+    def submit_periodic(self, stream_id: str, clip_frames_rgb: List[np.ndarray]) -> bool:
+        """Directly queue a clip for VLM review, bypassing ViT judgment (periodic trigger)."""
+        try:
+            self._queue.put_nowait((stream_id, [f.copy() for f in clip_frames_rgb]))
+            return True
+        except queue.Full:
+            return False
+
+    def pop_result(self, stream_id: str) -> Optional[Dict[str, Any]]:
+        """Pop and return the latest VLM result for a stream, or None."""
+        with self._lock:
+            return self._results.pop(stream_id, None)
+
+    def get_result(self, stream_id: str) -> Optional[Dict[str, Any]]:
+        """Peek at the latest VLM result without removing it."""
+        with self._lock:
+            return self._results.get(stream_id)
+
     def _worker_loop(self) -> None:
         while True:
             try:
@@ -93,6 +106,4 @@ class VlmReviewRuntime:
                     "error": True,
                 }
             with self._lock:
-                if stream_id not in self.state_ref:
-                    self.state_ref[stream_id] = {}
-                self.state_ref[stream_id]["agent_result"] = result
+                self._results[stream_id] = result

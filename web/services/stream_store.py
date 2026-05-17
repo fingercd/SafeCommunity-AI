@@ -1,12 +1,12 @@
 """
-RTSP 流配置的 JSON 持久化读写。
+RTSP stream config JSON persistence (read/write).
 """
 from __future__ import annotations
 
 import json
 import uuid
 from pathlib import Path
-from typing import Any, List
+from typing import Any, List, Optional
 
 DEFAULT_PATH = Path(__file__).resolve().parent.parent / "config" / "streams.json"
 
@@ -43,6 +43,10 @@ def add_stream(
     vit_threshold: float = 0.6,
     yolo_confidence: float = 0.3,
     agent_enabled: bool = True,
+    rois: Optional[list] = None,
+    roi_alarm_classes: Optional[list] = None,
+    global_alarm_classes: Optional[list] = None,
+    vlm_auto_interval_sec: float = 16.0,
     config_path: Path | str | None = None,
 ) -> dict:
     streams = load_streams(config_path)
@@ -57,6 +61,10 @@ def add_stream(
         "vit_threshold": float(vit_threshold),
         "yolo_confidence": float(yolo_confidence),
         "agent_enabled": bool(agent_enabled),
+        "rois": rois or [],
+        "roi_alarm_classes": roi_alarm_classes or ["person"],
+        "global_alarm_classes": global_alarm_classes or ["fire", "smoke"],
+        "vlm_auto_interval_sec": float(vlm_auto_interval_sec),
     }
     streams.append(entry)
     save_streams(streams, config_path)
