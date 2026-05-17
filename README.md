@@ -1,359 +1,416 @@
-﻿# Moniter
+# Moniter — 多模态 AI 智能视频监控系统
 
-一个把多路监控、目标检测、规则告警、视频事件识别、网页展示串起来的完整项目。
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.3%2B-ee4c2c)](https://pytorch.org)
+[![Flask](https://img.shields.io/badge/Flask-2.3%2B-green)](https://flask.palletsprojects.com)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-当前仓库不是单一模型工程，而是 4 条互相配合的主线：
+> **Moniter** 是一套集成多模态大模型的智能视频监控系统，将目标检测（YOLO）、视频异常识别（ViT）与视觉语言模型复核（VLM）串联成三级推理流水线，实现对多路视频流的实时监控、异常检测与语义化告警。
 
-- `yolo/`：目标检测、多目标跟踪、区域规则、实时显示。
-- `Vit/`：视频片段级事件识别，当前真实主线是 `VideoMAE v2 + MIL`。
-- `vlm/`：大视觉语言模型复核，用来给异常片段做二次说明。
-- `web/`：网页监控层，把 YOLO、ViT、VLM 串起来做多路展示。
+---
 
-## 这套项目能做什么
+## ✨ 功能亮点
 
-| 能力 | 说明 |
-|------|------|
-| 多路视频接入 | 支持 RTSP 和本地视频混合输入。 |
-| 目标检测 | 用 `YOLOv8` 检出人、车、物体等目标。 |
-| 目标跟踪 | 用 `ByteTrack` 给同一路视频里的目标分配稳定 ID。 |
-| 规则告警 | 支持禁区、滞留、禁现物品、车辆超时等规则。 |
-| 视频事件识别 | 用 `VideoMAE v2 + MIL` 对一段视频片段判断 `normal / anomaly`。 |
-| 网页监控 | 用 `Flask + MJPEG` 展示多路视频和状态。 |
-| 大模型复核 | 当 ViT 觉得可疑时，再交给 `vlm/` 里的模型做文字解释。 |
+- 🎥 **多路视频接入** — 支持 RTSP 网络流与本地视频文件混合输入，Web 端随时增删改查
+- 🧠 **三级 AI 推理** — YOLO 目标检测 → ViT 视频异常识别 → VLM 大模型语义复核，层层递进
+- 🌐 **精致 Web 监控面板** — Glassmorphism 玻璃拟态 UI，实时 MJPEG 视频流、状态看板、ROI 绘制
+- 📊 **灵活规则引擎** — ROI 禁区闯入、人员滞留、禁现物品、车辆超时停留等多维度告警
+- 🚀 **一键启动** — `python launch.py` 自动启动后端并打开浏览器
+- 📝 **中文原生** — YOLO 标签、VLM 输出、Web 界面全中文，开箱即用
 
-## 先看懂整体关系
+---
 
-### 1. 根目录主入口
+## 📖 项目简介
 
-- `predict.py`
-  - 这是命令行版总入口。
-  - 它负责把 `yolo` 和 `Vit` 接起来。
-  - 优先读取 `config.yaml`，如果你不传配置，就走文件里写好的默认参数。
+传统视频监控系统只能被动录像，无法主动识别异常行为。**Moniter** 将计算机视觉与大语言模型结合，让监控系统具备"看懂视频"的能力：
 
-- `config.yaml`
-  - 这是整套实时监控的集中配置。
-  - 包括视频源、每一路规则、YOLO 路径、ViT 路径、系统显示参数、跟踪参数。
+1. **感知层** — YOLOv8 实时检测画面中的目标（人、车、物品等）
+2. **认知层** — VideoMAE v2 + MIL 分析连续视频片段，判断是否存在异常行为
+3. **理解层** — Qwen-VL 视觉语言模型对异常片段进行语义描述，输出"打架""火灾"等结构化结论
 
-### 2. 实时数据流
+系统面向安防运维人员、AI 研究人员及需要自动化视频分析的场景，帮助用户从海量监控录像中快速定位关键事件。
 
-```text
-视频源（RTSP / 文件）
-    ↓
-采集线程
-    ↓
-推理队列
-    ↓
-YOLO 批量检测
-    ↓
-ByteTrack 跟踪
-    ↓
-规则判断（ROI / 滞留 / 禁现 / 车辆）
-    ↓
-ViT 异步事件识别
-    ↓
-绘制画面与状态
-    ↓
-OpenCV 窗口 或 Web 页面
+---
+
+## 🚀 快速开始
+
+### 环境要求
+
+- Python >= 3.10
+- CUDA >= 11.8（GPU 推理，推荐显存 >= 12GB）
+- Windows / Linux
+
+### 安装依赖
+
+```bash
+# 克隆仓库
+git clone <repo-url>
+cd moniter
+
+# 创建虚拟环境并安装核心依赖
+conda create -n moniter python=3.10
+conda activate moniter
+
+# 安装各模块依赖
+pip install -r yolo/requirements.txt
+pip install -r Vit/lab_anomaly/requirements.txt
+pip install -r vlm/requirements.txt
+pip install Flask
 ```
 
-### 3. 网页版的额外流程
+### 准备模型权重
 
-```text
-YOLO 检测结果
-    ↓
-ViT 先判断当前片段是否可疑
-    ↓
-如果可疑并且超过阈值
-    ↓
-VLM 再做二次复核和文字解释
-    ↓
-Web 页面展示检测结果 + ViT 结果 + 大模型结论
+| 模型 | 默认路径 | 说明 |
+|------|----------|------|
+| YOLO | `yolo/logs/best_epoch_weights.pth` | 目标检测权重 |
+| ViT | `Vit/lab_dataset/derived/end2end_classifier/checkpoint_best.pt` | 异常检测 checkpoint |
+| VLM | `vlm/outputs/merged/` | 微调合并后的 Qwen-VL（可选） |
+
+> 可通过环境变量覆盖默认路径：`YOLO_WEIGHTS`、`VIT_CHECKPOINT`、`VLM_MERGED`
+
+### 一键启动
+
+```bash
+python launch.py
 ```
 
-## 顶层目录说明
+服务启动后会自动打开浏览器访问 `http://127.0.0.1:5000`，即可进入监控面板。
 
-```text
+---
+
+## 🏗️ 技术架构
+
+### 系统架构
+
+```mermaid
+flowchart TD
+    A["🎥 视频源<br/>RTSP / 本地文件"] --> B["OpenCV 采集"]
+    B --> C["YOLO 检测器<br/>目标检测 + ByteTrack 跟踪"]
+    C --> D["规则引擎<br/>ROI / 滞留 / 车辆超时"]
+    D --> E{"ViT 异常检测"}
+    E -->|正常| F["帧状态缓存<br/>FrameStateCache"]
+    E -->|异常超过阈值| G["VLM 复核引擎<br/>Qwen-VL 语义分析"]
+    G --> F
+    F --> H["Flask API"]
+    H --> I["🌐 Web Dashboard<br/>MJPEG 流 + 状态面板"]
+    H --> J["📱 告警推送<br/>JSON 状态接口"]
+```
+
+### 数据流
+
+```mermaid
+sequenceDiagram
+    participant Video as 视频源
+    participant YOLO as YOLO 检测器
+    participant ViT as ViT 异常识别
+    participant VLM as VLM 复核引擎
+    participant API as Flask API
+    participant Web as Web 前端
+
+    Video->>YOLO: 原始帧 (BGR)
+    YOLO-->>API: 检测框 + 类别 + Track ID
+    API->>ViT: 滑动窗口视频片段
+    ViT-->>API: 异常概率 + 分类标签
+    alt 异常概率 ≥ 阈值
+        API->>VLM: 视频片段 + Prompt
+        VLM-->>API: {"classification":"打架","reason":"..."}
+    end
+    API->>Web: MJPEG 帧 + JSON 状态
+```
+
+### 三级推理流水线详解
+
+#### L1 — 感知层：YOLO 目标检测
+- **输入**：单帧图像（640×640）
+- **模型**：YOLOv8-L（CSPDarknet53 + PANet-FPN + 解耦头）
+- **输出**：目标边界框、82 类类别标签（COCO 80 + fire + smoke）、置信度
+- **跟踪**：ByteTrack，支持 person / vehicle 独立 ID 空间
+
+#### L2 — 认知层：ViT 视频异常识别
+- **输入**：16 帧连续视频片段（224×224，从滑动缓冲区均匀采样）
+- **模型**：VideoMAE v2（OpenGVLab/VideoMAEv2-Base）+ MIL（Multiple Instance Learning）头
+- **输出**：视频级二分类（normal / anomaly）、异常概率、ranking 分数
+- **机制**：滑动窗口异步推理，不阻塞主循环
+
+#### L3 — 理解层：VLM 大模型复核
+- **输入**：触发时的视频片段（RGB 帧列表）
+- **模型**：Qwen-VL（优先使用微调合并模型，回退基础模型）
+- **输出**：结构化 JSON — `{"classification": "打架", "reason": "两人在画面中央发生肢体冲突"}`
+- **触发条件**：
+  - ViT 判定异常且概率超过阈值
+  - 或周期性自动触发（`vlm_auto_interval_sec`，独立于 ViT）
+
+---
+
+## 🛠️ 技术栈
+
+| 技术 | 版本 | 用途 |
+|------|------|------|
+| Python | 3.10+ | 主语言 |
+| PyTorch | 2.3+ | 深度学习框架 |
+| transformers | 4.36+ | VideoMAE / Qwen-VL 加载 |
+| OpenCV | 4.8+ | 视频捕获、图像处理 |
+| Flask | 2.3+ | Web 服务与 REST API |
+| ByteTrack | — | 多目标跟踪 |
+| Pillow | 10.0+ | 中文标签渲染 |
+
+---
+
+## 📁 项目结构
+
+```
 moniter/
-├── predict.py
-├── config.yaml
-├── README.md
-├── yolo/
-├── Vit/
-├── vlm/
-└── web/
+├── launch.py                     # 一键启动入口（自动打开浏览器）
+├── predict.py                    # 命令行版实时监控入口
+├── config.yaml                   # 统一配置文件
+├── pyproject.toml                # 项目元数据
+│
+├── yolo/                         # 目标检测模块
+│   ├── yolo.py                   # YOLOv8 推理类
+│   ├── train.py                  # YOLO 训练入口
+│   ├── logs/                     # 模型权重
+│   ├── Class/                    # 类别文件（含中文）
+│   └── realtime/                 # 实时管线
+│       ├── pipeline.py           # 主循环
+│       ├── yolo_batch.py         # 真批量推理
+│       ├── bytetrack_wrapper.py  # ByteTrack 跟踪封装
+│       └── display.py            # 画框、画轨迹、中文标签
+│
+├── Vit/                          # 视频异常检测模块
+│   ├── lab_anomaly/
+│   │   ├── models/               # VideoMAE v2 + MIL 模型定义
+│   │   ├── infer/                # 推理运行时
+│   │   │   ├── known_event_runtime.py   # 异步实时推理
+│   │   │   ├── rtsp_service.py          # 独立 RTSP 服务
+│   │   │   └── scoring.py               # checkpoint 加载与融合
+│   │   ├── train/                # 端到端训练
+│   │   │   └── train_end2end.py  # VideoMAE v2 + MIL 训练
+│   │   └── tool/
+│   │       └── precompute_clips.py      # 离线预切 clip
+│   └── lab_dataset/              # 数据集与产物
+│       ├── labels/video_labels.csv
+│       └── derived/              # 训练产物 / checkpoint
+│
+├── vlm/                          # 视觉语言模型模块
+│   ├── infer/
+│   │   └── vlm_engine.py         # Qwen-VL 推理引擎
+│   ├── train/                    # QLoRA 微调
+│   ├── configs/
+│   │   └── default.yaml          # VLM 配置
+│   └── outputs/                  # 训练输出 / 合并模型
+│
+└── web/                          # Web 监控层
+    ├── app.py                    # Flask 入口（11 个 API 端点）
+    ├── static/
+    │   ├── app.js                # 前端核心逻辑
+    │   └── style.css             # Glassmorphism 主题
+    ├── templates/
+    │   └── index.html            # 监控面板页面
+    └── services/
+        ├── runtime_manager.py    # 后台总调度（YOLO + ViT + VLM 串联）
+        ├── frame_state.py        # 帧状态缓存
+        ├── stream_store.py       # 流配置持久化
+        └── vlm_review_runtime.py # VLM 复核线程管理
 ```
 
-### `yolo/`
+---
 
-负责“看见画面里有什么”。
+## ✨ 功能详情
 
-- 训练目标检测模型。
-- 对单张图、视频、实时流做检测。
-- 在 `realtime/` 里把检测、跟踪、规则、显示串成一条实时管线。
+### 视频接入
+- 支持 RTSP 网络摄像头与本地 `.mp4` / `.avi` 文件
+- Web 端可动态添加、删除、启停视频流
+- 流配置持久化到 `web/config/streams.json`
 
-### `Vit/`
+### 目标检测与跟踪
+- **82 类目标**：COCO 80 类 + `fire`（火灾）+ `smoke`（烟雾）
+- **中文标签**：画框标签使用 PIL 渲染，避免 OpenCV 中文乱码
+- **ByteTrack 跟踪**：同一路视频中目标保持稳定的 Track ID
+- **独立 ID 空间**：人（1+）、车（10000+）、其他（负 ID）
 
-负责“看一小段视频里发生了什么”。
-
-这一块最容易被旧文档误导，所以要特别说明：
-
-- **当前仓库里真实存在、能对上的主线**：`VideoMAE v2 + MIL + 端到端训练`
-- **旧文档里提到但当前仓库未完整保留的老流程**：光流、embedding、开放集边界等那一套
-
-也就是说，现在你要把这个仓库介绍给别人时，应该把 `Vit` 的主线写成：
-
-1. 先把视频离线切成 clip。
-2. 再用 `train_end2end.py` 做端到端训练。
-3. 训练好的 checkpoint 给 `known_event_runtime.py` 或 `rtsp_service.py` 使用。
-
-### `vlm/`
-
-负责“当系统怀疑异常时，再用大模型帮你解释一下到底像什么异常”。
-
-这一块不是基础检测必须要有的模块，而是增强模块：
-
-- 可以准备数据、做 QLoRA 微调。
-- 可以把 LoRA 合并成完整模型。
-- Web 监控会在 ViT 触发后调用它做复核。
-
-### `web/`
-
-负责“把整个系统变成网页监控工具”。
-
-- 页面里可以添加、删除、启停视频流。
-- 后台启动 `yolo.realtime.pipeline`。
-- 读取 ViT 和 VLM 的判断结果并显示到页面上。
-
-## 每一层建议怎么读
-
-如果你是第一次接触这个项目，建议按这个顺序看：
-
-1. 先看根目录 `README.md`，知道整个项目是怎么分层的。
-2. 再看 `yolo/README.md`，先理解基础检测和实时管线。
-3. 再看 `Vit/README.md`，确认当前最新 ViT 主线到底是什么。
-4. 如果你要做网页监控，再看 `web/README.md`。
-5. 如果你要做大模型复核，再看 `vlm/README.md`。
-
-## 当前真实可用的主流程
-
-### 主流程 A：本地窗口版监控
-
-适合调试整条实时检测链路。
-
-- 入口：`predict.py`
-- 配置来源：
-  - 优先 `config.yaml`
-  - 没有的话就用 `predict.py` 里内置默认值
-- 主要能力：
-  - YOLO 检测
-  - ByteTrack 跟踪
-  - 规则告警
-  - ViT 事件识别
-
-### 主流程 B：网页版监控
-
-适合做多路监控界面。
-
-- 入口：`web/app.py`
-- 后台调度：`web/services/runtime_manager.py`
-- 主要能力：
-  - 管理流列表
-  - 启停监控
-  - 页面拉取 MJPEG 画面
-  - 显示 ViT 和 VLM 的结果
-
-### 主流程 C：只跑 YOLO + 规则
-
-适合暂时不接 ViT，只想先跑目标检测、跟踪和规则。
-
-- 入口：`yolo/run_realtime.py`
-- 重点目录：`yolo/realtime/`
-
-## 配置从哪里改
-
-这个项目比较适合在 PyCharm 里直接改代码和配置文件，不需要强依赖命令行参数。
-
-### 你最常会改的地方
-
-| 目标 | 建议修改位置 |
-|------|--------------|
-| 视频源 | `config.yaml` 的 `sources`，或者 `predict.py` 里的 `_default_sources()` |
-| 每路规则 | `config.yaml` 的 `streams`，或者 `predict.py` 里的 `_default_stream_config_map()` |
-| YOLO 权重 | `config.yaml` 的 `yolo.model_path` |
-| YOLO 类别文件 | `config.yaml` 的 `yolo.classes_path` |
-| ViT checkpoint | `config.yaml` 的 `vit.known_checkpoint` |
-| 显示大小与阈值 | `config.yaml` 的 `system` |
-| 跟踪参数 | `config.yaml` 的 `tracker` |
-| Web 端模型路径 | `web/services/runtime_manager.py` 中的默认路径或环境变量读取位置 |
-| VLM 训练参数 | `vlm/configs/default.yaml` |
-
-## 根目录关键文件说明
-
-| 文件 | 作用 |
+### 规则引擎
+| 规则 | 说明 |
 |------|------|
-| `predict.py` | 总入口，负责把 `yolo` 和 `Vit` 连起来。 |
-| `config.yaml` | 统一配置文件。 |
-| `README.md` | 项目总说明。 |
+| ROI 禁区 | 自定义多边形禁区，指定类别闯入即告警 |
+| 人员滞留 | 目标在 ROI 内停留超过阈值时间触发 |
+| 禁现物品 | 全局画面中出现指定类别即告警 |
+| 车辆超时 | 车辆在画面内停留超过阈值时间触发 |
+| 告警冷却 | 同一规则 30 秒内不重复触发 |
 
-## `yolo/` 架构摘要
+### 异常检测（ViT）
+- 基于 VideoMAE v2 预训练权重，端到端训练 MIL 分类头
+- 三阶段渐进解冻训练策略（head → 最后 2 层 → 最后 4 层）
+- 异步推理线程，不影响实时视频流帧率
+- 输出：异常概率 + 分类标签 + ranking 分数
 
-### 它负责什么
+### 大模型复核（VLM）
+- Qwen-VL 视觉语言模型，支持基础模型与微调模型自动切换
+- 强制中文 JSON 输出：`{"classification": "...", "reason": "..."}`
+- 双触发机制：ViT 异常触发 + 周期性自动触发
+- Web 面板中以可折叠卡片展示 VLM 结论
 
-- 检测目标。
-- 跟踪目标。
-- 做区域规则判断。
-- 把结果画到画面上。
+### Web 监控面板
+- **实时视频**：MJPEG 流，每路独立播放
+- **状态看板**：每路流的运行状态、ViT 结果、VLM 结论
+- **ROI 绘制**：在视频帧快照上绘制多边形禁区
+- **精致 UI**：Glassmorphism 玻璃拟态设计，卡片悬停动画
+- **设置弹窗**：每路流独立配置阈值、类别、ROI、VLM 开关
 
-### 它的核心文件
+---
 
-| 路径 | 作用 |
-|------|------|
-| `yolo/yolo.py` | YOLO 推理类。 |
-| `yolo/train.py` | YOLO 训练入口。 |
-| `yolo/run_realtime.py` | 只跑 YOLO 实时管线的入口。 |
-| `yolo/realtime/pipeline.py` | 实时监控总循环。 |
-| `yolo/realtime/yolo_batch.py` | 真批量推理。 |
-| `yolo/realtime/bytetrack_wrapper.py` | 跟踪器封装。 |
-| `yolo/realtime/display.py` | 画框、画轨迹、画文字。 |
+## 🧠 模型说明
 
-## `Vit/` 架构摘要
+| 模块 | 模型架构 | 默认路径 | 环境变量覆盖 |
+|------|----------|----------|--------------|
+| **YOLO** | YOLOv8-L<br/>(CSPDarknet53 + PANet-FPN + Decoupled Head) | `yolo/logs/best_epoch_weights.pth` | `YOLO_WEIGHTS` |
+| **YOLO 类别** | 82 类（COCO 80 + fire + smoke）| `yolo/Class/coco_classes.txt` | `YOLO_CLASSES` |
+| **ViT** | VideoMAE v2-Base + MIL<br/>(16帧 → 768维 → Attention Pooling) | `Vit/lab_dataset/derived/end2end_classifier/checkpoint_best.pt` | `VIT_CHECKPOINT` |
+| **VLM** | Qwen-VL（基础或 QLoRA 微调合并）| `vlm/outputs/merged/`（优先）<br/>`vlm/Qwen/`（回退） | `VLM_MERGED`<br/>`VLM_BASE` |
 
-### 最新 ViT 主线是什么
+> **注意**：YOLO 类别文件中的中文类别名（如 `人`、`汽车`、`火灾`）必须与 `config.yaml` 和 Web 端规则配置中的名称完全一致，否则规则不会触发。
 
-这里的“最新 ViT”建议你在 GitHub 上明确写成：
+---
 
-**当前仓库主用的是 `VideoMAE v2` 视频编码器，不是旧文档里那套双流光流主线。**
+## ⚙️ 配置说明
 
-### 当前主流程
+### `config.yaml` 关键字段
 
-1. `Vit/lab_dataset/labels/video_labels.csv` 维护视频标签。
-2. `Vit/lab_anomaly/tool/precompute_clips.py` 先把视频离线切成 clip。
-3. `Vit/lab_anomaly/train/train_end2end.py` 训练 `VideoMAE v2 + MIL`。
-4. 产物输出到 `Vit/lab_dataset/derived/end2end_classifier/` 一类目录。
-5. `Vit/lab_anomaly/infer/known_event_runtime.py` 或 `rtsp_service.py` 用训练结果做实时推理。
+| 节 | 字段 | 说明 | 默认值 |
+|---|------|------|--------|
+| `sources` | `id`, `uri`, `type` | 视频源列表（file / rtsp）| — |
+| `streams` | `rois` | 每路流的禁区多边形坐标 | `[]` |
+| `streams` | `roi_alarm_classes` | ROI 闯入告警类别 | `人` |
+| `streams` | `global_alarm_classes` | 全局禁现类别 | `猫, 狗` |
+| `streams` | `vehicle_alarm_classes` | 车辆超时类别 | `汽车, 卡车, 公交车, 摩托车` |
+| `streams` | `vehicle_alarm_sec` | 车辆超时阈值（秒）| `10.0` |
+| `yolo` | `model_path` | YOLO 权重路径 | `yolo/logs/...` |
+| `yolo` | `classes_path` | 类别文件路径 | `yolo/Class/coco_classes_chinese.txt` |
+| `yolo` | `confidence` | 检测置信度阈值 | `0.3` |
+| `vit` | `known_checkpoint` | ViT checkpoint 路径 | `Vit/lab_dataset/...` |
+| `vit` | `clip_len` | 每片段帧数 | `16` |
+| `vit` | `window_stride` | 滑窗步长 | `4` |
+| `system` | `max_batch` | YOLO 批量大小 | `4` |
+| `system` | `alarm_cooldown_sec` | 告警冷却时间 | `30.0` |
+| `system` | `dwell_warning_sec` | 滞留告警阈值 | `5.0` |
+| `system` | `vit_anomaly_threshold` | ViT 异常阈值 | `0.55` |
+| `tracker` | `track_high_th` | 跟踪高分阈值 | `0.5` |
+| `tracker` | `match_thresh` | 匹配阈值 | `0.5` |
 
-### 需要特别提醒的地方
+### Web 端流级配置
 
-- `README.VIT.md` 里提到的一些脚本和配置，当前仓库里并不完整存在。
-- 训练用的帧数、推理用的帧数一定要对齐。
-- `predict.py` 里 ViT 默认参数名和 `known_event_runtime.py` 的真实构造参数存在不一致风险，后续如果你要真正跑通，建议专门再核对一遍。
+每路流在 Web 面板中可独立配置：
 
-## `vlm/` 架构摘要
+| 配置项 | 说明 |
+|--------|------|
+| `yolo_confidence` | YOLO 检测置信度阈值 |
+| `vit_threshold` | ViT 异常触发阈值 |
+| `agent_enabled` | 是否启用 VLM 复核 |
+| `vlm_auto_interval_sec` | VLM 周期性自动触发间隔（秒，0 为关闭）|
+| `rois` | ROI 禁区多边形 |
+| `roi_alarm_classes` | ROI 闯入告警类别 |
+| `global_alarm_classes` | 全局禁现类别 |
 
-### 它在项目里的位置
+修改后保存会自动重启后端管线实时生效。
 
-它不是基础检测模块，而是复核模块。
+---
 
-简单理解：
+## 📡 API 文档
 
-- YOLO 负责“看到目标”
-- ViT 负责“判断一段视频是否异常”
-- VLM 负责“把异常讲明白”
+### 流管理
 
-### 它的核心内容
+| 方法 | 端点 | 说明 |
+|------|------|------|
+| `GET` | `/api/streams` | 列出所有流 + 模型加载状态 |
+| `POST` | `/api/streams` | 添加新流 |
+| `DELETE` | `/api/streams/<id>` | 删除流 |
+| `POST` | `/api/streams/<id>/start` | 启动流 |
+| `POST` | `/api/streams/<id>/stop` | 停止流 |
+| `PATCH` | `/api/streams/<id>` | 更新流配置（阈值、ROI、类别等）|
+| `GET` | `/api/streams/<id>/status` | 获取流状态 + ViT/VLM 结果 |
 
-| 路径 | 作用 |
-|------|------|
-| `vlm/data/` | 数据准备、切片、生成训练集。 |
-| `vlm/train/` | QLoRA 训练、LoRA 合并、评估。 |
-| `vlm/infer/` | 复核推理引擎。 |
-| `vlm/configs/default.yaml` | 主配置文件。 |
-| `vlm/pycharm/` | 给 PyCharm 用的分步脚本。 |
+### 视频与数据
 
-## `web/` 架构摘要
+| 方法 | 端点 | 说明 |
+|------|------|------|
+| `GET` | `/video/<id>` | MJPEG 实时视频流 |
+| `GET` | `/api/streams/<id>/snapshot` | 获取最新帧 JPEG（用于 ROI 绘制）|
+| `GET` | `/api/classes` | 获取所有可检测类别列表 |
 
-### 它负责什么
+---
 
-- 提供多路监控页面。
-- 管理流配置。
-- 把 YOLO、ViT、VLM 结果展示出来。
+## 🖥️ 使用方式
 
-### 关键文件
+### 方式 A：Web 监控面板（推荐）
 
-| 路径 | 作用 |
-|------|------|
-| `web/app.py` | Flask 入口。 |
-| `web/services/runtime_manager.py` | 后台总调度。 |
-| `web/services/frame_state.py` | 保存最新画面和状态。 |
-| `web/services/stream_store.py` | 读写流配置。 |
-| `web/services/vlm_review_runtime.py` | 大模型复核线程。 |
-| `web/config/streams.json` | 流列表持久化文件。 |
+适合多路监控与远程查看。
 
-## 在 PyCharm 里怎么理解“运行”
+```bash
+python launch.py
+```
 
-考虑到这个项目里很多脚本都有自己的配置区，最适合的方式不是到处传参数，而是：
+- 自动启动 Flask 服务（默认端口 5000）
+- 3 秒后自动打开浏览器
+- 在面板中添加 RTSP 地址或本地视频路径
+- 每路流独立配置规则、阈值、ROI
 
-### 1. 固定解释器
+### 方式 B：本地窗口版
 
-- 解释器环境：`C:\ProgramData\anaconda3\envs\yolovv`
+适合调试检测链路。
 
-### 2. 按任务打开对应入口文件
+```bash
+python predict.py --config config.yaml
+```
 
-| 想做的事 | 建议打开的文件 |
-|----------|----------------|
-| 跑整套实时监控 | `predict.py` |
-| 改统一配置 | `config.yaml` |
-| 训练 YOLO | `yolo/train.py` |
-| 只调实时检测 | `yolo/run_realtime.py` |
-| 预切 ViT 训练片段 | `Vit/lab_anomaly/tool/precompute_clips.py` |
-| 训练最新 ViT | `Vit/lab_anomaly/train/train_end2end.py` |
-| 跑 Web 页面 | `web/app.py` |
-| 训练 VLM | `vlm/pycharm/` 下对应步骤脚本 |
+- 读取 `config.yaml` 中的视频源和规则配置
+- 弹出 OpenCV 窗口展示检测结果
+- 同时运行 YOLO + ByteTrack + ViT
 
-### 3. 尽量在代码里改参数
+### 方式 C：只跑 YOLO + 规则
 
-本仓库很多脚本都已经按“直接改代码配置块”的思路写好了，比如：
+适合暂时不需要 ViT/VLM 的场景。
 
-- `predict.py`
-- `yolo/train.py`
-- `Vit/lab_anomaly/train/train_end2end.py`
-- `Vit/lab_anomaly/tool/precompute_clips.py`
-- `vlm/configs/default.yaml`
+```bash
+python yolo/run_realtime.py
+```
 
-## 权重与产物一般放哪
+- 纯目标检测 + 跟踪 + 规则告警
+- 资源占用最低
 
-| 类型 | 常见位置 |
-|------|----------|
-| YOLO 最佳权重 | `yolo/logs/best_epoch_weights.pth` |
-| ViT 数据标签 | `Vit/lab_dataset/labels/video_labels.csv` |
-| ViT 预切片 | `Vit/lab_dataset/derived/preclips/` |
-| ViT 训练产物 | `Vit/lab_dataset/derived/end2end_classifier/` |
-| Web 默认 ViT 路径 | `Vit/lab_dataset/derived/known_classifier/checkpoint_best.pt` |
-| VLM 训练输出 | `vlm/outputs/qlora/` |
-| VLM 合并后模型 | `vlm/outputs/merged/` |
+---
 
-## 已知容易踩坑的地方
+## ⚠️ 常见问题
 
-### 1. 文档和代码并不完全同步
+### 1. ViT 训练与推理参数必须对齐
 
-最明显的是 `Vit/`：
+`clip_len`（每片段帧数）、`window_stride`（滑窗步长）、`encoder_model`（编码器名称）在训练和推理时必须一致，否则效果下降或直接报错。
 
-- 老文档写的是 embedding / 光流 / open-set 那条线。
-- 当前代码里最完整的是 `precompute_clips + train_end2end + known_event_runtime` 这条线。
+### 2. 类别名大小写敏感
 
-### 2. 很多路径是本机绝对路径
+`config.yaml` 和 Web 端配置中的类别名（如 `人`、`汽车`、`火灾`）必须与 `coco_classes_chinese.txt` 中的名称**完全一致**（包括大小写），否则规则引擎不会触发。
 
-这说明仓库更偏本地开发状态，不是完全通用模板。
+### 3. Web 版与命令行版是两套入口
 
-如果你要发 GitHub，建议别人优先看：
+- `predict.py` — 本地窗口版，不走 Flask
+- `web/app.py` / `launch.py` — Web 版，只有 Web 版才会加载 VLM
 
-- 哪些路径可以在 YAML 改
-- 哪些路径写死在 Python 文件里
+### 4. VLM 显示"未加载"
 
-### 3. Web 和命令行版不是一回事
+检查 `vlm/outputs/merged/` 目录是否存在有效的 Qwen-VL 合并模型。也可通过环境变量 `VLM_MERGED` 指定其他路径。
 
-- `predict.py` 主要是本地窗口版实时管线
-- `web/app.py` 是网页监控版
-- 两者都可能用到 `yolo` 和 `Vit`
-- 但只有 Web 才会额外接上 `vlm`
+### 5. 浏览器缓存
 
-### 4. ViT 的训练和推理参数必须对齐
+前端 CSS/JS 更新后，需要按 `Ctrl + F5` 强制刷新才能看到最新样式。
 
-尤其是：
+### 6. Meta Tensor 修复
 
-- 每个 clip 多少帧
-- 滑窗步长
-- 编码器模型名
+VideoMAE v2 的 `pos_embed` 在某些 transformers 版本下可能残留 meta tensor。代码中已包含自动修复逻辑（重建正弦位置编码），通常无需手动处理。
 
-这些值如果前后不一致，轻则效果变差，重则直接报错。
+---
 
+## 📄 License
+
+本项目采用 [MIT License](LICENSE) 开源。
+
+---
+
+> 如果你在使用过程中遇到问题，欢迎提交 Issue 或 PR。
