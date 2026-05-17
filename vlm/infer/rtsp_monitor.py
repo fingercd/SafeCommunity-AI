@@ -37,8 +37,9 @@ def parse_args():
     ap.add_argument("--model_path", type=str, default="outputs/qlora/final")
     ap.add_argument("--clip_frames", type=int, default=8)
     ap.add_argument("--fps_sample", type=float, default=4.0, help="采样帧率，用于组 clip")
-    ap.add_argument("--confidence_threshold", type=float, default=0.7)
-    ap.add_argument("--consecutive_anomaly_clips", type=int, default=2)
+    # default=None：未传参时用配置文件或内置默认值；避免 0 被 `or` 当成“没填”而忽略
+    ap.add_argument("--confidence_threshold", type=float, default=None)
+    ap.add_argument("--consecutive_anomaly_clips", type=int, default=None)
     ap.add_argument("--log_path", type=str, default="outputs/rtsp_alerts.jsonl")
     ap.add_argument("--no_display", action="store_true", help="不弹窗显示画面")
     return ap.parse_args()
@@ -52,11 +53,21 @@ def main() -> None:
         with config_path.open("r", encoding="utf-8") as f:
             cfg = yaml.safe_load(f)
         inf_cfg = cfg.get("inference", {})
-        confidence_threshold = args.confidence_threshold or inf_cfg.get("confidence_threshold", 0.7)
-        consecutive_n = args.consecutive_anomaly_clips or inf_cfg.get("consecutive_anomaly_clips", 2)
+        if args.confidence_threshold is not None:
+            confidence_threshold = args.confidence_threshold
+        else:
+            confidence_threshold = inf_cfg.get("confidence_threshold", 0.7)
+        if args.consecutive_anomaly_clips is not None:
+            consecutive_n = args.consecutive_anomaly_clips
+        else:
+            consecutive_n = inf_cfg.get("consecutive_anomaly_clips", 2)
     else:
-        confidence_threshold = args.confidence_threshold
-        consecutive_n = args.consecutive_anomaly_clips
+        confidence_threshold = (
+            args.confidence_threshold if args.confidence_threshold is not None else 0.7
+        )
+        consecutive_n = (
+            args.consecutive_anomaly_clips if args.consecutive_anomaly_clips is not None else 2
+        )
 
     model_path = Path(args.model_path)
     if not model_path.is_absolute():
