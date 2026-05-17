@@ -1,21 +1,19 @@
 """
-Flask 多路 RTSP 监控：MJPEG 视频、流增删停启、ViT+Agent 状态展示。
-从项目根运行: python -m web.app  或  set PYTHONPATH=c:\\Users\\Administrator\\Desktop\\moniter && python -m web.app
+Flask multi-stream RTSP monitor: MJPEG video, stream CRUD, ViT+VLM status, ROI config.
+Run: python -m web.app
 """
 from __future__ import annotations
 
-import io
 import sys
+import time
 from pathlib import Path
 
-# 保证项目根与 Vit 在 path 中
 WEB_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = WEB_DIR.parent
 VIT_DIR = PROJECT_ROOT / "Vit"
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-if str(VIT_DIR) not in sys.path:
-    sys.path.insert(0, str(VIT_DIR))
+for p in (str(PROJECT_ROOT), str(VIT_DIR)):
+    if p not in sys.path:
+        sys.path.insert(0, p)
 
 from flask import Flask, Response, jsonify, request, send_from_directory
 
@@ -33,6 +31,8 @@ app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config["JSON_AS_ASCII"] = False
 
 CONFIG_PATH = WEB_DIR / "config" / "streams.json"
+YOLO_CLASSES_PATH = PROJECT_ROOT / "yolo" / "Class" / "coco_classes.txt"
+
 frame_state = get_frame_state()
 runtime_manager = MonitorRuntimeManager(
     stream_store_load=lambda: load_streams(CONFIG_PATH),
@@ -46,6 +46,8 @@ def _ensure_running():
         runtime_manager.start()
 
 
+# ── Pages ──
+
 @app.route("/")
 def index():
     return send_from_directory(app.template_folder, "index.html")
@@ -56,12 +58,17 @@ def static_file(path):
     return send_from_directory(app.static_folder, path)
 
 
+# ── Stream CRUD ──
+
 @app.route("/api/streams", methods=["GET"])
 def api_list_streams():
     streams = load_streams(CONFIG_PATH)
     return jsonify({
         "streams": streams,
         "vit_loaded": runtime_manager.is_vit_loaded(),
+        "vlm_loaded": runtime_manager.is_vlm_loaded(),
+        "vlm_finetuned": runtime_manager.is_vlm_finetuned(),
+        "vlm_base": runtime_manager.is_vlm_base_model(),
     })
 
 
@@ -81,6 +88,10 @@ def api_add_stream():
         vit_threshold=float(data.get("vit_threshold", 0.6)),
         yolo_confidence=float(data.get("yolo_confidence", 0.3)),
         agent_enabled=data.get("agent_enabled", True),
+        rois=data.get("rois"),
+        roi_alarm_classes=data.get("roi_alarm_classes"),
+        global_alarm_classes=data.get("global_alarm_classes"),
+        vlm_auto_interval_sec=float(data.get("vlm_auto_interval_sec", 16.0)),
         config_path=CONFIG_PATH,
     )
     _ensure_running()
@@ -132,16 +143,19 @@ def api_update_stream(stream_id):
     if not stream:
         return jsonify({"error": "stream not found"}), 404
     data = request.get_json() or {}
-    updates = {}
-    if "yolo_confidence" in data:
-        updates["yolo_confidence"] = float(data["yolo_confidence"])
-    if "vit_threshold" in data:
-        updates["vit_threshold"] = float(data["vit_threshold"])
+    allowed = {
+        "yolo_confidence", "vit_threshold", "agent_enabled",
+        "rois", "roi_alarm_classes", "global_alarm_classes", "name",
+        "vlm_auto_interval_sec",
+    }
+    updates = {k: v for k, v in data.items() if k in allowed}
     if not updates:
         return jsonify(stream), 200
     updated = store_update(stream_id, updates, CONFIG_PATH)
-    runtime_manager.stop()
-    runtime_manager.start()
+    needs_restart = any(k in updates for k in ("rois", "roi_alarm_classes", "global_alarm_classes", "yolo_confidence", "vit_threshold", "agent_enabled", "vlm_auto_interval_sec"))
+    if needs_restart:
+        runtime_manager.stop()
+        runtime_manager.start()
     return jsonify(updated or stream), 200
 
 
@@ -156,14 +170,55 @@ def api_stream_status(stream_id):
         "id": stream_id,
         "stream_id": rtsp_url,
         "vit_loaded": runtime_manager.is_vit_loaded(),
+        "vlm_loaded": runtime_manager.is_vlm_loaded(),
+        "vlm_finetuned": runtime_manager.is_vlm_finetuned(),
+        "vlm_base": runtime_manager.is_vlm_base_model(),
         **stream,
         "status": status,
     })
 
 
-# 无帧时的占位 JPEG（1x1 黑像素）
+# ── New endpoints ──
+
+@app.route("/api/streams/<stream_id>/snapshot", methods=["GET"])
+def api_snapshot(stream_id):
+    """Return latest JPEG frame for ROI drawing."""
+    stream = store_get(stream_id, CONFIG_PATH)
+    if not stream:
+        return jsonify({"error": "stream not found"}), 404
+    rtsp_url = stream.get("rtsp_url")
+    if not rtsp_url:
+        return jsonify({"error": "no rtsp_url"}), 404
+    _ensure_running()
+    jpeg = frame_state.get_jpeg(rtsp_url)
+    if not jpeg:
+        return jsonify({"error": "no frame available yet"}), 503
+    return Response(jpeg, mimetype="image/jpeg")
+
+
+@app.route("/api/classes", methods=["GET"])
+def api_classes():
+    """Return all YOLO detectable class names."""
+    classes = []
+    if YOLO_CLASSES_PATH.exists():
+        with YOLO_CLASSES_PATH.open("r", encoding="utf-8") as f:
+            for line in f:
+                c = line.strip()
+                if c:
+                    classes.append(c)
+    return jsonify({"classes": classes})
+
+
+# ── MJPEG ──
+
 _PLACEHOLDER_JPEG = (
-    b"\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x00\x00\xff\xdb\x00C\x00\x08\x06\x06\x07\x06\x05\x08\x07\x07\x07\t\t\x08\n\x0c\x14\r\x0c\x0b\x0b\x0c\x19\x12\x13\x0f\x14\x1d\x1a\x1f\x1e\x1d\x1a\x1c\x1c $.\' \",#\x1c\x1c(7),01444\x1f\'9=82<.342\xff\xc0\x00\x0b\x08\x00\x01\x00\x01\x01\x01\x11\x00\xff\xc4\x00\x17\x00\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x02\x03\x04\xff\xda\x00\x08\x01\x01\x00\x00?\x00\xfe\x7f\xff\xd9"
+    b"\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x00\x00"
+    b"\xff\xdb\x00C\x00\x08\x06\x06\x07\x06\x05\x08\x07\x07\x07\t\t\x08\n"
+    b"\x0c\x14\r\x0c\x0b\x0b\x0c\x19\x12\x13\x0f\x14\x1d\x1a\x1f\x1e\x1d"
+    b"\x1a\x1c\x1c $.' \",#\x1c\x1c(7),01444\x1f'9=82<.342\xff\xc0\x00\x0b"
+    b"\x08\x00\x01\x00\x01\x01\x01\x11\x00\xff\xc4\x00\x17\x00\x01\x01\x01"
+    b"\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x02\x03"
+    b"\x04\xff\xda\x00\x08\x01\x01\x00\x00?\x00\xfe\x7f\xff\xd9"
 )
 
 
@@ -177,12 +232,11 @@ def video_mjpeg(stream_id):
         return "no rtsp_url", 404
 
     def generate():
-        import time
         _ensure_running()
         while True:
             jpeg = frame_state.get_jpeg(rtsp_url)
             payload = jpeg if jpeg else _PLACEHOLDER_JPEG
-            yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + payload + b"\r\n")
+            yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + payload + b"\r\n"
             time.sleep(0.05)
 
     return Response(
