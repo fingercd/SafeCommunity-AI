@@ -20,7 +20,13 @@ import torch
 import yaml
 from tqdm import tqdm
 
-from PIL import Image
+from vlm.utils import (
+    extract_json_from_text,
+    load_frames_from_dir,
+    load_model_for_eval,
+    pad_and_batch_inputs,
+    resolve_frames_dir,
+)
 
 SYSTEM_PROMPT = (
     "You are an expert in surveillance video analysis. Watch the clip and output exactly one "
@@ -48,60 +54,6 @@ def ground_truth_anomaly_from_obj(obj: dict[str, Any] | None) -> bool:
     if "classification" in obj:
         return classification_is_abnormal(obj.get("classification"))
     return bool(obj.get("is_anomaly", False))
-
-
-def _resolve_frames_dir_eval(frames_dir: str | Path, project_root: Path) -> Path:
-    p = Path(frames_dir)
-    if p.is_absolute() and p.exists():
-        return p
-    name = p.name
-    for sub in ("ecva_clips", "clips"):
-        cand = project_root / "data" / "processed" / sub / name
-        if cand.exists():
-            return cand
-    if p.exists():
-        return p
-    return project_root / "data" / "processed" / "clips" / name
-
-
-def load_frames_from_dir(frames_dir: str | Path, num_frames: int = 16) -> list:
-    frames_dir = Path(frames_dir)
-    imgs = sorted(frames_dir.glob("frame_*.jpg")) or sorted(frames_dir.glob("*.jpg"))
-    imgs = imgs[:num_frames]
-    out = []
-    for p in imgs:
-        out.append(Image.open(p).convert("RGB"))
-    while len(out) < num_frames and out:
-        out.append(out[-1])
-    return out[:num_frames]
-
-
-def extract_json_from_text(text: str) -> dict[str, Any] | None:
-    text = text.strip()
-    if "```" in text:
-        for part in text.split("```"):
-            part = part.strip()
-            if part.startswith("json"):
-                part = part[4:].strip()
-            try:
-                return json.loads(part)
-            except json.JSONDecodeError:
-                continue
-    start = text.find("{")
-    if start == -1:
-        return None
-    depth = 0
-    for i in range(start, len(text)):
-        if text[i] == "{":
-            depth += 1
-        elif text[i] == "}":
-            depth -= 1
-            if depth == 0:
-                try:
-                    return json.loads(text[start : i + 1])
-                except json.JSONDecodeError:
-                    return None
-    return None
 
 
 def get_ground_truth(item: dict) -> tuple[bool, dict]:
@@ -286,52 +238,6 @@ def _mean_bertscore_f1(refs: list[str], preds: list[str], lang: str = "en") -> f
         return 0.0
 
 
-def _load_model_and_processor_eval(
-    model_path: str,
-    use_4bit: bool = True,
-    model_cfg: dict | None = None,
-    adapter_path: str | None = None,
-):
-    from transformers import AutoProcessor, Qwen3_5ForConditionalGeneration
-    from transformers import BitsAndBytesConfig
-
-    model_cfg = model_cfg or {}
-    processor = AutoProcessor.from_pretrained(
-        adapter_path or model_path, trust_remote_code=True
-    )
-
-    quantization_config = None
-    if use_4bit:
-        compute_dtype = getattr(
-            torch,
-            model_cfg.get("bnb_4bit_compute_dtype", "bfloat16"),
-            torch.bfloat16,
-        )
-        quantization_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_compute_dtype=compute_dtype,
-            bnb_4bit_quant_type=model_cfg.get("bnb_4bit_quant_type", "nf4"),
-            bnb_4bit_use_double_quant=model_cfg.get("bnb_4bit_use_double_quant", True),
-        )
-    device_map = "auto" if use_4bit else "cuda:0"
-    model = Qwen3_5ForConditionalGeneration.from_pretrained(
-        model_path,
-        quantization_config=quantization_config,
-        device_map=device_map,
-        torch_dtype=torch.bfloat16 if not use_4bit else None,
-        trust_remote_code=True,
-    )
-
-    if adapter_path:
-        from peft import PeftModel
-
-        print(f"挂载 LoRA adapter: {adapter_path}")
-        model = PeftModel.from_pretrained(model, adapter_path)
-
-    model.eval()
-    return model, processor
-
-
 def _normalize_prediction_record(r: dict[str, Any], model_tag: str) -> dict[str, Any]:
     """兼容旧版仅含 y_true/ref_text 的 jsonl 行。"""
     out = dict(r)
@@ -391,42 +297,6 @@ def _write_predictions_snapshot(
     }
     with predictions_json.open("w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
-
-
-def _pad_and_batch(inputs_list: list[dict]) -> dict:
-    if len(inputs_list) == 1:
-        return inputs_list[0]
-    id_tensors = [inp["input_ids"].squeeze(0) for inp in inputs_list]
-    max_len = max(t.shape[0] for t in id_tensors)
-    pad_id = 0
-    batched: dict[str, Any] = {}
-    padded_ids = []
-    padded_mask = []
-    for ids in id_tensors:
-        pad_len = max_len - ids.shape[0]
-        padded_ids.append(torch.cat([torch.full((pad_len,), pad_id, dtype=ids.dtype), ids]))
-        padded_mask.append(
-            torch.cat([torch.zeros(pad_len, dtype=torch.long), torch.ones(ids.shape[0], dtype=torch.long)])
-        )
-    batched["input_ids"] = torch.stack(padded_ids)
-    batched["attention_mask"] = torch.stack(padded_mask)
-    if all("pixel_values_videos" in inp for inp in inputs_list):
-        batched["pixel_values_videos"] = torch.cat(
-            [inp["pixel_values_videos"] for inp in inputs_list], dim=0
-        )
-    if all("video_grid_thw" in inp for inp in inputs_list):
-        batched["video_grid_thw"] = torch.cat(
-            [inp["video_grid_thw"] for inp in inputs_list], dim=0
-        )
-    if all("pixel_values" in inp for inp in inputs_list):
-        batched["pixel_values"] = torch.cat(
-            [inp["pixel_values"] for inp in inputs_list], dim=0
-        )
-    if all("image_grid_thw" in inp for inp in inputs_list):
-        batched["image_grid_thw"] = torch.cat(
-            [inp["image_grid_thw"] for inp in inputs_list], dim=0
-        )
-    return batched
 
 
 def _reports_to_improvement(base: dict[str, Any], cur: dict[str, Any]) -> dict[str, Any]:
@@ -497,7 +367,7 @@ def evaluate_one_model(
         print(f"[{model_tag}] 从 jsonl 恢复：已完成 {len(done_ids)} clips")
 
     print(f"[{model_tag}] 加载模型（4bit={use_4bit}, adapter={adapter_path is not None}）...")
-    model, processor = _load_model_and_processor_eval(
+    model, processor = load_model_for_eval(
         base_model_path,
         use_4bit=use_4bit,
         model_cfg=model_cfg,
@@ -514,7 +384,7 @@ def evaluate_one_model(
         frames_dir = item.get("frames_dir", "")
         if not frames_dir:
             continue
-        abs_frames = _resolve_frames_dir_eval(frames_dir, project_root)
+        abs_frames = resolve_frames_dir(frames_dir, project_root)
         try:
             frames = load_frames_from_dir(abs_frames, num_frames)
         except Exception:
@@ -564,7 +434,7 @@ def evaluate_one_model(
             inp.pop("mm_token_type_ids", None)
             inputs_list.append(inp)
 
-        batched = _pad_and_batch(inputs_list)
+        batched = pad_and_batch_inputs(inputs_list)
         device = next(model.parameters()).device
         batched_gpu = {k: v.to(device) if hasattr(v, "to") else v for k, v in batched.items()}
         input_len = batched_gpu["input_ids"].shape[1]
@@ -725,7 +595,7 @@ def evaluate_one_model(
     bert_f1 = _mean_bertscore_f1(refs_sub, preds_sub, lang=bertscore_lang)
     fpr, tpr, thresholds = roc_curve(y_true_arr, y_score_arr)
     idx = int(np.argmin(np.abs(tpr - 0.95)))
-    fpr_at_95 = float(fpr[idx]) if idx is not None else 0.0
+    fpr_at_95 = float(fpr[idx])
 
     tpr_levels = [0.5, 0.7, 0.8, 0.9, 0.95]
     fpr_at_tpr_levels: dict[str, float] = {}
