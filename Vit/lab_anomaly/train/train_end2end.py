@@ -390,39 +390,10 @@ def _training_step(
     def _forward_with_x(x: torch.Tensor) -> tuple[torch.Tensor, dict]:
         return mil(x, mask=mask, y=None, return_details=True)
 
-    if scaler is not None:
-        with torch.amp.autocast("cuda"):
-            x = _encode_nested_clips(
-                encoder,
-                batch["clips_nested"],
-                mask,
-                device,
-                backbone_frozen,
-                micro_bs,
-                clip_eval_mode_when_frozen,
-            )
-            logits, details = _forward_with_x(x)
-            loss_ce = ce(logits, y)
-            loss_rank = torch.tensor(0.0, device=device)
-            if use_rank and "anomaly_scores" in details:
-                s = details["anomaly_scores"]
-                is_normal = y == normal_idx
-                is_anom = ~is_normal
-                if is_anom.any() and is_normal.any():
-                    loss_rank = mil_ranking_loss(
-                        s[is_anom],
-                        s[is_normal],
-                        mask_pos=mask[is_anom],
-                        mask_neg=mask[is_normal],
-                        lambda_sparse=lambda_sparse,
-                        lambda_smooth=lambda_smooth,
-                    )
-            loss = loss_ce + lambda_rank * loss_rank
-        scaler.scale(loss).backward()
-        scaler.step(opt)
-        scaler.update()
-        logits_train = logits.detach()
-    else:
+    amp_ctx = (
+        torch.amp.autocast("cuda") if scaler is not None else contextlib.nullcontext()
+    )
+    with amp_ctx:
         x = _encode_nested_clips(
             encoder,
             batch["clips_nested"],
@@ -449,9 +420,15 @@ def _training_step(
                     lambda_smooth=lambda_smooth,
                 )
         loss = loss_ce + lambda_rank * loss_rank
+
+    if scaler is not None:
+        scaler.scale(loss).backward()
+        scaler.step(opt)
+        scaler.update()
+    else:
         loss.backward()
         opt.step()
-        logits_train = logits.detach()
+    logits_train = logits.detach()
 
     return float(loss_ce.item()), float(loss_rank.item()), logits_train
 

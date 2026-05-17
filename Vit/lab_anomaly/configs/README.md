@@ -1,67 +1,46 @@
-## configs/ — YAML 配置文件
+# configs — 配置文件目录
 
-本目录包含 ViT 异常检测模块各阶段的示例配置文件。
+> 存放 Vit 当前主线用到的 YAML 配置文件。
 
-### 文件说明
+---
 
-| 文件 | 用途 | 对应脚本 |
-|------|------|----------|
-| `embedding_example.yaml` | 提取 embedding 的基础配置（单流 RGB，关闭 SSIM 过滤） | `train/extract_embeddings.py` |
-| `embedding_dual_stream.yaml` | 双流（RGB + 光流）embedding 配置 | `train/extract_embeddings.py` |
-| `pseudo_label_iter_example.yaml` | 伪标签迭代训练配置 | `train/pseudo_label_iter.py` |
-| `rtsp_service_example.yaml` | 实时 RTSP 推理服务配置 | `infer/rtsp_service.py` |
+## 当前有效的配置文件
 
-### 配置结构（以 embedding_example.yaml 为例）
+| 文件 | 作用 |
+|------|------|
+| `train_end2end.yaml` | **当前主线训练配置**，控制数据路径、模型参数、训练策略 |
+| `rtsp_service_example.yaml` | 推理服务示例配置，控制 RTSP 地址、checkpoint 路径、输出目录 |
 
-```yaml
-# 数据
-dataset_root: lab_dataset
-labels_csv: lab_dataset/labels/video_labels.csv
+## 配置覆盖机制
 
-# 采样
-sampling:
-  clip_len: 16
-  frame_stride: 2
-  num_clips_per_video: 32
-
-# 编码器
-encoder:
-  use_dual_stream: false    # true 时需要预计算光流
-  fusion_method: concat     # 双流融合方式
-
-# 过滤（建议关闭）
-enable_filtering: false
-enable_flow_filter: false
-
-# 光流（双流时需要）
-flows:
-  flows_dir: lab_dataset/derived/optical_flows
-
-# 运行时
-runtime:
-  batch_size: 32
-  limit: 0                  # 0 = 不限制
+```
+train_end2end.py 内部默认值
+    ↓ 被覆盖
+train_end2end.yaml 中的配置
+    ↓ 最终生效
 ```
 
-### rtsp_service_example.yaml 关键字段
+- Python 文件里先有一套默认配置
+- YAML 再去覆盖它
+- **如果 YAML 里没写某个值，就回退到 Python 默认值**
 
-```yaml
-rtsp_url: rtsp://user:pass@ip:554/stream
-artifacts:
-  known_checkpoint: lab_dataset/derived/known_classifier/checkpoint_best.pt
-  open_set_dir: lab_dataset/derived/open_set
-  labels_json: lab_dataset/derived/known_classifier/labels.json
-output:
-  events_jsonl: lab_dataset/derived/realtime/events.jsonl
-  snapshots_dir: lab_dataset/derived/realtime/snapshots
-```
+> ⚠️ 不能只改 YAML 不看 Python 默认值。改了配置没效果时，先检查 YAML 是否真的覆盖了目标字段。
 
-### 使用方式
+## 关键字段
 
-```bash
-# 方式 A：通过 --config 参数
-python -m lab_anomaly.train.extract_embeddings --config lab_anomaly/configs/embedding_example.yaml
+### `train_end2end.yaml`
+- `dataset_root` / `labels_csv` / `preclip_root`：数据路径
+- `out_dir`：训练输出目录
+- `frames_per_clip`：每片段帧数（与预切阶段对齐）
+- `encoder_model_name`：编码器名称（如 `OpenGVLab/VideoMAEv2-Base`）
+- `batch_size` / `stages` / `val_ratio`：训练参数
 
-# 方式 B：命令行参数覆盖 YAML
-python -m lab_anomaly.train.extract_embeddings --config lab_anomaly/configs/embedding_example.yaml --batch_size 64
-```
+### `rtsp_service_example.yaml`
+- `rtsp_url`：视频源地址
+- `artifacts.known_checkpoint`：checkpoint 路径
+- `output.events_dir` / `output.snapshots_dir`：结果输出目录
+
+## 注意事项
+
+1. 旧文档里提到的 `embedding_example.yaml`、`embedding_dual_stream.yaml` 等配置文件在当前仓库中可能不存在，以实际目录中的文件为准
+2. 训练和推理配置要对齐，尤其是 `clip_len` 和 `encoder_model_name`

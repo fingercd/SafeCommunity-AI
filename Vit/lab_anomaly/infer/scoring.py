@@ -48,6 +48,7 @@ def load_known_classifier(checkpoint_path: str | Path, device: Optional[str] = N
     state_key = "mil_state" if "mil_state" in ckpt else "model_state"
     model.load_state_dict(ckpt[state_key], strict=True)
     model.to(device)
+    model.float()  # 强制 FP32，避免 BFloat16 与 LayerNorm 冲突
     model.eval()
 
     label2idx = {str(k): int(v) for k, v in ckpt.get("label2idx", {}).items()}
