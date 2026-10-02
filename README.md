@@ -1,3 +1,5 @@
+
+
 <div align="center">
 
 # Moniter — Multimodal AI Intelligent Video Surveillance System
@@ -161,7 +163,7 @@ Web panel supports per-stream independent configuration.
 ## ⚠️ Common Issues
 
 1. **ViT params must align** — `clip_len`, `window_stride`, and `encoder_model` must match between training and inference.
-2. **Case-sensitive class names** — Category names in `config.yaml` and Web UI must exactly match `coco_classes_chinese.txt`.
+2. **Case-sensitive class names** — Category names in `config.yaml` and Web UI must exactly match `yolo/Class/coco_classes.txt`.
 3. **Web vs CLI** — `predict.py` is local window mode (no Flask); `launch.py` / `web/app.py` is Web mode (loads VLM).
 4. **VLM "not loaded"** — Check if `vlm/outputs/merged/` exists. Use `VLM_MERGED` env var to override.
 
